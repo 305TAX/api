@@ -6,6 +6,7 @@ specifiers:
   mongodb: ^4.8.1
   next: latest
   nextjs-cors: ^2.1.2
+  odoo-xmlrpc: ^1.0.8
   react: ^18.2.0
   react-dom: ^18.2.0
   typescript: 4.6.3
@@ -14,6 +15,7 @@ dependencies:
   mongodb: 4.14.0
   next: 13.2.4_biqbaboplfbrettd7655fr4n2y
   nextjs-cors: 2.1.2_next@13.2.4
+  odoo-xmlrpc: 1.0.8
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
 
@@ -1154,6 +1156,14 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /odoo-xmlrpc/1.0.8:
+    resolution: {integrity: sha512-tkUwrlyARnkSsbwcQqpLDgyMXNC29cMTU4EZd1JmWK9+Q+gX19EVoqsYfrUDrVAu3gXQKDW/+UvAXibbP/ZDwQ==}
+    engines: {node: '>=0.8', npm: '>=1.0.0'}
+    dependencies:
+      url: 0.11.0
+      xmlrpc: 1.3.2
+    dev: false
+
   /picocolors/1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
     dev: false
@@ -1167,9 +1177,19 @@ packages:
       source-map-js: 1.0.2
     dev: false
 
+  /punycode/1.3.2:
+    resolution: {integrity: sha512-RofWgt/7fL5wP1Y7fxE7/EmTLzQVnB0ycyibJ0OOHIlJqTNzglYFxVwETOcIoJqJmpDXJ9xImDv+Fq34F/d4Dw==}
+    dev: false
+
   /punycode/2.3.0:
     resolution: {integrity: sha512-rRV+zQD8tVFys26lAGR9WUuS4iUAngJScM+ZRSKtvl5tKeZ2t5bvdNFdNHBW9FWR4guGHlgmsZ1G7BSm2wTbuA==}
     engines: {node: '>=6'}
+    dev: false
+
+  /querystring/0.2.0:
+    resolution: {integrity: sha512-X/xY82scca2tau62i9mDyU9K+I+djTMUsvwf7xnUX5GLvVzgJybOJf4Y6o9Zx3oJK/LSXg5tTZBjwzqVPaPO2g==}
+    engines: {node: '>=0.4.x'}
+    deprecated: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
     dev: false
 
   /react-dom/18.2.0_react@18.2.0:
@@ -1197,6 +1217,10 @@ packages:
       sparse-bitfield: 3.0.3
     dev: false
     optional: true
+
+  /sax/1.2.4:
+    resolution: {integrity: sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==}
+    dev: false
 
   /scheduler/0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
@@ -1273,6 +1297,13 @@ packages:
     hasBin: true
     dev: true
 
+  /url/0.11.0:
+    resolution: {integrity: sha512-kbailJa29QrtXnxgq+DdCEGlbTeYM2eJUxsz6vjZavrCYPMIFHMKQmSKYAIuUK2i7hgPm28a8piX5NTUtM/LKQ==}
+    dependencies:
+      punycode: 1.3.2
+      querystring: 0.2.0
+    dev: false
+
   /uuid/8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
@@ -1295,4 +1326,17 @@ packages:
     dependencies:
       tr46: 3.0.0
       webidl-conversions: 7.0.0
+    dev: false
+
+  /xmlbuilder/8.2.2:
+    resolution: {integrity: sha512-eKRAFz04jghooy8muekqzo8uCSVNeyRedbuJrp0fovbLIi7wlsYtdUn3vBAAPq2Y3/0xMz2WMEUQ8yhVVO9Stw==}
+    engines: {node: '>=4.0'}
+    dev: false
+
+  /xmlrpc/1.3.2:
+    resolution: {integrity: sha512-jQf5gbrP6wvzN71fgkcPPkF4bF/Wyovd7Xdff8d6/ihxYmgETQYSuTc+Hl+tsh/jmgPLro/Aro48LMFlIyEKKQ==}
+    engines: {node: '>=0.8', npm: '>=1.0.0'}
+    dependencies:
+      sax: 1.2.4
+      xmlbuilder: 8.2.2
     dev: false
