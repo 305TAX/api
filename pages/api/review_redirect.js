@@ -63,6 +63,7 @@ export default async function handler(req, res) {
         "rating_count",
         "rating_avg_text",
         "active",
+        "partner_name",
       ]);
 
       let params = [];
@@ -79,7 +80,7 @@ export default async function handler(req, res) {
 
           try {
             result.forEach(async (review) => {
-              if (Number(reviewArray.i) - 2 == review.id) {
+              if (Number(reviewArray.i) == review.id) {
                 tempReview = review;
               }
             });
