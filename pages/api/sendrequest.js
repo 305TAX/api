@@ -67,9 +67,12 @@ export default async function handler(req, res) {
           return console.log(err);
         }
 
+        let nameVal = generateRandomString(8) + "-" + dateServer.toDateString();
+        nameVal = String(nameVal).trim();
+
         var inParams = [];
         inParams.push({
-          name: generateRandomString(8) + "-" + dateServer.toDateString(),
+          name: nameVal,
           stage_id: 4,
           partner_id: responseQuery.id,
         });
