@@ -96,7 +96,7 @@ export default async function handler(req, res) {
             if (reviewArray.cpid != tempReview.commercial_partner_id[0])
               return res.status(400).json({ response: false, reason: "ERR 2" });
 
-            if (tempReview.rating_avg_text == "none")
+            if (tempReview.rating_avg_text != "none")
               return res.redirect("https://305tax.com");
 
             try {
