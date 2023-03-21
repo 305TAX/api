@@ -97,8 +97,11 @@ export default async function handler(req, res) {
             if (reviewArray.cpid != tempReview.commercial_partner_id[0])
               return res.status(400).json({ response: false, reason: "ERR 2" });
 
+            let redirectURL =
+              "https://305tax.odoo.com/rate/" + reviewArray.a + "/5";
+
             if (tempReview.rating_avg_text != "none")
-              return res.redirect("https://305tax.com");
+              return res.redirect(redirectURL);
 
             try {
               const client = await clientPromise;
@@ -106,9 +109,6 @@ export default async function handler(req, res) {
               const response = await db
                 .collection("users")
                 .findOne({ id: tempReview.id });
-
-              let redirectURL =
-                "https://305tax.odoo.com/rate/" + reviewArray.a + "/5";
 
               if (response) {
                 if (response.rating_avg_text == "top")
