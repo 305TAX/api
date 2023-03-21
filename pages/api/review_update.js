@@ -1,3 +1,4 @@
+import clientPromise from "../../lib/mongodb";
 import Odoo from "odoo-xmlrpc";
 
 import NextCors from "nextjs-cors";
@@ -13,14 +14,8 @@ export default async function handler(req, res) {
   });
 
   const responseQuery = JSON.parse(req.body);
+  const responseId = req.query;
   //responseQuery.id = Number(String(responseQuery.id).replace(/,/g, ""));
-
-  let odoo = new Odoo({
-    url: "https://305tax.odoo.com",
-    db: "305tax",
-    username: "joalexint@gmail.com",
-    password: "17569323Jouu1n*",
-  });
 
   const generateRandomString = (num) => {
     const characters =
@@ -41,9 +36,25 @@ export default async function handler(req, res) {
 
   const dateServer = new Date();
 
-  return res.json({
-    result: responseQuery,
-  });
+  try {
+    const client = await clientPromise;
+    const db = client.db("users_reviews");
+    const response = await db
+      .collection("users")
+      .updateOne(
+        { web_access_token: responseId.a },
+        {
+          $set: {
+            web_feedback: responseQuery.feedback,
+            web_points: responseQuery,
+          },
+        }
+      );
+
+    return res.send(true);
+  } catch (error) {
+    return res.send(false);
+  }
 
   // odoo.connect((err) => {
   //   if (err) {
