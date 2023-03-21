@@ -116,9 +116,7 @@ export default async function handler(req, res) {
 
                 return res.redirect(redirectURL);
               } else {
-                tempReview.web = {
-                  access_token: reviewArray.a,
-                };
+                tempReview.web_access_token = reviewArray.a;
                 await db.collection("users").insertOne(tempReview);
 
                 if (tempReview.rating_avg_text == "top")

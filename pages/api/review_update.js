@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
 
-  const responseQuery = req.body;
+  const responseQuery = JSON.parse(req.body);
   //responseQuery.id = Number(String(responseQuery.id).replace(/,/g, ""));
 
   let odoo = new Odoo({
@@ -41,137 +41,141 @@ export default async function handler(req, res) {
 
   const dateServer = new Date();
 
-  odoo.connect((err) => {
-    if (err) {
-      return console.log(err);
-    }
-    console.log("Connected to Odoo server.");
-    var inParams = [];
-    inParams.push([["active", "=", true]]);
-    var params = [];
-    params.push(inParams);
-
-    // 1- Login
-    odoo.connect(function (err) {
-      if (err) {
-        return console.log(err);
-      }
-      console.log("Connected to Odoo server.");
-    });
-
-    // odoo.connect(function (err) {
-    //   if (err) {
-    //     return console.log(err);
-    //   }
-
-    //   let nameVal = generateRandomString(8) + "-" + dateServer.toDateString();
-    //   nameVal = String(nameVal).trim();
-
-    //   var inParams = [];
-    //   inParams.push({
-    //     name: nameVal,
-    //     stage_id: 4,
-    //     partner_id: responseQuery.id,
-    //   });
-    //   var params = [];
-    //   params.push(inParams);
-    //   odoo.execute_kw(
-    //     "helpdesk.ticket",
-    //     "create",
-    //     params,
-    //     function (err, value) {
-    //       if (err) {
-    //         return console.log(err);
-    //       }
-    //       console.log("Result CREATON >>>>>: ", value);
-    //       return res.json({
-    //         response: true,
-    //         result: value,
-    //       });
-    //     }
-    //   );
-    // });
-
-    // odoo.connect(function (err) {
-    //   if (err) {
-    //     return console.log(err);
-    //   }
-
-    //   var inParams = [];
-    //   inParams.push([8]); //id to delete
-    //   var params = [];
-    //   params.push(inParams);
-    //   odoo.execute_kw(
-    //     "helpdesk.ticket",
-    //     "unlink",
-    //     params,
-    //     function (err, value) {
-    //       if (err) {
-    //         return console.log(err);
-    //       }
-    //       console.log("Result: ", value);
-    //       return res.json({
-    //         result: value,
-    //       });
-    //     }
-    //   );
-    // });
-
-    // odoo.connect(function (err) {
-    //   if (err) {
-    //     return console.log(err);
-    //   }
-
-    //   var inParams = [];
-    //   inParams.push([30]); //id to update
-    //   inParams.push({
-    //     rating_text: "ok",
-    //   });
-    //   var params = [];
-    //   params.push(inParams);
-    //   odoo.execute_kw("rating.rating", "write", params, function (err, value) {
-    //     if (err) {
-    //       return console.log(err);
-    //     }
-    //     console.log("Result: ", value);
-    //   });
-    // });
-
-    odoo.execute_kw("helpdesk.ticket", "search", params, (err, value) => {
-      if (err) return console.log("ERROR:", err);
-
-      let inParams = [];
-      inParams.push(value); //ids
-      inParams.push([
-        "name",
-        "company_id",
-        "email",
-        "domain_user_ids",
-        "commercial_partner_id",
-        "kanban_state",
-        "stage_id",
-        "access_token",
-        "use_rating",
-        "rating_count",
-        "rating_avg_text",
-        "active",
-        "partner_name",
-      ]);
-
-      let params = [];
-      params.push(inParams);
-
-      odoo.execute_kw(
-        "helpdesk.ticket",
-        "read",
-        params,
-        async (err2, value2) => {
-          if (err2) return console.log("ERROR:", err2);
-
-          //result = value2;
-          console.log("Reesult", value2);
-        }
-      );
-    });
+  return res.json({
+    result: responseQuery,
   });
+
+  // odoo.connect((err) => {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+  //   console.log("Connected to Odoo server.");
+  //   var inParams = [];
+  //   inParams.push([["active", "=", true]]);
+  //   var params = [];
+  //   params.push(inParams);
+
+  //   // 1- Login
+  //   odoo.connect(function (err) {
+  //     if (err) {
+  //       return console.log(err);
+  //     }
+  //     console.log("Connected to Odoo server.");
+  //   });
+
+  // odoo.connect(function (err) {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+
+  //   let nameVal = generateRandomString(8) + "-" + dateServer.toDateString();
+  //   nameVal = String(nameVal).trim();
+
+  //   var inParams = [];
+  //   inParams.push({
+  //     name: nameVal,
+  //     stage_id: 4,
+  //     partner_id: responseQuery.id,
+  //   });
+  //   var params = [];
+  //   params.push(inParams);
+  //   odoo.execute_kw(
+  //     "helpdesk.ticket",
+  //     "create",
+  //     params,
+  //     function (err, value) {
+  //       if (err) {
+  //         return console.log(err);
+  //       }
+  //       console.log("Result CREATON >>>>>: ", value);
+  //       return res.json({
+  //         response: true,
+  //         result: value,
+  //       });
+  //     }
+  //   );
+  // });
+
+  // odoo.connect(function (err) {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+
+  //   var inParams = [];
+  //   inParams.push([8]); //id to delete
+  //   var params = [];
+  //   params.push(inParams);
+  //   odoo.execute_kw(
+  //     "helpdesk.ticket",
+  //     "unlink",
+  //     params,
+  //     function (err, value) {
+  //       if (err) {
+  //         return console.log(err);
+  //       }
+  //       console.log("Result: ", value);
+  //       return res.json({
+  //         result: value,
+  //       });
+  //     }
+  //   );
+  // });
+
+  // odoo.connect(function (err) {
+  //   if (err) {
+  //     return console.log(err);
+  //   }
+
+  //   var inParams = [];
+  //   inParams.push([30]); //id to update
+  //   inParams.push({
+  //     rating_text: "ok",
+  //   });
+  //   var params = [];
+  //   params.push(inParams);
+  //   odoo.execute_kw("rating.rating", "write", params, function (err, value) {
+  //     if (err) {
+  //       return console.log(err);
+  //     }
+  //     console.log("Result: ", value);
+  //   });
+  // });
+
+  // odoo.execute_kw("helpdesk.ticket", "search", params, (err, value) => {
+  //   if (err) return console.log("ERROR:", err);
+
+  //   let inParams = [];
+  //   inParams.push(value); //ids
+  //   inParams.push([
+  //     "name",
+  //     "company_id",
+  //     "email",
+  //     "domain_user_ids",
+  //     "commercial_partner_id",
+  //     "kanban_state",
+  //     "stage_id",
+  //     "access_token",
+  //     "use_rating",
+  //     "rating_count",
+  //     "rating_avg_text",
+  //     "active",
+  //     "partner_name",
+  //   ]);
+
+  //   let params = [];
+  //   params.push(inParams);
+
+  //   odoo.execute_kw(
+  //     "helpdesk.ticket",
+  //     "read",
+  //     params,
+  //     async (err2, value2) => {
+  //       if (err2) return console.log("ERROR:", err2);
+
+  //       //result = value2;
+  //       console.log("Reesult", value2);
+  //     }
+  //   );
+  // });
+  // });
 }
