@@ -102,7 +102,9 @@ export default async function handler(req, res) {
                 String(tempRating.partner_id[1]).trim()
               )}`;
 
-              return res.send(urlRedirect);
+              return res.json({
+                result_link: urlRedirect,
+              });
             }
           });
         });
