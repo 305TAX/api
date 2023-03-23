@@ -17,6 +17,9 @@ export default async function handler(req, res) {
   const responseQuery = req.query;
   responseQuery.id = Number(String(responseQuery.id).replace(/,/g, ""));
 
+  let result;
+  let resultResponse;
+
   let odoo = new Odoo({
     url: "https://305tax.odoo.com",
     db: "305tax",
@@ -103,6 +106,10 @@ export default async function handler(req, res) {
               )}`;
 
               return res.send(urlRedirect);
+              // return res.json({
+              //   result: "LOGRADOOOOOOOOOOOO",
+              //   review: review,
+              // });
             }
           });
         });
@@ -189,6 +196,22 @@ export default async function handler(req, res) {
               );
 
               return odooSearch2(tempRating);
+
+              // //https://review.305tax.com/api/review_redirect?i=93&a=dab7379d98e5448c817ed647be58114f&cpid=res.partner(1602,)&d=m2lfq4Hx-Wed%20Mar%2022%202023&partner=Joalex%20Urdaneta
+              // //https://review.305tax.com/api/review_redirect?i=93&a=dab7379d98e5448c817ed647be58114f&cpid=res.partner(1601,)&d=m2lfq4Hx-Wed%20Mar%2022%202023&partner=Joalex%20Urdaneta
+
+              // // result = value2;
+              // //https://review.305tax.com/api/review_redirect?i=85&a=58bdbd3ee5224df99c241d3352b92902&cpid=res.partner(1601,)&d=ohByXkAO-Wed%20Mar%2022%202023&partner=Joalex%20Urdaneta
+              // let urlRedirect = `https://review.305tax.com/api/review_redirect?i=${
+              //   tempRating.res_id
+              // }&a=${tempRating.access_token}&cpid=res.partner(${
+              //   tempRating.partner_id[0]
+              // },)&d=${encodeURI(tempRating.display_name)}&partner=${encodeURI(
+              //   String(tempRating.partner_id).trim()
+              // )}`;
+              // return res.json({
+              //   result: tempRating,
+              // });
             }
           );
         });
@@ -198,6 +221,10 @@ export default async function handler(req, res) {
         result: error,
       });
     }
+
+    // return res.json({
+    //   result: idReview,
+    // });
   };
 
   try {
