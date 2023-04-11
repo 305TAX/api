@@ -57,10 +57,8 @@ export default async function handler(req, res) {
         "website_meta_title",
         "website_meta_description",
         "x_background_image",
-        "is_published",
-        "author_name",
-        "published_date",
         "subtitle",
+        "author_name",
       ]);
 
       let params = [];
@@ -70,17 +68,17 @@ export default async function handler(req, res) {
         if (err2) return console.log("ERROR:", err2);
 
         result = value2;
-        let resultPublished = [];
 
         for (let index = 0; index < result.length; index++) {
           const post = result[index];
 
-          if (post.is_published == true) {
-            resultPublished.push(post);
+          if (String(post.website_url).split("/")[3] == postQuery.p) {
+            return res.json(post);
           }
         }
-
-        return res.json(resultPublished);
+        return res.status(404).json({
+          error: "No existe el blog",
+        });
       });
     });
   });
