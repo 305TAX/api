@@ -45,7 +45,7 @@ export default async function handler(req, res) {
       let params = [];
       params.push(inParams);
 
-      result = value2;
+      result = value;
       return res.json(result);
     });
   });
