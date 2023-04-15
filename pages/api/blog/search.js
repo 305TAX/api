@@ -52,15 +52,15 @@ export default async function handler(req, res) {
     params.push(inParams);
 
     // 1- Login
-    odoo.connect(function (err) {
-      if (err) {
-        return console.log(err);
-      }
-      console.log("Connected to Odoo server.");
-    });
+    // odoo.connect(function (err) {
+    //   if (err) {
+    //     return console.log(err);
+    //   }
+    //   console.log("Connected to Odoo server.");
+    // });
 
     // 4- Read
-    odoo.execute_kw("blog.post", "search", params, (err, value) => {
+    odoo.execute_kw("blog.post", "search_read", params, (err, value) => {
       if (err) return console.log("ERROR:", err);
 
       let inParams = [];
@@ -84,26 +84,31 @@ export default async function handler(req, res) {
       let params = [];
       params.push(inParams);
 
-      odoo.execute_kw("blog.post", "read", params, async (err2, value2) => {
-        if (err2) return console.log("ERROR:", err2);
+      result = value;
 
-        result = value2;
-        let resultPublished = [];
-        console.log(">>>", value2);
+      let resultPublished = [];
 
-        for (let index = 0; index < result.length; index++) {
-          const post = result[index];
-
-          if (post.is_published == true) {
-            resultPublished.push(post);
-          }
-        }
-        let resultChunk = chunckArrayInGroups(resultPublished, 9);
-        return res.json({
-          per_pages: resultChunk,
-          all_items: resultPublished,
-        });
+      result.forEach((post) => {
+        if (post.is_published == true) resultPublished.push(post);
       });
+      
+      return res.json(resultPublished);
+
+      // let resultChunk = chunckArrayInGroups(resultPublished, 12);
+      // return res.json({
+      //   per_pages: resultChunk,
+      //   all_items: resultPublished,
+      // });
+      // odoo.execute_kw("blog.post", "read", params, async (err2, value2) => {
+      //   if (err2) return console.log("ERROR:", err2);
+
+      //   result = value2;
+      //
+      //   console.log(">>>", value2);
+
+      //
+
+      // });
     });
   });
 }

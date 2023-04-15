@@ -34,16 +34,8 @@ export default async function handler(req, res) {
     var params = [];
     params.push(inParams);
 
-    // 1- Login
-    odoo.connect(function (err) {
-      if (err) {
-        return console.log(err);
-      }
-      console.log("Connected to Odoo server.");
-    });
-
     // 4- Read
-    odoo.execute_kw("appointment.type", "search", params, (err, value) => {
+    odoo.execute_kw("appointment.type", "search_read", params, (err, value) => {
       if (err) return console.log("ERROR:", err);
 
       let inParams = [];
@@ -53,27 +45,8 @@ export default async function handler(req, res) {
       let params = [];
       params.push(inParams);
 
-      odoo.execute_kw(
-        "appointment.type",
-        "read",
-        params,
-        async (err2, value2) => {
-          if (err2) return console.log("ERROR:", err2);
-
-          result = value2;
-          // let resultPublished = [];
-
-          // for (let index = 0; index < result.length; index++) {
-          //   const post = result[index];
-
-          //   if (post.is_published == true) {
-          //     resultPublished.push(post);
-          //   }
-          // }
-
-          return res.json(result);
-        }
-      );
+      result = value2;
+      return res.json(result);
     });
   });
 }
