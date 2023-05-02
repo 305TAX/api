@@ -58,6 +58,7 @@ export default async function handler(req, res) {
       "x_appointment_relation",
       "x_description_service",
       "x_studio_steps",
+      "x_related_posts",
     ]);
     var params = [];
     params.push(inParams);
@@ -105,11 +106,32 @@ export default async function handler(req, res) {
               async (err3, value3) => {
                 if (err3) return console.log("ERROR:", err3);
 
+                const blogRel = [];
+
+                await value[0].x_related_posts.forEach(async (element) => {
+                  let inParams4 = [];
+                  inParams4.push([["id", "=", element]]);
+                  inParams4.push(["display_name"]);
+                  let params4 = [];
+                  params4.push(inParams4);
+
+                  odoo.execute_kw(
+                    "blog.post",
+                    "search_read",
+                    params4,
+                    async (err4, value4) => {
+                      if (err4) return console.log("ERROR:", err4);
+                      blogRel.push(element);
+                    }
+                  );
+                });
+
                 result = value2[0];
                 return res.json({
                   result: result,
                   page: value[0],
                   page_steps: value3,
+                  blog_rel: blogRel,
                 });
 
                 //return res.json(value3);

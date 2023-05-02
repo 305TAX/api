@@ -48,18 +48,7 @@ export default async function handler(req, res) {
 
       let inParams = [];
       inParams.push(value); //ids
-      inParams.push([
-        "tag_ids",
-        "content",
-        "website_url",
-        "website_id",
-        "name",
-        "website_meta_title",
-        "website_meta_description",
-        "x_background_image",
-        "subtitle",
-        "author_name",
-      ]);
+      inParams.push([]);
 
       let params = [];
       params.push(inParams);
