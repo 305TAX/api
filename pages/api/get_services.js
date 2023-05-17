@@ -71,11 +71,13 @@ export default async function handler(req, res) {
           }
         });
 
+        console.log("search service: ", searchService);
+
         if (!searchService) return res.json([]);
         console.log("fase 1 superada");
 
         let inParams2 = [];
-        inParams2.push([["id", "=", 5]]);
+        inParams2.push([["id", "=", Number(searchService)]]);
 
         let params2 = [];
         params2.push(inParams2);
