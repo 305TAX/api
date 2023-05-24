@@ -31,13 +31,12 @@ export default async function handler(req, res) {
     let inParams = [];
     inParams.push([["x_studio_show", "=", true]]);
     inParams.push([
-      "display_name",
       "x_name",
       "id",
-      "x_studio_icon",
+
       "x_studio_translate_to_spanish",
       "x_studio_associated_page",
-      "x_studio_service_appointment",
+
       "x_studio_description",
     ]);
 
