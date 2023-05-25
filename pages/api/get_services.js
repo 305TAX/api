@@ -19,6 +19,19 @@ export default async function handler(req, res) {
   //QUERY
   const p = req.query;
 
+  const capitalized = (word) => {
+    let wordSplit = String(word).split(" ");
+    let result = "";
+    for (let index = 0; index < wordSplit.length; index++) {
+      const element = wordSplit[index];
+      result = result.concat(
+        element.charAt(0).toUpperCase() + element.slice(1) + " "
+      );
+    }
+
+    return result;
+  };
+
   //FUNCTION
   odoo.connect((err) => {
     if (err) {
@@ -34,6 +47,7 @@ export default async function handler(req, res) {
       "x_name",
       "id",
       "x_studio_related_field_DTE4c",
+      "x_studio_custom_url",
       "x_studio_translate_to_spanish",
       "x_studio_associated_page",
 
@@ -43,27 +57,20 @@ export default async function handler(req, res) {
     let params = [];
     params.push(inParams);
 
-    if (p.id) {
+    if (p.url) {
       let inParams2 = [];
-      inParams2.push([["id", "=", Number(p.id)]]);
+      inParams2.push([["x_studio_custom_url", "=", p.url]]);
       inParams2.push([
         "id",
-        "website_url",
-        "url",
-        "x_studio_associated_page.arch_db",
-        "__last_update",
+        "x_name",
         "display_name",
-        "website_meta_title",
-        "website_meta_description",
-        "website_meta_keywords",
-        "website_meta_og_img",
       ]);
 
       let params2 = [];
       params2.push(inParams2);
 
       odoo.execute_kw(
-        "website.page",
+        "x_services",
         "search_read",
         params2,
         async (err2, value2) => {
