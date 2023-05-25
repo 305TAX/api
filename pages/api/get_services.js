@@ -46,7 +46,6 @@ export default async function handler(req, res) {
     inParams.push([
       "x_name",
       "id",
-      "x_studio_related_field_DTE4c",
       "x_studio_custom_url",
       "x_studio_translate_to_spanish",
       "x_studio_associated_page",
@@ -64,6 +63,10 @@ export default async function handler(req, res) {
         "id",
         "x_name",
         "display_name",
+        "x_studio_related_field_DTE4c",
+        "x_studio_custom_url",
+        "x_studio_translate_to_spanish",
+        "x_studio_description",
       ]);
 
       let params2 = [];
