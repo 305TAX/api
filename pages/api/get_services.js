@@ -33,7 +33,7 @@ export default async function handler(req, res) {
     inParams.push([
       "x_name",
       "id",
-
+      "x_studio_related_field_DTE4c",
       "x_studio_translate_to_spanish",
       "x_studio_associated_page",
 
@@ -50,7 +50,7 @@ export default async function handler(req, res) {
         "id",
         "website_url",
         "url",
-        "arch",
+        "x_studio_associated_page.arch_db",
         "__last_update",
         "display_name",
         "website_meta_title",
