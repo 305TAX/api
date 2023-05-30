@@ -48,7 +48,8 @@ export default async function handler(req, res) {
       "id",
       "x_studio_description",
       "x_studio_href",
-      "x_studio_category"
+      "x_studio_category",
+      "x_studio_translate_to_spanish",
     ]);
 
     let params = [];
