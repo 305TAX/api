@@ -17,7 +17,7 @@ export default async function handler(req, res) {
   //   `Estimado, ${customer}.\n\nLe damos las gracias por elegir a 305TAX como sus asesores tributarios y por permitirnos ayudarle con sus necesidades fiscales. Esperamos que haya quedado satisfecho con el nivel de servicio que le hemos proporcionado y que su experiencia haya sido positiva.\n\nComo pequeña empresa, dependemos en gran medida de las opiniones positivas y de las recomendaciones de boca en boca. Estaríamos muy agradecidos si pudiera dedicar unos minutos a dejarnos su opinión sobre nuestros servicios.\n\nHaz click en el siguiente enlace:\n${linkRedirect}`
   // );
 
-  console.log("SE ENVIO", req.query)
+  console.log("SE ENVIO", req.query, "BODY", req.body)
 
   return res.json({
     reuslt: "listo"
