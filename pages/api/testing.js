@@ -99,9 +99,15 @@ export default async function handler(req, res) {
   // );
 
   const arrBody = JSON.parse(JSON.stringify(req.body));
-  console.log("SE ENVIO", req.query, "BODY", arrBody);
+
+  arrBody?.boards.forEach((element, index) => {
+      const newElement = element.split("(")[1].split(")")[0].replace(",", "");
+      arrBody?.boards[index] = String(newElement)
+  });
+
+  console.log("ESTIMADO", arrBody, req.query)
 
   return res.json({
-    reuslt: "listo",
+    reuslt: arrBody,
   });
 }
