@@ -33,7 +33,9 @@ export default async function handler(req, res) {
     ),
     Notes: "",
     FamilyName: String(
-      customerOdoo?.familyname ? customerOdoo?.familyname : ""
+      customerOdoo?.familyname
+        ? String(customerOdoo?.familyname).split(" ")[1]
+        : ""
     ),
     PrimaryPhone: {
       FreeFormNumber: String(
@@ -52,7 +54,11 @@ export default async function handler(req, res) {
       Line1: String(customerOdoo?.address ? customerOdoo?.address : ""),
       Country: String(customerOdoo?.country ? customerOdoo?.country : ""),
     },
-    GivenName: String(customerOdoo?.givenname ? customerOdoo?.givenname : ""),
+    GivenName: String(
+      customerOdoo?.givenname
+        ? String(customerOdoo?.givenname).split(" ")[0]
+        : ""
+    ),
   };
 
   const Boards = [
