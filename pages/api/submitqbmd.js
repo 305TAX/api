@@ -64,86 +64,112 @@ export default async function handler(req, res) {
   const Boards = [
     {
       name: "INCOME TAX",
+      id: 1,
     },
     {
       name: "ANNUAL REPORT",
+      id: 2,
     },
     {
       name: "FORM 5471",
+      id: 3,
     },
     {
       name: "FINCEN 114",
+      id: 4,
     },
     {
       name: "BOOKKEEPING",
+      id: 5,
     },
     {
       name: "BOOKKEEPING (TAX)",
+      id: 6,
     },
     {
       name: "PAYROLL",
+      id: 7,
     },
     {
       name: "941",
+      id: 8,
     },
     {
       name: "940 & W2",
+      id: 9,
     },
     {
       name: "RT6",
+      id: 10,
     },
     {
       name: "SALES TAX MONTHLY",
+      id: 11,
     },
     {
       name: "SALES TAX QUARTERLY",
+      id: 12,
     },
     {
       name: "SALES TAX ANNUAL",
+      id: 13,
     },
     {
       name: "NEW BUSINESS",
+      id: 14,
     },
     {
       name: "DR1",
+      id: 15,
     },
     {
       name: "ITIN",
+      id: 16,
     },
     {
       name: "EFTPS PAYROLL",
+      id: 17,
     },
     {
       name: "EIN",
+      id: 18,
     },
     {
       name: "EFTPS INCOME TAX",
+      id: 19,
     },
     {
       name: "FORM 2553 8832",
+      id: 20,
     },
     {
       name: "FIRPTA",
+      id: 21,
     },
     {
       name: "DBPR R16",
+      id: 22,
     },
     {
       name: "PENDIENTES",
+      id: 28,
     },
     {
       name: "IRS DOR COMM",
+      id: 23,
     },
     {
       name: "MARKETING",
+      id: 24,
     },
     {
       name: "BE-12C",
+      id: 26,
     },
   ];
 
   //const arrBody = JSON.parse(JSON.stringify(req.body));
-  const arrBody = JSON.parse(JSON.stringify(req.body));
+  //const arrBody = JSON.parse(JSON.stringify(req.body));
   const newBoards = [];
 
   //   const queryArray = "query { boards (limit:40) { id name workspace  }}";
@@ -203,7 +229,7 @@ export default async function handler(req, res) {
   );
 
   //const fd = mamit.filter((element) => String(element?.name).includes("2023"));
-  console.log("EJECUTADO EL SUBMIT", body_res);
+  console.log("EJECUTADO EL SUBMIT", customerOdoo);
   return res.json({
     currentYear: currentYear,
     workspaces: result[0],
