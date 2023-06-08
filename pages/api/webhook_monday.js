@@ -30,6 +30,7 @@ export default async function handler(req, res) {
   };
 
   const queryArray = "query { boards (ids:4589083677) { name columns {id title} }}"
+  const queryCreateItem = "mutation { create_item (board_id: 4589083677, item_name: \"afd\", column_values: \"{\\\"date4\\\":\\\"2023-05-25\\\", \\\"status\\\":\\\"2\\\"}\") { id name }}"
 
   const resp = await fetch("https://api.monday.com/v2", {
     method: "post",
@@ -40,7 +41,7 @@ export default async function handler(req, res) {
       "API-Version": "2023-04",
     },
     body: JSON.stringify({
-      query: "mutation { create_item (board_id: 4589083677, item_name: \"afd\", column_values: \"{\\\"date4\\\":\\\"2023-05-25\\\", \\\"status\\\":\\\"2\\\"}\") { id name }}",
+      query: "query { boards (limit:40) { id name columns {id title} }}",
     }),
   });
   const mamit = await resp.json();

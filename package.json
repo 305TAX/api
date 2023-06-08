@@ -9,6 +9,7 @@
     "mongodb": "^4.8.1",
     "next": "latest",
     "nextjs-cors": "^2.1.2",
+    "node-quickbooks": "^2.0.42",
     "odoo-xmlrpc": "^1.0.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
