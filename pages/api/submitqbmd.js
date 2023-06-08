@@ -16,7 +16,9 @@ export default async function handler(req, res) {
 
   const body_res = {
     FullyQualifiedName: String(
-      customerOdoo?.companyname ? customerOdoo?.companyname : ""
+      customerOdoo?.companyname
+        ? customerOdoo?.companyname
+        : customerOdoo?.displayname
     ),
     PrimaryEmailAddr: {
       Address: String(customerOdoo?.email ? customerOdoo?.email : ""),
