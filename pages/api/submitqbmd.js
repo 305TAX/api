@@ -229,7 +229,9 @@ export default async function handler(req, res) {
     (elm) => !String(elm.name).includes("Subitems")
   );
 
-  const pers = await axios.get(`https://qb-tau.vercel.app/getCompanyInfo`);
+  const pers = await axios.post(
+    `https://qb-tau.vercel.app/cc?q=${JSON.stringify(body_res)}`
+  );
 
   // const createCustomerQB = fetch(
   //   `https://qb-tau.vercel.app/cc?q=${JSON.stringify(body_res)}`,
