@@ -281,7 +281,7 @@ export default async function handler(req, res) {
   //const example = boards.filter(brdt => String(brdt?.name).toUpperCase().includes("FORM 2553 | 8832"))
 
   //const fd = mamit.filter((element) => String(element?.name).includes("2023"));
-  console.log("EJECUTADO EL SUBMIT");
+  console.log("EJECUTADO EL SUBMIT", customerOdoo);
   return res.json({
     currentYear: currentYear,
     workspaces: result[0],
