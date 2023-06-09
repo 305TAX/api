@@ -1,6 +1,7 @@
 //import clientPromise from "../../lib/mongodb";
 
 import NextCors from "nextjs-cors";
+import axios from "axios";
 
 export default async function handler(req, res) {
   await NextCors(req, res, {
@@ -228,19 +229,21 @@ export default async function handler(req, res) {
     (elm) => !String(elm.name).includes("Subitems")
   );
 
-  const createCustomerQB = fetch(
-    `https://qb-tau.vercel.app/cc?q=${JSON.stringify(body_res)}`,
-    {
-      method: "POST",
-    }
-  )
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data);
-    });
+  const pers = await axios.get(`https://qb-tau.vercel.app/getCompanyInfo`);
+
+  // const createCustomerQB = fetch(
+  //   `https://qb-tau.vercel.app/cc?q=${JSON.stringify(body_res)}`,
+  //   {
+  //     method: "POST",
+  //   }
+  // )
+  //   .then((res) => res.json())
+  //   .then((data) => {
+  //     console.log(data);
+  //   });
 
   //const fd = mamit.filter((element) => String(element?.name).includes("2023"));
-  console.log("EJECUTADO EL SUBMIT", JSON.stringify(body_res));
+  console.log("EJECUTADO EL SUBMIT", pers);
   return res.json({
     currentYear: currentYear,
     workspaces: result[0],
