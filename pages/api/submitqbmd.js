@@ -243,7 +243,7 @@ export default async function handler(req, res) {
   //   });
 
   //const fd = mamit.filter((element) => String(element?.name).includes("2023"));
-  console.log("EJECUTADO EL SUBMIT", pers);
+  console.log("EJECUTADO EL SUBMIT", pers?.data);
   return res.json({
     currentYear: currentYear,
     workspaces: result[0],
