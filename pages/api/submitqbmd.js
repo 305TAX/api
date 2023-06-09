@@ -196,7 +196,13 @@ export default async function handler(req, res) {
     }),
   });
 
-  const newBoards = customerOdoo?.boards.replace("x_boards", "").replace("(", "").replace(")", "").replace(" ", "").split(",");
+  const newBoards = customerOdoo?.boards
+    .replace("x_boards", "")
+    .replace("(", "")
+    .replace(")", "")
+    .replace(" ", "")
+    .split(",")
+    .filter((el) => el != "");
 
   // customerOdoo.boards.forEach((element, index) => {
   //   const newElement = element.split("(")[1].split(")")[0].replace(",", "");
@@ -233,6 +239,10 @@ export default async function handler(req, res) {
 
   const boardsDestination = [];
 
+  const pers = await axios.post(
+    `https://qb-tau.vercel.app/cc?q=${JSON.stringify(body_res)}`
+  );
+
   newBoards.forEach((element) => {
     const findBoardApi = Boards.filter((brd) => brd?.id == Number(element));
     if (findBoardApi) {
@@ -241,8 +251,8 @@ export default async function handler(req, res) {
   });
 
   boardsDestination.forEach(async (bd, index) => {
-    const boardD = boards.filter((board) =>
-      String(board?.name).toUpperCase().includes(bd?.name)
+    const boardD = boards.filter(
+      (board) => String(board?.name).toUpperCase() == bd?.name
     );
     const mondayId = boardD[0]?.id;
     let queryCreateCustomer = `mutation { create_item (board_id: ${Number(
@@ -270,13 +280,8 @@ export default async function handler(req, res) {
 
     const result = await createCustomerMonday.json();
 
-    console.log(index + 1, "SE EJECUTO", bd, "MONDAY ID", boardD[0]?.id, result);
+    console.log(index + 1, "SE EJECUTO", bd, "MONDAY ID", boardD[0], mondayId);
   });
-
-  /** CUSTOMER CREATE QB FUNCIONANDO */
-  // const pers = await axios.post(
-  //   `https://qb-tau.vercel.app/cc?q=${JSON.stringify(body_res)}`
-  // );
 
   //const example = boards.filter(brdt => String(brdt?.name).toUpperCase().includes("FORM 2553 | 8832"))
 
