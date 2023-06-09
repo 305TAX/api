@@ -196,12 +196,7 @@ export default async function handler(req, res) {
     }),
   });
 
-  const newBoards = customerOdoo?.boards
-    .replace("x_boards", "")
-    .replace("(", "")
-    .replace(")", "")
-    .replace(" ", "")
-    .split(",");
+  const newBoards = customerOdoo?.boards.replace("x_boards", "").replace("(", "").replace(")", "").replace(" ", "").split(",");
 
   // customerOdoo.boards.forEach((element, index) => {
   //   const newElement = element.split("(")[1].split(")")[0].replace(",", "");
