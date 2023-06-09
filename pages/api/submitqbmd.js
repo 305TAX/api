@@ -171,7 +171,7 @@ export default async function handler(req, res) {
 
   //const arrBody = JSON.parse(JSON.stringify(req.body));
   //const arrBody = JSON.parse(JSON.stringify(req.body));
-  const newBoards = [];
+  // const newBoards = [];
 
   //   const queryArray = "query { boards (limit:40) { id name workspace  }}";
   //   const queryCreateItem =
@@ -196,7 +196,14 @@ export default async function handler(req, res) {
     }),
   });
 
-  // arrBody.boards.forEach((element, index) => {
+  const newBoards = customerOdoo?.boards
+    .replace("x_boards", "")
+    .replace("(", "")
+    .replace(")", "")
+    .replace(" ", "")
+    .split(",");
+
+  // customerOdoo.boards.forEach((element, index) => {
   //   const newElement = element.split("(")[1].split(")")[0].replace(",", "");
   //   newBoards.push({
   //     boardId: Number(newElement),
@@ -209,7 +216,7 @@ export default async function handler(req, res) {
 
   const result = workspaces.filter((elm) => String(elm.name).includes("2023"));
 
-  const showAllBoards = `query {boards (workspace_ids:${result[0]?.id} limit:100) { name } }`;
+  const showAllBoards = `query {boards (workspace_ids:${result[0]?.id} limit:100) { id name } }`;
 
   const resp2 = await fetch("https://api.monday.com/v2", {
     method: "post",
@@ -229,27 +236,61 @@ export default async function handler(req, res) {
     (elm) => !String(elm.name).includes("Subitems")
   );
 
-  const pers = await axios.post(
-    `https://qb-tau.vercel.app/cc?q=${JSON.stringify(body_res)}`
-  );
+  const boardsDestination = [];
 
-  // const createCustomerQB = fetch(
-  //   `https://qb-tau.vercel.app/cc?q=${JSON.stringify(body_res)}`,
-  //   {
-  //     method: "POST",
-  //   }
-  // )
-  //   .then((res) => res.json())
-  //   .then((data) => {
-  //     console.log(data);
-  //   });
+  newBoards.forEach((element) => {
+    const findBoardApi = Boards.filter((brd) => brd?.id == Number(element));
+    if (findBoardApi) {
+      boardsDestination.push(findBoardApi[0]);
+    }
+  });
+
+  boardsDestination.forEach(async (bd, index) => {
+    const boardD = boards.filter((board) =>
+      String(board?.name).toUpperCase().includes(bd?.name)
+    );
+    const mondayId = boardD[0]?.id;
+    let queryCreateCustomer = `mutation { create_item (board_id: ${Number(
+      mondayId
+    )}, item_name: \"${
+      body_res.DisplayName
+    }\", column_values: \"{\\\"text9\\\":\\\"${
+      customerOdoo?.x_studio_contact_name
+        ? customerOdoo?.x_studio_contact_name
+        : " "
+    }\\\"}\") { id }}`;
+
+    const createCustomerMonday = await fetch("https://api.monday.com/v2", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
+        "API-Version": "2023-04",
+      },
+      body: JSON.stringify({
+        query: queryCreateCustomer,
+      }),
+    });
+
+    const result = await createCustomerMonday.json();
+
+    console.log(index + 1, "SE EJECUTO", bd, "MONDAY ID", boardD[0]?.id, result);
+  });
+
+  /** CUSTOMER CREATE QB FUNCIONANDO */
+  // const pers = await axios.post(
+  //   `https://qb-tau.vercel.app/cc?q=${JSON.stringify(body_res)}`
+  // );
+
+  //const example = boards.filter(brdt => String(brdt?.name).toUpperCase().includes("FORM 2553 | 8832"))
 
   //const fd = mamit.filter((element) => String(element?.name).includes("2023"));
-  console.log("EJECUTADO EL SUBMIT", pers?.data);
+  console.log("EJECUTADO EL SUBMIT");
   return res.json({
     currentYear: currentYear,
     workspaces: result[0],
-    boards: [boards.length, Boards.length],
+    boards: boardsDestination.length,
     body: body_res,
   });
 
