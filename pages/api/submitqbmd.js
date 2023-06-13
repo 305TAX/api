@@ -235,7 +235,7 @@ export default async function handler(req, res) {
   const boardsDestination = [];
 
   const createCustomerQb = await axios
-    .post(`${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
+    .get(`${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
     .then((response) => {
       console.log("CREATED CUSTOMER IN QUICKBOOKS");
     })
