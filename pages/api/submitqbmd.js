@@ -242,7 +242,7 @@ export default async function handler(req, res) {
   ).then(response => response.json()).then(data => {
     console.log("LISTO", data)
   }).catch(err => {
-    console.log("NO EFECTUADO", err, JSON.stringify(body_res))
+    console.log("NO EFECTUADO", err, `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
   })
   // console.log(body_res, `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
   // const createCustomerQb = await axios
