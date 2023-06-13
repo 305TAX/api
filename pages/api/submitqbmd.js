@@ -11,8 +11,8 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
 
+  /** VARIABLES */
   const currentYear = new Date().getFullYear();
-
   const customerOdoo = JSON.parse(JSON.stringify(req.body));
 
   const body_res = {
@@ -180,6 +180,7 @@ export default async function handler(req, res) {
   //     "query { workspaces (id: 1234567) { id name kind description }}}";
   //   const queryW = "query { workspaces (limit:40) { id name kind description }}";
 
+  /** QUERY SHOW ALL WORKSPACES */
   const showAllWorkspaces =
     "query {workspaces (limit:40) {id name kind description} }";
 
@@ -196,6 +197,8 @@ export default async function handler(req, res) {
     }),
   });
 
+  /** TRANSFORM BOARDS */
+
   const newBoards = customerOdoo?.boards
     .replace("x_boards", "")
     .replace("(", "")
@@ -203,14 +206,6 @@ export default async function handler(req, res) {
     .replace(" ", "")
     .split(",")
     .filter((el) => el != "");
-
-  // customerOdoo.boards.forEach((element, index) => {
-  //   const newElement = element.split("(")[1].split(")")[0].replace(",", "");
-  //   newBoards.push({
-  //     boardId: Number(newElement),
-  //     boardName: Boards[Number(newElement) - 1],
-  //   });
-  // });
 
   const { data } = await resp.json();
   const workspaces = data?.workspaces;
@@ -240,7 +235,7 @@ export default async function handler(req, res) {
   const boardsDestination = [];
 
   const pers = await axios.post(
-    `https://qb-tau.vercel.app/cc?q=${JSON.stringify(body_res)}`
+    `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`
   );
 
   newBoards.forEach((element) => {
