@@ -245,38 +245,38 @@ export default async function handler(req, res) {
     }
   });
 
-  boardsDestination.forEach(async (bd, index) => {
-    const boardD = boards.filter(
-      (board) => String(board?.name).toUpperCase() == bd?.name
-    );
-    const mondayId = boardD[0]?.id;
-    let queryCreateCustomer = `mutation { create_item (board_id: ${Number(
-      mondayId
-    )}, item_name: \"${
-      body_res.DisplayName
-    }\", column_values: \"{\\\"text9\\\":\\\"${
-      customerOdoo?.x_studio_contact_name
-        ? customerOdoo?.x_studio_contact_name
-        : " "
-    }\\\"}\") { id }}`;
+  // boardsDestination.forEach(async (bd, index) => {
+  //   const boardD = boards.filter(
+  //     (board) => String(board?.name).toUpperCase() == bd?.name
+  //   );
+  //   const mondayId = boardD[0]?.id;
+  //   let queryCreateCustomer = `mutation { create_item (board_id: ${Number(
+  //     mondayId
+  //   )}, item_name: \"${
+  //     body_res.DisplayName
+  //   }\", column_values: \"{\\\"text9\\\":\\\"${
+  //     customerOdoo?.x_studio_contact_name
+  //       ? customerOdoo?.x_studio_contact_name
+  //       : " "
+  //   }\\\"}\") { id }}`;
 
-    const createCustomerMonday = await fetch("https://api.monday.com/v2", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
-        "API-Version": "2023-04",
-      },
-      body: JSON.stringify({
-        query: queryCreateCustomer,
-      }),
-    });
+  //   const createCustomerMonday = await fetch("https://api.monday.com/v2", {
+  //     method: "post",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization:
+  //         "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
+  //       "API-Version": "2023-04",
+  //     },
+  //     body: JSON.stringify({
+  //       query: queryCreateCustomer,
+  //     }),
+  //   });
 
-    const result = await createCustomerMonday.json();
+  //   const result = await createCustomerMonday.json();
 
-    console.log(index + 1, "SE EJECUTO", bd, "MONDAY ID", boardD[0], mondayId);
-  });
+  //   console.log(index + 1, "SE EJECUTO", bd, "MONDAY ID", boardD[0], mondayId);
+  // });
 
   //const example = boards.filter(brdt => String(brdt?.name).toUpperCase().includes("FORM 2553 | 8832"))
 
