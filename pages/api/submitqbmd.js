@@ -13,7 +13,7 @@ export default async function handler(req, res) {
 
   /** VARIABLES */
   const currentYear = new Date().getFullYear();
-  const customerOdoo = req.body;
+  const customerOdoo = {...req.body};
 
   // const body_res = {
   //   FullyQualifiedName: String(
