@@ -15,6 +15,31 @@ export default async function handler(req, res) {
   const currentYear = new Date().getFullYear();
   const customerOdoo = { ...req.body };
 
+  const bodyTransform = JSON.parse(
+    `{"FullyQualifiedName":"TEN WIZARDS LLC","PrimaryEmailAddr":{"Address":"info@305tax.com"},"DisplayName":"TEN WIZARDS LLC","Suffix":"","Title":"","MiddleName":"","Notes":"","FamilyName":"","PrimaryPhone":{"FreeFormNumber":"+1 305-280-8030"},"CompanyName":"TEN WIZARDS LLC","BillAddr":{"CountrySubDivisionCode":"","City":"","PostalCode":"","Line1":"","Country":""},"GivenName":""}`
+  );
+
+  const newBody = {
+    FullyQualifiedName: "TEN WIZARDS LLC",
+    PrimaryEmailAddr: { Address: "info@305tax.com" },
+    DisplayName: "TEN WIZARDS LLC",
+    Suffix: "",
+    Title: "",
+    MiddleName: "",
+    Notes: "",
+    FamilyName: "",
+    PrimaryPhone: { FreeFormNumber: "+1 305-280-8030" },
+    CompanyName: "TEN WIZARDS LLC",
+    BillAddr: {
+      CountrySubDivisionCode: "",
+      City: "",
+      PostalCode: "",
+      Line1: "",
+      Country: "",
+    },
+    GivenName: "",
+  };
+
   const body_res = {
     FullyQualifiedName: String(
       customerOdoo?.companyname
@@ -63,10 +88,10 @@ export default async function handler(req, res) {
   };
 
   const createQ = await axios.get(
-    `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`
+    `${process.env.QB_API}/cc?q=${JSON.stringify(newBody)}`
   );
-  
-  console.log("RESULTADO", createQ?.data);
+
+  console.log("RESULTADO", createQ);
 
   // const Boards = [
   //   {
