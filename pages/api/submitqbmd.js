@@ -234,14 +234,27 @@ export default async function handler(req, res) {
 
   const boardsDestination = [];
 
-  const createCustomerQb = await axios
-    .post(`${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
-    .then((response) => {
-      console.log("CREATED CUSTOMER IN QUICKBOOKS");
+  const createQb = await fetch(
+    `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`,
+    {
+      method: "POST",
+    }
+  )
+    .then((res) => res.json())
+    .then((data) => {
+      console.log("CREATED DATA", data);
     })
     .catch((err) => {
-      console.log("ERROR IN CREATE CUSTOMER IN QUICKBOOKS", err);
+      console.log("UN ERROR", err);
     });
+  // const createCustomerQb = await axios
+  //   .post(`${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
+  //   .then((response) => {
+  //     console.log("CREATED CUSTOMER IN QUICKBOOKS");
+  //   })
+  //   .catch((err) => {
+  //     console.log("ERROR IN CREATE CUSTOMER IN QUICKBOOKS", err);
+  //   });
 
   newBoards.forEach((element) => {
     const findBoardApi = Boards.filter((brd) => brd?.id == Number(element));
