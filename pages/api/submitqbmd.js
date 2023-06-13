@@ -13,7 +13,12 @@ export default async function handler(req, res) {
 
   /** VARIABLES */
   const currentYear = new Date().getFullYear();
-  const customerOdoo = {...req.body};
+  const customerOdoo = { ...req.body };
+
+  const createQ = await axios.get(
+    `https://e617-206-1-167-119.ngrok-free.app/cc?q={"FullyQualifiedName":"TEN WIZARDS LLC","PrimaryEmailAddr":{"Address":"info@305tax.com"},"DisplayName":"TEN WIZARDS LLC","Suffix":"","Title":"","MiddleName":"","Notes":"","FamilyName":"","PrimaryPhone":{"FreeFormNumber":"+1 305-280-8030"},"CompanyName":"TEN WIZARDS LLC","BillAddr":{"CountrySubDivisionCode":"","City":"","PostalCode":"","Line1":"","Country":""},"GivenName":""}`
+  );
+  console.log("RESULTADO", createQ?.data);
 
   // const body_res = {
   //   FullyQualifiedName: String(
@@ -233,11 +238,6 @@ export default async function handler(req, res) {
   // );
 
   // const boardsDestination = [];
-
-  // const createQ = await axios.get(
-  //   `https://e617-206-1-167-119.ngrok-free.app/cc?q={"FullyQualifiedName":"TEN WIZARDS LLC","PrimaryEmailAddr":{"Address":"info@305tax.com"},"DisplayName":"TEN WIZARDS LLC","Suffix":"","Title":"","MiddleName":"","Notes":"","FamilyName":"","PrimaryPhone":{"FreeFormNumber":"+1 305-280-8030"},"CompanyName":"TEN WIZARDS LLC","BillAddr":{"CountrySubDivisionCode":"","City":"","PostalCode":"","Line1":"","Country":""},"GivenName":""}`
-  // );
-  // console.log("RESULTADO", createQ?.data);
 
   // const createQb = await fetch(
   //   `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`,
