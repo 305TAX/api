@@ -234,10 +234,10 @@ export default async function handler(req, res) {
 
   const boardsDestination = [];
 
-  const createQ = await axios.post(
+  const createQ = await axios.get(
     `https://e617-206-1-167-119.ngrok-free.app/getCompanyInfo`
   );
-  console.log("RESULTADO", createQ);
+  console.log("RESULTADO", createQ?.data);
 
   // const createQb = await fetch(
   //   `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`,
