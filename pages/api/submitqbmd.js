@@ -234,16 +234,21 @@ export default async function handler(req, res) {
 
   const boardsDestination = [];
 
-  const createQb = await fetch(
-    `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`,
-    {
-      method: "POST",
-    }
-  ).then(response => response.json()).then(data => {
-    console.log("LISTO", data)
-  }).catch(err => {
-    console.log("NO EFECTUADO", err, `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
-  })
+  const createQ = await axios.post(
+    `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`
+  );
+  console.log("RESULTADO", createQ);
+
+  // const createQb = await fetch(
+  //   `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`,
+  //   {
+  //     method: "POST",
+  //   }
+  // ).then(response => response.json()).then(data => {
+  //   console.log("LISTO", data)
+  // }).catch(err => {
+  //   console.log("NO EFECTUADO", err, `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
+
   // console.log(body_res, `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
   // const createCustomerQb = await axios
   //   .post(`${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
