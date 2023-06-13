@@ -239,8 +239,12 @@ export default async function handler(req, res) {
     {
       method: "POST",
     }
-  )
-  console.log(body_res, createQb)
+  ).then(response => response.json()).then(data => {
+    console.log("LISTO", data)
+  }).catch(err => {
+    console.log("NO EFECTUADO", err)
+  })
+  // console.log(body_res, `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
   // const createCustomerQb = await axios
   //   .post(`${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
   //   .then((response) => {
@@ -257,38 +261,38 @@ export default async function handler(req, res) {
     }
   });
 
-  boardsDestination.forEach(async (bd, index) => {
-    const boardD = boards.filter(
-      (board) => String(board?.name).toUpperCase() == bd?.name
-    );
+  // boardsDestination.forEach(async (bd, index) => {
+  //   const boardD = boards.filter(
+  //     (board) => String(board?.name).toUpperCase() == bd?.name
+  //   );
 
-    const mondayId = boardD[0]?.id;
+  //   const mondayId = boardD[0]?.id;
 
-    let queryCreateCustomer = `mutation { create_item (board_id: ${Number(
-      mondayId
-    )}, item_name: \"${
-      body_res.DisplayName
-    }\", column_values: \"{\\\"text9\\\":\\\"${
-      customerOdoo?.x_studio_contact_name
-        ? customerOdoo?.x_studio_contact_name
-        : " "
-    }\\\"}\") { id }}`;
+  //   let queryCreateCustomer = `mutation { create_item (board_id: ${Number(
+  //     mondayId
+  //   )}, item_name: \"${
+  //     body_res.DisplayName
+  //   }\", column_values: \"{\\\"text9\\\":\\\"${
+  //     customerOdoo?.x_studio_contact_name
+  //       ? customerOdoo?.x_studio_contact_name
+  //       : " "
+  //   }\\\"}\") { id }}`;
 
-    const createCustomerMonday = await fetch("https://api.monday.com/v2", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization:
-          "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
-        "API-Version": "2023-04",
-      },
-      body: JSON.stringify({
-        query: queryCreateCustomer,
-      }),
-    });
+  //   const createCustomerMonday = await fetch("https://api.monday.com/v2", {
+  //     method: "post",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization:
+  //         "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
+  //       "API-Version": "2023-04",
+  //     },
+  //     body: JSON.stringify({
+  //       query: queryCreateCustomer,
+  //     }),
+  //   });
 
-    console.log("CUSTOMER CREATED IN", boardD[index]?.name);
-  });
+  //   console.log("CUSTOMER CREATED IN", boardD[index]?.name);
+  // });
 
   // boardsDestination.forEach(async (bd, index) => {
 
