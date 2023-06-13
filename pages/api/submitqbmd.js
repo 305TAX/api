@@ -199,7 +199,7 @@ export default async function handler(req, res) {
 
   /** TRANSFORM BOARDS */
 
-  const newBoards = customerOdoo?.boards
+  const newBoards = String(customerOdoo?.boards)
     .replace("x_boards", "")
     .replace("(", "")
     .replace(")", "")
