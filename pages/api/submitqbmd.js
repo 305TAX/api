@@ -13,32 +13,7 @@ export default async function handler(req, res) {
 
   /** VARIABLES */
   const currentYear = new Date().getFullYear();
-  const customerOdoo = { ...req.body };
-
-  const bodyTransform = JSON.parse(
-    `{"FullyQualifiedName":"TEN WIZARDS LLC","PrimaryEmailAddr":{"Address":"info@305tax.com"},"DisplayName":"TEN WIZARDS LLC","Suffix":"","Title":"","MiddleName":"","Notes":"","FamilyName":"","PrimaryPhone":{"FreeFormNumber":"+1 305-280-8030"},"CompanyName":"TEN WIZARDS LLC","BillAddr":{"CountrySubDivisionCode":"","City":"","PostalCode":"","Line1":"","Country":""},"GivenName":""}`
-  );
-
-  const newBody = {
-    FullyQualifiedName: "TEN WIZARDS LLC",
-    PrimaryEmailAddr: { Address: "info@305tax.com" },
-    DisplayName: "TEN WIZARDS LLC",
-    Suffix: "",
-    Title: "",
-    MiddleName: "",
-    Notes: "",
-    FamilyName: "",
-    PrimaryPhone: { FreeFormNumber: "+1 305-280-8030" },
-    CompanyName: "TEN WIZARDS LLC",
-    BillAddr: {
-      CountrySubDivisionCode: "",
-      City: "",
-      PostalCode: "",
-      Line1: "",
-      Country: "",
-    },
-    GivenName: "",
-  };
+  const customerOdoo = JSON.parse(JSON.stringify(req.body));
 
   const body_res = {
     FullyQualifiedName: String(
@@ -87,118 +62,112 @@ export default async function handler(req, res) {
     ),
   };
 
-  const createQ = await axios.get(
-    `${process.env.QB_API}/cc?q=${JSON.stringify(newBody)}`
-  );
-
-  console.log("RESULTADO", createQ);
-
-  // const Boards = [
-  //   {
-  //     name: "INCOME TAX",
-  //     id: 1,
-  //   },
-  //   {
-  //     name: "ANNUAL REPORT",
-  //     id: 2,
-  //   },
-  //   {
-  //     name: "FORM 5471",
-  //     id: 3,
-  //   },
-  //   {
-  //     name: "FINCEN 114",
-  //     id: 4,
-  //   },
-  //   {
-  //     name: "BOOKKEEPING",
-  //     id: 5,
-  //   },
-  //   {
-  //     name: "BOOKKEEPING (TAX)",
-  //     id: 6,
-  //   },
-  //   {
-  //     name: "PAYROLL",
-  //     id: 7,
-  //   },
-  //   {
-  //     name: "941",
-  //     id: 8,
-  //   },
-  //   {
-  //     name: "940 & W2",
-  //     id: 9,
-  //   },
-  //   {
-  //     name: "RT6",
-  //     id: 10,
-  //   },
-  //   {
-  //     name: "SALES TAX MONTHLY",
-  //     id: 11,
-  //   },
-  //   {
-  //     name: "SALES TAX QUARTERLY",
-  //     id: 12,
-  //   },
-  //   {
-  //     name: "SALES TAX ANNUAL",
-  //     id: 13,
-  //   },
-  //   {
-  //     name: "NEW BUSINESS",
-  //     id: 14,
-  //   },
-  //   {
-  //     name: "DR1",
-  //     id: 15,
-  //   },
-  //   {
-  //     name: "ITIN",
-  //     id: 16,
-  //   },
-  //   {
-  //     name: "EFTPS PAYROLL",
-  //     id: 17,
-  //   },
-  //   {
-  //     name: "EIN",
-  //     id: 18,
-  //   },
-  //   {
-  //     name: "EFTPS INCOME TAX",
-  //     id: 19,
-  //   },
-  //   {
-  //     name: "FORM 2553 8832",
-  //     id: 20,
-  //   },
-  //   {
-  //     name: "FIRPTA",
-  //     id: 21,
-  //   },
-  //   {
-  //     name: "DBPR R16",
-  //     id: 22,
-  //   },
-  //   {
-  //     name: "PENDIENTES",
-  //     id: 28,
-  //   },
-  //   {
-  //     name: "IRS DOR COMM",
-  //     id: 23,
-  //   },
-  //   {
-  //     name: "MARKETING",
-  //     id: 24,
-  //   },
-  //   {
-  //     name: "BE-12C",
-  //     id: 26,
-  //   },
-  // ];
+  const Boards = [
+    {
+      name: "INCOME TAX",
+      id: 1,
+    },
+    {
+      name: "ANNUAL REPORT",
+      id: 2,
+    },
+    {
+      name: "FORM 5471",
+      id: 3,
+    },
+    {
+      name: "FINCEN 114",
+      id: 4,
+    },
+    {
+      name: "BOOKKEEPING",
+      id: 5,
+    },
+    {
+      name: "BOOKKEEPING (TAX)",
+      id: 6,
+    },
+    {
+      name: "PAYROLL",
+      id: 7,
+    },
+    {
+      name: "941",
+      id: 8,
+    },
+    {
+      name: "940 & W2",
+      id: 9,
+    },
+    {
+      name: "RT6",
+      id: 10,
+    },
+    {
+      name: "SALES TAX MONTHLY",
+      id: 11,
+    },
+    {
+      name: "SALES TAX QUARTERLY",
+      id: 12,
+    },
+    {
+      name: "SALES TAX ANNUAL",
+      id: 13,
+    },
+    {
+      name: "NEW BUSINESS",
+      id: 14,
+    },
+    {
+      name: "DR1",
+      id: 15,
+    },
+    {
+      name: "ITIN",
+      id: 16,
+    },
+    {
+      name: "EFTPS PAYROLL",
+      id: 17,
+    },
+    {
+      name: "EIN",
+      id: 18,
+    },
+    {
+      name: "EFTPS INCOME TAX",
+      id: 19,
+    },
+    {
+      name: "FORM 2553 8832",
+      id: 20,
+    },
+    {
+      name: "FIRPTA",
+      id: 21,
+    },
+    {
+      name: "DBPR R16",
+      id: 22,
+    },
+    {
+      name: "PENDIENTES",
+      id: 28,
+    },
+    {
+      name: "IRS DOR COMM",
+      id: 23,
+    },
+    {
+      name: "MARKETING",
+      id: 24,
+    },
+    {
+      name: "BE-12C",
+      id: 26,
+    },
+  ];
 
   //const arrBody = JSON.parse(JSON.stringify(req.body));
   //const arrBody = JSON.parse(JSON.stringify(req.body));
@@ -212,118 +181,107 @@ export default async function handler(req, res) {
   //   const queryW = "query { workspaces (limit:40) { id name kind description }}";
 
   /** QUERY SHOW ALL WORKSPACES */
-  // const showAllWorkspaces =
-  //   "query {workspaces (limit:40) {id name kind description} }";
+  const showAllWorkspaces =
+    "query {workspaces (limit:40) {id name kind description} }";
 
-  // const resp = await fetch("https://api.monday.com/v2", {
-  //   method: "post",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization:
-  //       "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
-  //     "API-Version": "2023-04",
-  //   },
-  //   body: JSON.stringify({
-  //     query: showAllWorkspaces,
-  //   }),
-  // });
+  const resp = await fetch("https://api.monday.com/v2", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
+      "API-Version": "2023-04",
+    },
+    body: JSON.stringify({
+      query: showAllWorkspaces,
+    }),
+  });
 
-  // /** TRANSFORM BOARDS */
+  /** TRANSFORM BOARDS */
 
-  // const newBoards = String(customerOdoo?.boards)
-  //   .replace("x_boards", "")
-  //   .replace("(", "")
-  //   .replace(")", "")
-  //   .replace(" ", "")
-  //   .split(",")
-  //   .filter((el) => el != "");
+  const newBoards = String(customerOdoo?.boards)
+    .replace("x_boards", "")
+    .replace("(", "")
+    .replace(")", "")
+    .replace(" ", "")
+    .split(",")
+    .filter((el) => el != "");
 
-  // const { data } = await resp.json();
-  // const workspaces = data?.workspaces;
+  const { data } = await resp.json();
+  const workspaces = data?.workspaces;
 
-  // const result = workspaces.filter((elm) => String(elm.name).includes("2023"));
+  const result = workspaces.filter((elm) => String(elm.name).includes("2023"));
 
-  // const showAllBoards = `query {boards (workspace_ids:${result[0]?.id} limit:100) { id name } }`;
+  const showAllBoards = `query {boards (workspace_ids:${result[0]?.id} limit:100) { id name } }`;
 
-  // const resp2 = await fetch("https://api.monday.com/v2", {
-  //   method: "post",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //     Authorization:
-  //       "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
-  //     "API-Version": "2023-04",
-  //   },
-  //   body: JSON.stringify({
-  //     query: showAllBoards,
-  //   }),
-  // });
+  const resp2 = await fetch("https://api.monday.com/v2", {
+    method: "post",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization:
+        "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
+      "API-Version": "2023-04",
+    },
+    body: JSON.stringify({
+      query: showAllBoards,
+    }),
+  });
 
-  // const databoards = await resp2.json();
-  // const boards = databoards?.data?.boards.filter(
-  //   (elm) => !String(elm.name).includes("Subitems")
-  // );
+  const databoards = await resp2.json();
+  const boards = databoards?.data?.boards.filter(
+    (elm) => !String(elm.name).includes("Subitems")
+  );
 
-  // const boardsDestination = [];
+  const boardsDestination = [];
 
-  // const createQb = await fetch(
-  //   ,
-  //   {
-  //     method: "POST",
-  //   }
-  // ).then(response => response.json()).then(data => {
-  //   console.log("LISTO", data)
-  // }).catch(err => {
-  //   console.log("NO EFECTUADO", err, `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
+  const createCustomerQb = await axios
+    .post(`${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
+    .then((response) => {
+      console.log("CREATED CUSTOMER IN QUICKBOOKS");
+    })
+    .catch((err) => {
+      console.log("ERROR IN CREATE CUSTOMER IN QUICKBOOKS", err);
+    });
 
-  // console.log(body_res, `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
-  // const createCustomerQb = await axios
-  //   .post(`${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
-  //   .then((response) => {
-  //     console.log("CREATED CUSTOMER IN QUICKBOOKS");
-  //   })
-  //   .catch((err) => {
-  //     console.log("ERROR IN CREATE CUSTOMER IN QUICKBOOKS", err);
-  //   });
+  newBoards.forEach((element) => {
+    const findBoardApi = Boards.filter((brd) => brd?.id == Number(element));
+    if (findBoardApi) {
+      boardsDestination.push(findBoardApi[0]);
+    }
+  });
 
-  // newBoards.forEach((element) => {
-  //   const findBoardApi = Boards.filter((brd) => brd?.id == Number(element));
-  //   if (findBoardApi) {
-  //     boardsDestination.push(findBoardApi[0]);
-  //   }
-  // });
+  boardsDestination.forEach(async (bd, index) => {
+    const boardD = boards.filter(
+      (board) => String(board?.name).toUpperCase() == bd?.name
+    );
 
-  // boardsDestination.forEach(async (bd, index) => {
-  //   const boardD = boards.filter(
-  //     (board) => String(board?.name).toUpperCase() == bd?.name
-  //   );
+    const mondayId = boardD[0]?.id;
 
-  //   const mondayId = boardD[0]?.id;
+    let queryCreateCustomer = `mutation { create_item (board_id: ${Number(
+      mondayId
+    )}, item_name: \"${
+      body_res.DisplayName
+    }\", column_values: \"{\\\"text9\\\":\\\"${
+      customerOdoo?.x_studio_contact_name
+        ? customerOdoo?.x_studio_contact_name
+        : " "
+    }\\\"}\") { id }}`;
 
-  //   let queryCreateCustomer = `mutation { create_item (board_id: ${Number(
-  //     mondayId
-  //   )}, item_name: \"${
-  //     body_res.DisplayName
-  //   }\", column_values: \"{\\\"text9\\\":\\\"${
-  //     customerOdoo?.x_studio_contact_name
-  //       ? customerOdoo?.x_studio_contact_name
-  //       : " "
-  //   }\\\"}\") { id }}`;
+    const createCustomerMonday = await fetch("https://api.monday.com/v2", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
+        "API-Version": "2023-04",
+      },
+      body: JSON.stringify({
+        query: queryCreateCustomer,
+      }),
+    });
 
-  //   const createCustomerMonday = await fetch("https://api.monday.com/v2", {
-  //     method: "post",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       Authorization:
-  //         "eyJhbGciOiJIUzI1NiJ9.eyJ0aWQiOjI2MDIyMDgwMiwiYWFpIjoxMSwidWlkIjozNzE3MzE0OCwiaWFkIjoiMjAyMy0wNi0wMlQxNToxNjo0Ni4wMDBaIiwicGVyIjoibWU6d3JpdGUiLCJhY3RpZCI6MTQzOTMxNzMsInJnbiI6InVzZTEifQ.DKOZtmfsOv5OC6DDUwfMiI8fGdx3VOkZks3OmVHINRA",
-  //       "API-Version": "2023-04",
-  //     },
-  //     body: JSON.stringify({
-  //       query: queryCreateCustomer,
-  //     }),
-  //   });
-
-  //   console.log("CUSTOMER CREATED IN", boardD[index]?.name);
-  // });
+    console.log("CUSTOMER CREATED IN", boardD[index]?.name);
+  });
 
   // boardsDestination.forEach(async (bd, index) => {
 
@@ -338,11 +296,9 @@ export default async function handler(req, res) {
 
   //const fd = mamit.filter((element) => String(element?.name).includes("2023"));
 
-  console.log(customerOdoo);
   return res.json({
     currentYear: currentYear,
-    result: customerOdoo,
-    // x: boardsDestination,
+    x: boardsDestination,
     // workspaces: result[0],
     // boards: boardsDestination.length,
     // body: body_res,
