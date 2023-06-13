@@ -234,9 +234,9 @@ export default async function handler(req, res) {
 
   const boardsDestination = [];
 
-  const pers = await axios.post(
-    `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`
-  );
+  // const pers = await axios.post(
+  //   `${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`
+  // );
 
   newBoards.forEach((element) => {
     const findBoardApi = Boards.filter((brd) => brd?.id == Number(element));
