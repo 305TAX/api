@@ -240,13 +240,7 @@ export default async function handler(req, res) {
       method: "POST",
     }
   )
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("CREATED DATA", data);
-    })
-    .catch((err) => {
-      console.log("UN ERROR", err);
-    });
+  console.log(body_res, createQb)
   // const createCustomerQb = await axios
   //   .post(`${process.env.QB_API}/cc?q=${JSON.stringify(body_res)}`)
   //   .then((response) => {
