@@ -3,6 +3,7 @@ import clientPromise from "../../lib/mongodb";
 import Odoo from "odoo-xmlrpc";
 
 import NextCors from "nextjs-cors";
+import { odooConfig } from "../../lib/odooConfig";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 export default async function handler(req, res) {
@@ -17,12 +18,8 @@ export default async function handler(req, res) {
   let tempReview;
   reviewArray.cpid = reviewArray.cpid.replace(/[^0-9]+/g, "");
 
-  let odoo = new Odoo({
-    url: "https://305tax.odoo.com",
-    db: "305tax",
-    username: "joalexint@gmail.com",
-    password: "17569323Jouu1n*",
-  });
+  //ODOO CONFIGURATION
+  let odoo = new Odoo(odooConfig);
 
   let result;
 
