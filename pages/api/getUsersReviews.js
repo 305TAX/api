@@ -17,6 +17,6 @@ export default async function handler(req, res) {
 
     return res.json(getusers);
   } catch (error) {
-    console.error(e);
+    console.error(error);
   }
 }

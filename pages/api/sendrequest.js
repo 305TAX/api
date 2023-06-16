@@ -3,6 +3,7 @@
 import Odoo from "odoo-xmlrpc";
 
 import NextCors from "nextjs-cors";
+import { odooConfig } from "../../lib/odooConfig";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
@@ -17,12 +18,8 @@ export default async function handler(req, res) {
   const responseQuery = req.query;
   responseQuery.id = Number(String(responseQuery.id).replace(/,/g, ""));
 
-  let odoo = new Odoo({
-    url: "https://305tax.odoo.com",
-    db: "305tax",
-    username: "joalexint@gmail.com",
-    password: "17569323Jouu1n*",
-  });
+  //ODOO CONFIGURATION
+  let odoo = new Odoo(odooConfig);
 
   const generateRandomString = (num) => {
     const characters =
