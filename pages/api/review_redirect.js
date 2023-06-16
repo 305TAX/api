@@ -95,7 +95,7 @@ export default async function handler(req, res) {
               return res.status(400).json({ response: false, reason: "ERR 2" });
 
             let redirectURL =
-              "https://305tax.odoo.com/rate/" + reviewArray.a + "/5";
+              "https://service.305tax.com/rate/" + reviewArray.a + "/5";
 
             if (tempReview.rating_avg_text != "none")
               return res.redirect(redirectURL);
