@@ -16,9 +16,43 @@ export default async function handler(req, res) {
   //ODOO CONFIGURATION
   let odoo = new Odoo(odooConfig);
 
-  return res.json({
-    result: "Hello world",
+  const q = JSON.parse(req.body);
+
+  odoo.connect(function (err) {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({
+        error: err,
+      });
+    }
+
+    let inParams = [];
+
+    inParams.push([["id", "=", Number(q.user)]]);
+    inParams.push(["name", "email"]); //fields
+
+    let params = [];
+    params.push(inParams);
+
+    odoo.execute_kw(
+      "res.partner",
+      "search_read",
+      params,
+      function (err, value) {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({
+            error: err,
+          });
+        }
+
+        return res.json({
+          result: value,
+        });
+      }
+    );
   });
+
   //QUERY
   //   const p = req.query;
 

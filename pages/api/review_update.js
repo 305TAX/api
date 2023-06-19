@@ -13,48 +13,72 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
 
-  const responseQuery = JSON.parse(req.body);
-  const responseId = req.query;
-  //responseQuery.id = Number(String(responseQuery.id).replace(/,/g, ""));
-
-  const generateRandomString = (num) => {
-    const characters =
-      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-    let result1 = " ";
-
-    const charactersLength = characters.length;
-
-    for (let i = 0; i < num; i++) {
-      result1 += characters.charAt(
-        Math.floor(Math.random() * charactersLength)
-      );
-    }
-
-    return result1;
-  };
-
-  const dateServer = new Date();
+  const q = JSON.parse(req.body);
 
   try {
     const client = await clientPromise;
     const db = client.db("users_reviews");
-    const response = await db
-      .collection("users")
-      .updateOne(
-        { web_access_token: responseId.a },
-        {
-          $set: {
-            web_feedback: responseQuery.feedback,
-            web_points: responseQuery,
-          },
-        }
-      );
 
-    return res.send(true);
+    const response = await db.collection("users").insertOne(q);
+
+    if (response) {
+      return res.json({
+        result: true,
+      });
+    } else {
+      return res.json({
+        result: false,
+        error: "001",
+      });
+    }
   } catch (error) {
-    return res.send(false);
+    return res.json({
+      result: false,
+      error: error,
+    });
   }
+
+  // const responseQuery = JSON.parse(req.body);
+  // const responseId = req.query;
+
+  // const generateRandomString = (num) => {
+  //   const characters =
+  //     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+  //   let result1 = " ";
+
+  //   const charactersLength = characters.length;
+
+  //   for (let i = 0; i < num; i++) {
+  //     result1 += characters.charAt(
+  //       Math.floor(Math.random() * charactersLength)
+  //     );
+  //   }
+
+  //   return result1;
+  // };
+
+  // const dateServer = new Date();
+
+  // try {
+  //
+  //
+  //   const response = await db
+  //     .collection("users")
+  //     .updateOne(
+  //       { web_access_token: responseId.a },
+  //       {
+  //         $set: {
+  //           web_feedback: responseQuery.feedback,
+  //           web_points: responseQuery,
+  //         },
+  //       }
+  //     );
+
+  //   return res.send(true);
+  // } catch (error) {
+  //   return res.send(false);
+  // }
 
   // odoo.connect((err) => {
   //   if (err) {
