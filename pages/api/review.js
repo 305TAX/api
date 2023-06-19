@@ -46,14 +46,14 @@ export default async function handler(req, res) {
           });
         }
 
-        if (
-          String(value?.email) != String(q.email) ||
-          Number(value?.id) != Number(q.user)
-        ) {
-          return res.json({
-            result: false,
-          });
-        }
+        // if (
+        //   String(value?.email) != String(q.email) ||
+        //   Number(value?.id) != Number(q.user)
+        // ) {
+        //   return res.json({
+        //     result: false,
+        //   });
+        // }
 
         return res.json({
           result: value,
