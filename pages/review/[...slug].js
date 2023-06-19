@@ -98,9 +98,9 @@ const Review = ({ userReview }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.result == false) {
-          return router.push("https://www.305tax.com");
-        }
+        // if (data.result == false) {
+        //   return router.push("https://www.305tax.com");
+        // }
 
         setUserCurrent(data.result[0]);
         console.log(data.result[0]);
