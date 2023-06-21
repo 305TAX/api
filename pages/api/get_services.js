@@ -51,6 +51,8 @@ export default async function handler(req, res) {
       "x_studio_associated_page",
 
       "x_studio_description",
+      "x_studio_description_to_spanish",
+
     ]);
 
     let params = [];
