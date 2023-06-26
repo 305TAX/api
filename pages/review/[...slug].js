@@ -78,8 +78,8 @@ const Review = ({ userReview }) => {
       en: "Ethics | Integrity",
     },
     {
-      es: "Confianza en el Trabajo Ejecutado | Competencia Profesional",
-      en: "Confidence in the Work Performed | Professional Competence",
+      es: "Competencia Profesional | Confianza en el Trabajo Ejecutado",
+      en: "Professional Competence | Confidence in the Work Performed",
     },
     {
       es: "Confidencialidad | Seguridad de la Información",
