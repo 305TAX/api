@@ -137,16 +137,19 @@ const Review = ({ userReview }) => {
           <div
             className={classNames(
               thankState == false ? "block" : "hidden",
-              "max-w-4xl mx-auto space-y-8 w-full py-4 px-8"
+              "max-w-4xl h-screen mx-auto space-y-8 w-full py-2 px-8"
             )}
           >
-            <h2 className="text-4xl font-bold text-center">
-              {currentLang == "es" ? (
-                <>¡Porque su opinión es importante!</>
-              ) : (
-                <>Why your opinion matters!</>
-              )}
-            </h2>
+            <div className="flex justify-center items-center">
+              <Image
+                src={`/op_es.svg`}
+                alt=""
+                className="w-4 h-4 lg:w-40 lg:h-40"
+                width={0}
+                height={0}
+                sizes="100vw"
+              />
+            </div>
             <Stepper
               activeStep={activeStep}
               isLastStep={(value) => setIsLastStep(value)}
@@ -186,7 +189,7 @@ const Review = ({ userReview }) => {
                   "border space-y-4 rounded-sm border-gray-400 px-6 py-4"
                 )}
               >
-                <p className="text-lg text-justify">
+                <p className="text-base text-justify">
                   Sus comentarios nos ayudarán a seguir mejorando nuestros
                   servicios y ayudaría a otros a tomar una decisión informada al
                   elegir a sus asesores fiscales. Califique cada una de las
@@ -317,7 +320,9 @@ const Review = ({ userReview }) => {
                 <p className="text-lg text-justify">
                   Sus comentarios nos ayudarán a seguir mejorando nuestros
                   servicios y ayudaría a otros a tomar una decisión informada al
-                  elegir a sus asesores fiscales.
+                  elegir a sus asesores fiscales. Haz click en el siguiente
+                  botón, una vez que hayas dejado tu review, regresa a esta
+                  pantalla para finalizar el proceso.
                 </p>
                 <hr />
 
@@ -377,7 +382,7 @@ const Review = ({ userReview }) => {
                 </div>
               </div>
             </div>
-            <div className="mt-16 flex items-center justify-between">
+            <div className=" pb-6 flex items-center justify-between">
               <Button
                 className="bg-[#110975] rounded-sm"
                 onClick={handlePrev}
@@ -385,8 +390,8 @@ const Review = ({ userReview }) => {
               >
                 Atrás
               </Button>
-              <div className="space-y-4">
-                <div className="flex justify-center items-center">
+              <div className="flex justify-start items-center space-x-3">
+                 <div className="flex justify-center items-center">
                   <Image
                     src="/logopng.png"
                     alt=""
@@ -397,8 +402,8 @@ const Review = ({ userReview }) => {
                     height={0}
                     sizes="100vw"
                   />
-                </div>
-                <p className="m-0 p-0 text-center text-sm">
+                </div> 
+                <p className="m-0 p-0 text-justify text-sm">
                   &copy; 2023 305TAX. All rights reserved.
                   <br />
                   <a
@@ -460,9 +465,9 @@ const Review = ({ userReview }) => {
               <div className="space-y-8 mb-12">
                 <div className="flex mb-6 justify-center items-center">
                   <Image
-                    src="/logopng.png"
+                    src="/tky.png"
                     alt=""
-                    className="w-52 animate-fade animate-once animate-duration-1000 animate-delay-1000 animate-ease-out"
+                    className="w-72 animate-fade animate-once animate-duration-1000 animate-delay-1000 animate-ease-out"
                     priority={true}
                     width={0}
                     height={0}
@@ -493,9 +498,8 @@ const Review = ({ userReview }) => {
                   </span>
                   . Le damos las gracias por elegir a 305TAX como sus asesores
                   tributarios y por permitirnos ayudarle con sus necesidades
-                  fiscales. Esperamos que haya quedado satisfecho con el nivel
-                  de servicio que le hemos proporcionado y que su experiencia
-                  haya sido positiva.
+                  fiscales. Su opinión hecha en Google la mostraremos en nuestra
+                  página principal en breves.
                 </p>
               </div>
               <div className="space-y-4">
@@ -613,8 +617,23 @@ const Review = ({ userReview }) => {
                     </svg>
                   </a>
                 </div>
-                <footer className="text-center text-sm">
-                  &copy; 2023 305TAX. All Rights Reserved.
+                <footer className="text-center flex justify-center items-center space-x-3.5 text-sm">
+                  <div>
+                    <span className="block">
+                      &copy; 2023 305TAX. All Rights Reserved.
+                    </span>
+                    <div className="flex justify-center items-center pt-3">
+                      <Image
+                        src="/logopng.png"
+                        alt=""
+                        className="w-10 animate-fade animate-once animate-duration-1000 animate-delay-1000 animate-ease-out"
+                        priority={true}
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                      />
+                    </div>
+                  </div>
                 </footer>
               </div>
             </div>
