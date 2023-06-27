@@ -25,10 +25,18 @@ const Review = ({ userReview }) => {
   const [userCurrent, setUserCurrent] = useState({});
   const [thankState, setThankState] = useState(false);
 
+  const [langPrefered, setLangPrefered] = useState(
+    String(userReview?.lang).split("_")[0]
+  );
+
   const [gReview, setGReview] = useState(true);
 
   const brow = () => {
-    setCurrentLang(String(navigator.language).includes("es") ? "es" : "en");
+    if (userReview?.lang) {
+      setCurrentLang(String(userReview?.lang).split("_")[0]);
+    } else {
+      setCurrentLang(String(navigator.language).includes("es") ? "es" : "en");
+    }
   };
 
   const [isLoading, setIsLoading] = useState(true);
@@ -127,6 +135,20 @@ const Review = ({ userReview }) => {
     );
   }
 
+  const handleGoogleReview = () => {
+    const windowFeatures = "left=100,top=100,width=720,height=480";
+
+    const googleWindow = window.open(
+      "https://search.google.com/local/writereview?placeid=ChIJ-d6ten652YgRZT7aBTsXuCs",
+      "mozillaWindow",
+      windowFeatures
+    );
+
+    setTimeout(() => {
+      setGReview(false);
+    }, 10000);
+  };
+
   return (
     <>
       <Head>
@@ -141,14 +163,29 @@ const Review = ({ userReview }) => {
             )}
           >
             <div className="flex justify-center items-center">
-              <Image
-                src={`/op_es.svg`}
-                alt=""
-                className="w-4 h-4 lg:w-40 lg:h-40"
-                width={0}
-                height={0}
-                sizes="100vw"
-              />
+              {currentLang == "es" ? (
+                <>
+                  <Image
+                    src={`/op_es.svg`}
+                    alt=""
+                    className="w-4 h-4 lg:w-40 lg:h-40"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                  />
+                </>
+              ) : (
+                <>
+                  <Image
+                    src={`/op_en.svg`}
+                    alt=""
+                    className="w-4 h-4 lg:w-40 lg:h-40"
+                    width={0}
+                    height={0}
+                    sizes="100vw"
+                  />
+                </>
+              )}
             </div>
             <Stepper
               activeStep={activeStep}
@@ -190,20 +227,43 @@ const Review = ({ userReview }) => {
                 )}
               >
                 <p className="text-base text-justify">
-                  Sus comentarios nos ayudarán a seguir mejorando nuestros
-                  servicios y ayudaría a otros a tomar una decisión informada al
-                  elegir a sus asesores fiscales. Califique cada una de las
-                  características de nuestro servicio, basándose en la siguiente
-                  escala:
+                  {currentLang == "es" ? (
+                    <>
+                      Sus comentarios nos ayudarán a seguir mejorando nuestros
+                      servicios y ayudaría a otros a tomar una decisión
+                      informada al elegir a sus asesores fiscales. Califique
+                      cada una de las características de nuestro servicio,
+                      basándose en la siguiente escala:
+                    </>
+                  ) : (
+                    <>
+                      Your comments will help us to continue to improve our
+                      services services and help others make an informed
+                      decision when choosing their informed decision when
+                      choosing their tax advisors. Please rate each of the
+                      features of our service, based on the following scale:
+                    </>
+                  )}
                 </p>
                 <ul className="flex justify-between items-center pr-2">
                   <li>
                     <Tooltip
                       placement="bottom"
-                      content={`Ejecutado muy por debajo de lo esperado`}
+                      content={`${
+                        currentLang == "es"
+                          ? "Ejecutado muy por debajo de lo esperado"
+                          : "Performed well below expected standards"
+                      }`}
                     >
                       <div className="space-x-2">
-                        <span className="">Insatisfactorio 1</span>
+                        <span className="">
+                          {currentLang == "es" ? (
+                            <>Insatisfactorio</>
+                          ) : (
+                            <>Unsatisfactory</>
+                          )}{" "}
+                          1
+                        </span>
                         <span className="text-[#FBBC04] text-lg">&#9733;</span>
                       </div>
                     </Tooltip>
@@ -211,10 +271,16 @@ const Review = ({ userReview }) => {
                   <li>
                     <Tooltip
                       placement="bottom"
-                      content={`Ejecutado ligeramente por debajo de lo esperado`}
+                      content={`${
+                        currentLang == "es"
+                          ? "Ejecutado ligeramente por debajo de lo esperado"
+                          : "Performed slightly below expected standards"
+                      }`}
                     >
                       <div className="space-x-2">
-                        <span className="">Regular 2</span>
+                        <span className="">
+                          {currentLang == "es" ? <>Regular</> : <>Fair</>} 2
+                        </span>
                         <span className="text-[#FBBC04] text-lg">&#9733;</span>
                       </div>
                     </Tooltip>
@@ -222,10 +288,21 @@ const Review = ({ userReview }) => {
                   <li>
                     <Tooltip
                       placement="bottom"
-                      content={`Ejecutado adecuadamente`}
+                      content={`${
+                        currentLang == "es"
+                          ? "Ejecutado adecuadamente"
+                          : "Performed adequately"
+                      }`}
                     >
                       <div className="space-x-2">
-                        <span className="">Aceptable 3</span>
+                        <span className="">
+                          {currentLang == "es" ? (
+                            <>Aceptable</>
+                          ) : (
+                            <>Acceptable</>
+                          )}{" "}
+                          3
+                        </span>
                         <span className="text-[#FBBC04] text-lg">&#9733;</span>
                       </div>
                     </Tooltip>
@@ -233,10 +310,21 @@ const Review = ({ userReview }) => {
                   <li>
                     <Tooltip
                       placement="bottom"
-                      content={`Ejecutado competentemente`}
+                      content={`${
+                        currentLang == "es"
+                          ? "Ejecutado competentemente"
+                          : "Performed competently"
+                      }`}
                     >
                       <div className="space-x-2">
-                        <span className="">Muy bueno 4</span>
+                        <span className="">
+                          {currentLang == "es" ? (
+                            <>Muy bueno</>
+                          ) : (
+                            <>Very Good</>
+                          )}{" "}
+                          4
+                        </span>
                         <span className="text-[#FBBC04] text-lg">&#9733;</span>
                       </div>
                     </Tooltip>
@@ -244,10 +332,21 @@ const Review = ({ userReview }) => {
                   <li>
                     <Tooltip
                       placement="bottom"
-                      content={`Ejecutado al más alto nivel`}
+                      content={`${
+                        currentLang == "es"
+                          ? "Ejecutado al más alto nivel"
+                          : "Performed at the highest level"
+                      }`}
                     >
                       <div className="space-x-2">
-                        <span className="">Excepcional 5</span>
+                        <span className="">
+                          {currentLang == "es" ? (
+                            <>Excepcional</>
+                          ) : (
+                            <>Exceptional</>
+                          )}{" "}
+                          5
+                        </span>
                         <span className="text-[#FBBC04] text-lg">&#9733;</span>
                       </div>
                     </Tooltip>
@@ -275,15 +374,25 @@ const Review = ({ userReview }) => {
                                 key={`t${index}-${index2}`}
                                 content={`${
                                   index2 === 0
-                                    ? "Insatisfactorio "
+                                    ? currentLang == "es"
+                                      ? "Insatisfactorio "
+                                      : "Unsatisfactory"
                                     : index2 === 1
-                                    ? "Regular"
+                                    ? currentLang == "es"
+                                      ? "Regular"
+                                      : "Fair"
                                     : index2 === 2
-                                    ? "Aceptable"
+                                    ? currentLang == "es"
+                                      ? "Aceptable"
+                                      : "Acceptable"
                                     : index2 === 3
-                                    ? "Muy Bueno"
+                                    ? currentLang == "es"
+                                      ? "Muy Bueno"
+                                      : "Very Good"
                                     : index2 === 4
-                                    ? "Excepcional"
+                                    ? currentLang == "es"
+                                      ? "Excepcional"
+                                      : "Exceptional"
                                     : "Undefined"
                                 }`}
                               >
@@ -318,28 +427,30 @@ const Review = ({ userReview }) => {
                 )}
               >
                 <p className="text-lg text-justify">
-                  Sus comentarios nos ayudarán a seguir mejorando nuestros
-                  servicios y ayudaría a otros a tomar una decisión informada al
-                  elegir a sus asesores fiscales. Haz click en el siguiente
-                  botón, una vez que hayas dejado tu review, regresa a esta
-                  pantalla para finalizar el proceso.
+                  {currentLang == "es" ? (
+                    <>
+                      Sus comentarios nos ayudarán a seguir mejorando nuestros
+                      servicios y ayudaría a otros a tomar una decisión
+                      informada al elegir a sus asesores fiscales. Haz click en
+                      el siguiente botón, una vez que hayas dejado tu review,
+                      regresa a esta pantalla para finalizar el proceso.
+                    </>
+                  ) : (
+                    <>
+                      Your feedback will help us continue to improve our
+                      services and help others make an informed decision when
+                      choosing their tax advisors. Click on the button below,
+                      once you have left your review, return to this screen to
+                      finish the process.
+                    </>
+                  )}
                 </p>
                 <hr />
 
                 <div className="flex justify-center items-center">
                   <button
                     className="bg-[#110975] flex justify-start space-x-4 items-center text-white py-4 px-6 rounded-sm"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const googleWindow = window.open(
-                        "https://search.google.com/local/writereview?placeid=ChIJ-d6ten652YgRZT7aBTsXuCs",
-                        "_blank"
-                      );
-
-                      setTimeout(() => {
-                        setGReview(false);
-                      }, 10000);
-                    }}
+                    onClick={handleGoogleReview}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -376,7 +487,11 @@ const Review = ({ userReview }) => {
                       </g>
                     </svg>
                     <span className="block font-semibold">
-                      Escribir review en Google
+                      {currentLang == "es" ? (
+                        <>Escribir Reseña en Google</>
+                      ) : (
+                        <>Write Review on Google</>
+                      )}
                     </span>
                   </button>
                 </div>
@@ -388,10 +503,10 @@ const Review = ({ userReview }) => {
                 onClick={handlePrev}
                 disabled={isFirstStep}
               >
-                Atrás
+                <>{currentLang == "es" ? <>Atrás</> : <>Back</>}</>
               </Button>
               <div className="flex justify-start items-center space-x-3">
-                 <div className="flex justify-center items-center">
+                <div className="flex justify-center items-center">
                   <Image
                     src="/logopng.png"
                     alt=""
@@ -402,8 +517,8 @@ const Review = ({ userReview }) => {
                     height={0}
                     sizes="100vw"
                   />
-                </div> 
-                <p className="m-0 p-0 text-justify text-sm">
+                </div>
+                <p className="m-0 p-0 text-center text-sm">
                   &copy; 2023 305TAX. All rights reserved.
                   <br />
                   <a
@@ -449,7 +564,11 @@ const Review = ({ userReview }) => {
                     : isLastStep
                 }
               >
-                {isLastStep ? <>Siguiente</> : <>Siguiente</>}
+                {isLastStep ? (
+                  <>{currentLang == "es" ? <>Siguiente</> : <>Next</>}</>
+                ) : (
+                  <>{currentLang == "es" ? <>Siguiente</> : <>Next</>}</>
+                )}
               </Button>
             </div>
           </div>
@@ -475,7 +594,7 @@ const Review = ({ userReview }) => {
                   />
                 </div>
                 <h2 className="font-bold mt-4 text-5xl text-black text-center animate-fade-up animate-once animate-duration-1000 animate-delay-2000 animate-ease-out">
-                  ¡Gracias,{" "}
+                  ¡{currentLang == "es" ? <>Gracias</> : <>Thank you</>},{" "}
                   {String(userCurrent.name)
                     .toLowerCase()
                     .split(" ")[0]
@@ -488,7 +607,12 @@ const Review = ({ userReview }) => {
                   !
                 </h2>
                 <p className="text-lg max-w-4xl text-center mx-auto">
-                  Nos has dado una puntuación promedio de:{" "}
+                  {currentLang == "es" ? (
+                    <>Nos has dado una puntuación promedio de</>
+                  ) : (
+                    <>You have given us an average rating of</>
+                  )}
+                  :{" "}
                   <span className="font-bold">
                     {" "}
                     {(
@@ -496,10 +620,22 @@ const Review = ({ userReview }) => {
                     ).toFixed(1)}{" "}
                     <span className="text-[#FBBC04] text-lg">&#9733;</span>
                   </span>
-                  . Le damos las gracias por elegir a 305TAX como sus asesores
-                  tributarios y por permitirnos ayudarle con sus necesidades
-                  fiscales. Su opinión hecha en Google la mostraremos en nuestra
-                  página principal en breves.
+                  .{" "}
+                  {currentLang == "es" ? (
+                    <>
+                      Le damos las gracias por elegir a 305TAX como sus asesores
+                      tributarios y por permitirnos ayudarle con sus necesidades
+                      fiscales. Su opinión hecha en Google la mostraremos en
+                      nuestra página principal en breves.
+                    </>
+                  ) : (
+                    <>
+                      We thank you for choosing 305TAX as your tax advisors and
+                      for allowing us to help you with your tax needs. Your
+                      feedback made on Google will be displayed on our home page
+                      shortly.
+                    </>
+                  )}
                 </p>
               </div>
               <div className="space-y-4">
@@ -650,6 +786,7 @@ export const getServerSideProps = async ({ query }) => {
   const userReview = {
     user: query.slug[0],
     email: query.e,
+    lang: query.l,
   };
   // const repo = await res.json()
   return { props: { userReview } };
