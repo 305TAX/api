@@ -55,7 +55,7 @@ export default async function handler(req, res) {
     },
   ];
 
-  fetch(
+  await fetch(
     `https://maps.googleapis.com/maps/api/place/details/json?place_id=ChIJ-d6ten652YgRZT7aBTsXuCs&reviews_no_translations=false&language=es&fields=user_ratings_total,reviews,rating&reviews_sort=newest&rating=4&key=AIzaSyAB9iUjmC4HSRWInSEkqbaYR-0ldgOz2YQ`,
     {
       method: "GET",
