@@ -255,14 +255,14 @@ const Review = ({ userReview }) => {
                   {topics?.map((topic, index) => (
                     <>
                       <div className="space-y-4">
-                        <span className="block text-base font-bold">
+                        <span className="block text-base text-center font-bold">
                           {currentLang == "es" ? (
                             <>{topic.es}</>
                           ) : (
                             <>{topic.en}</>
                           )}
                         </span>
-                        <div className="flex items-center justify-between">
+                        <div className="flex items-center justify-center space-x-6">
                           {[...Array(5)].map((_, index2) => {
                             const starValue = index2 + 1;
                             const isFilled = starValue <= rating[`p${index}`];
@@ -457,8 +457,8 @@ const Review = ({ userReview }) => {
             )}
           >
             <div className="max-w-7xl w-full mx-auto">
-              <div className="space-y-6 mb-12">
-                <div className="flex justify-center items-center">
+              <div className="space-y-8 mb-12">
+                <div className="flex mb-6 justify-center items-center">
                   <Image
                     src="/logopng.png"
                     alt=""
@@ -469,7 +469,7 @@ const Review = ({ userReview }) => {
                     sizes="100vw"
                   />
                 </div>
-                <h2 className="font-bold text-5xl text-black text-center animate-fade-up animate-once animate-duration-1000 animate-delay-2000 animate-ease-out">
+                <h2 className="font-bold mt-4 text-5xl text-black text-center animate-fade-up animate-once animate-duration-1000 animate-delay-2000 animate-ease-out">
                   ¡Gracias,{" "}
                   {String(userCurrent.name)
                     .toLowerCase()
