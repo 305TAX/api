@@ -48,6 +48,8 @@ const Review = ({ userReview }) => {
   const handleNext = () => !isLastStep && setActiveStep((cur) => cur + 1);
   const handlePrev = () => !isFirstStep && setActiveStep((cur) => cur - 1);
 
+  const [isReviewSend, setIsReviewSend] = useState(false);
+
   const [rating, setRating] = useState({
     p0: 0,
     p1: 0,
@@ -73,6 +75,7 @@ const Review = ({ userReview }) => {
     });
 
     const response = await rfetch.json();
+    setIsReviewSend(true);
     return response;
   };
 
@@ -168,7 +171,7 @@ const Review = ({ userReview }) => {
                   <Image
                     src={`/op_es.svg`}
                     alt=""
-                    className="w-4 h-4 lg:w-40 lg:h-40"
+                    className="w-32 h-32 lg:w-40 lg:h-40"
                     width={0}
                     height={0}
                     sizes="100vw"
@@ -245,7 +248,7 @@ const Review = ({ userReview }) => {
                     </>
                   )}
                 </p>
-                <ul className="flex justify-between items-center pr-2">
+                <ul className="grid grid-cols-1 sm:flex justify-between items-center sm:pr-2">
                   <li>
                     <Tooltip
                       placement="bottom"
@@ -255,16 +258,20 @@ const Review = ({ userReview }) => {
                           : "Performed well below expected standards"
                       }`}
                     >
-                      <div className="space-x-2">
-                        <span className="">
+                      <div className="space-x-2 flex justify-between items-center">
+                        <span className="block">
                           {currentLang == "es" ? (
                             <>Insatisfactorio</>
                           ) : (
                             <>Unsatisfactory</>
-                          )}{" "}
-                          1
+                          )}
                         </span>
-                        <span className="text-[#FBBC04] text-lg">&#9733;</span>
+                        <div className="flex justify-start items-center space-x-1">
+                          <span className="block">1</span>
+                          <span className="text-[#FBBC04] block text-lg">
+                            &#9733;
+                          </span>
+                        </div>
                       </div>
                     </Tooltip>
                   </li>
@@ -277,11 +284,16 @@ const Review = ({ userReview }) => {
                           : "Performed slightly below expected standards"
                       }`}
                     >
-                      <div className="space-x-2">
-                        <span className="">
-                          {currentLang == "es" ? <>Regular</> : <>Fair</>} 2
+                      <div className="space-x-2 flex justify-between items-center">
+                        <span className="block">
+                          {currentLang == "es" ? <>Regular</> : <>Fair</>}
                         </span>
-                        <span className="text-[#FBBC04] text-lg">&#9733;</span>
+                        <div className="flex justify-start items-center space-x-1">
+                          <span className="block">2</span>
+                          <span className="text-[#FBBC04] block text-lg">
+                            &#9733;
+                          </span>
+                        </div>
                       </div>
                     </Tooltip>
                   </li>
@@ -294,16 +306,20 @@ const Review = ({ userReview }) => {
                           : "Performed adequately"
                       }`}
                     >
-                      <div className="space-x-2">
-                        <span className="">
+                      <div className="space-x-2 flex justify-between items-center">
+                        <span className="block">
                           {currentLang == "es" ? (
                             <>Aceptable</>
                           ) : (
                             <>Acceptable</>
-                          )}{" "}
-                          3
+                          )}
                         </span>
-                        <span className="text-[#FBBC04] text-lg">&#9733;</span>
+                        <div className="flex justify-start items-center space-x-1">
+                          <span className="block">3</span>
+                          <span className="text-[#FBBC04] block text-lg">
+                            &#9733;
+                          </span>
+                        </div>
                       </div>
                     </Tooltip>
                   </li>
@@ -316,16 +332,20 @@ const Review = ({ userReview }) => {
                           : "Performed competently"
                       }`}
                     >
-                      <div className="space-x-2">
-                        <span className="">
+                      <div className="space-x-2 flex justify-between items-center">
+                        <span className="block">
                           {currentLang == "es" ? (
                             <>Muy bueno</>
                           ) : (
                             <>Very Good</>
-                          )}{" "}
-                          4
+                          )}
                         </span>
-                        <span className="text-[#FBBC04] text-lg">&#9733;</span>
+                        <div className="flex justify-start items-center space-x-1">
+                          <span className="block">4</span>
+                          <span className="text-[#FBBC04] block text-lg">
+                            &#9733;
+                          </span>
+                        </div>
                       </div>
                     </Tooltip>
                   </li>
@@ -338,16 +358,20 @@ const Review = ({ userReview }) => {
                           : "Performed at the highest level"
                       }`}
                     >
-                      <div className="space-x-2">
-                        <span className="">
+                      <div className="space-x-2 flex justify-between items-center">
+                        <span className="block">
                           {currentLang == "es" ? (
                             <>Excepcional</>
                           ) : (
                             <>Exceptional</>
-                          )}{" "}
-                          5
+                          )}
                         </span>
-                        <span className="text-[#FBBC04] text-lg">&#9733;</span>
+                        <div className="flex justify-start items-center space-x-1">
+                          <span className="block">5</span>
+                          <span className="text-[#FBBC04] block text-lg">
+                            &#9733;
+                          </span>
+                        </div>
                       </div>
                     </Tooltip>
                   </li>
@@ -364,7 +388,7 @@ const Review = ({ userReview }) => {
                             <>{topic.en}</>
                           )}
                         </span>
-                        <div className="flex items-center justify-center space-x-6">
+                        <div className="flex items-center justify-between sm:justify-center sm:space-x-6">
                           {[...Array(5)].map((_, index2) => {
                             const starValue = index2 + 1;
                             const isFilled = starValue <= rating[`p${index}`];
@@ -505,7 +529,7 @@ const Review = ({ userReview }) => {
               >
                 <>{currentLang == "es" ? <>Atrás</> : <>Back</>}</>
               </Button>
-              <div className="flex justify-start items-center space-x-3">
+              <div className="hidden sm:flex justify-start items-center space-x-3">
                 <div className="flex justify-center items-center">
                   <Image
                     src="/logopng.png"
@@ -542,18 +566,38 @@ const Review = ({ userReview }) => {
                   ) {
                     console.log("Not");
                   } else {
-                    if (isLastStep) {
-                      const response = await reviewSend();
+                    if (activeStep === 0) {
+                      if (isReviewSend == false) {
+                        const response = await reviewSend();
 
-                      if (response) {
-                        setThankState(true);
-                        console.log(response);
+                        if (response) {
+                          handleNext();
+                          console.log("review send");
+                        } else {
+                          console.log("err", response);
+                        }
                       } else {
-                        console.log("ERR", response);
+                        handleNext();
                       }
+                    } else if (isLastStep) {
+                      setThankState(true);
+                      console.log("thank");
                     } else {
                       handleNext();
                     }
+
+                    // if (isLastStep) {
+                    //
+
+                    //   if (response) {
+                    //     setThankState(true);
+                    //     console.log(response);
+                    //   } else {
+                    //     console.log("ERR", response);
+                    //   }
+                    // } else {
+                    //   handleNext();
+                    // }
                   }
                 }}
                 disabled={
@@ -570,6 +614,30 @@ const Review = ({ userReview }) => {
                   <>{currentLang == "es" ? <>Siguiente</> : <>Next</>}</>
                 )}
               </Button>
+            </div>
+            <div className="block sm:hidden pb-8 space-y-2">
+              <div className="flex justify-center items-center">
+                <Image
+                  src="/logopng.png"
+                  alt=""
+                  className="w-16"
+                  quality={80}
+                  priority={true}
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                />
+              </div>
+              <p className="m-0 p-0 text-center text-sm">
+                &copy; 2023 305TAX. All rights reserved.
+                <br />
+                <a
+                  className="text-[#110975]"
+                  href="https://www.305tax.com/?utm_source=review"
+                >
+                  www.305tax.com
+                </a>
+              </p>
             </div>
           </div>
           <div
