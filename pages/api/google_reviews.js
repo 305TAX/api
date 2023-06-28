@@ -12,6 +12,20 @@ export default async function handler(req, res) {
 
   const oReviews = [
     {
+      author_name: "Mayra Blel",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/AD_cMMSbtzyEF7ILYPO2ZdJFhUFSLnD7S_q6QQ_D0B9YKfwg6y4=s40-c-rp-mo-br100",
+      rating: "5",
+      text: "Excelente servicio !! Muy profesional..",
+    },
+    {
+      author_name: "Yenitze Molina",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/AD_cMMR-hSd2fUkXDpEf8eQQmDJPIRb5UlA5QEQOoDA7sS9BzAY=s40-c-rp-mo-br100",
+      rating: "5",
+      text: "Outstanding service for the last years doing business with 305 TAX. Very professional, great place, extremely efficient, fast and everyone is always friendly.",
+    },
+    {
       author_name: "Corina Oramas",
       profile_photo_url:
         "https://lh3.googleusercontent.com/a/AAcHTtcU1E4PlfS4ZF6L859SzcBsLPh0kNt3RI2L8MGNn5Y3=s40-c-rp-mo-br100",
