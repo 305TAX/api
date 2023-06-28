@@ -229,7 +229,11 @@ const Review = ({ userReview }) => {
                   "border space-y-4 rounded-sm border-gray-400 px-6 py-4"
                 )}
               >
-                <p className="text-base text-justify">
+                <div>
+                <h2 className="text-4xl font-bold uppercase text-center">
+                    {currentLang == "es" ? <>Paso</> : <>Step</>} 1
+                  </h2>
+                  <p className="text-base text-justify">
                   {currentLang == "es" ? (
                     <>
                       Sus comentarios nos ayudarán a seguir mejorando nuestros
@@ -243,12 +247,17 @@ const Review = ({ userReview }) => {
                       Your comments will help us to continue to improve our
                       services services and help others make an informed
                       decision when choosing their informed decision when
-                      choosing their tax advisors. Please rate each of the
+                      choosing their tax advisors.
+                      <br/>
+                      <br/>
+                      Please rate each of the
                       features of our service, based on the following scale:
                     </>
                   )}
                 </p>
-                <ul className="grid grid-cols-1 sm:flex justify-between items-center sm:pr-2">
+                </div>
+                
+                <ul className="grid grid-cols-1 pb-4 sm:flex justify-between items-center sm:pr-2">
                   <li>
                     <Tooltip
                       placement="bottom"
@@ -450,25 +459,23 @@ const Review = ({ userReview }) => {
                   "border space-y-4 rounded-sm border-gray-400 px-10 py-8"
                 )}
               >
-                <p className="text-lg text-justify">
-                  {currentLang == "es" ? (
+                <div>
+                  <h2 className="text-4xl font-bold uppercase text-center">
+                  {currentLang == "es" ? <>Paso</> : <>Step</>} 2
+                  </h2>
+                  <p className="text-lg text-justify">
+                  {/* {currentLang == "es" ? (
                     <>
-                      Sus comentarios nos ayudarán a seguir mejorando nuestros
-                      servicios y ayudaría a otros a tomar una decisión
-                      informada al elegir a sus asesores fiscales. Haz click en
-                      el siguiente botón, una vez que hayas dejado tu review,
-                      regresa a esta pantalla para finalizar el proceso.
+                      
                     </>
                   ) : (
                     <>
-                      Your feedback will help us continue to improve our
-                      services and help others make an informed decision when
-                      choosing their tax advisors. Click on the button below,
-                      once you have left your review, return to this screen to
-                      finish the process.
+                      
                     </>
-                  )}
+                  )} */}
                 </p>
+                </div>
+                
                 <hr />
 
                 <div className="flex justify-center items-center">
@@ -512,9 +519,9 @@ const Review = ({ userReview }) => {
                     </svg>
                     <span className="block font-semibold">
                       {currentLang == "es" ? (
-                        <>Escribir Reseña en Google</>
+                        <>Dejar una Reseña en Google</>
                       ) : (
-                        <>Write Review on Google</>
+                        <>Leave a Review on Google</>
                       )}
                     </span>
                   </button>
@@ -691,16 +698,14 @@ const Review = ({ userReview }) => {
                   .{" "}
                   {currentLang == "es" ? (
                     <>
-                      Le damos las gracias por elegir a 305TAX como sus asesores
-                      tributarios y por permitirnos ayudarle con sus necesidades
-                      fiscales. Su opinión hecha en Google la mostraremos en
-                      nuestra página principal en breves.
+                      <br/>Le damos las gracias por elegir a 305TAX como sus asesores
+                      tributarios. <br/>Su opinión expresada en Google la mostraremos en
+                      nuestra página principal en breve.
                     </>
                   ) : (
                     <>
-                      We thank you for choosing 305TAX as your tax advisors and
-                      for allowing us to help you with your tax needs. Your
-                      feedback made on Google will be displayed on our home page
+                      <br/>We thank you for choosing 305TAX as your tax advisors. <br/>Your
+                      Google Review will be displayed on our home page
                       shortly.
                     </>
                   )}
