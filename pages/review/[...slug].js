@@ -683,7 +683,7 @@ const Review = ({ userReview }) => {
                 </h2>
                 <p className="text-lg max-w-4xl text-center mx-auto">
                   {currentLang == "es" ? (
-                    <>Nos has dado una puntuación promedio de</>
+                    <>Nos ha dado una puntuación promedio de</>
                   ) : (
                     <>You have given us an average rating of</>
                   )}
@@ -699,8 +699,8 @@ const Review = ({ userReview }) => {
                   {currentLang == "es" ? (
                     <>
                       <br/>Le damos las gracias por elegir a 305TAX como sus asesores
-                      tributarios. <br/>Su opinión expresada en Google la mostraremos en
-                      nuestra página principal en breve.
+                      tributarios. <br/>Su opinión expresada en Google la mostraremos en breve en 
+                      nuestra página principal.
                     </>
                   ) : (
                     <>
