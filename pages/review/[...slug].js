@@ -859,7 +859,7 @@ export const getServerSideProps = async ({ query }) => {
   const userReview = {
     user: query.slug[0],
     email: query.e,
-    lang: query.l,
+    lang: query?.l ? query.l : "es_ES",
   };
   // const repo = await res.json()
   return { props: { userReview } };
