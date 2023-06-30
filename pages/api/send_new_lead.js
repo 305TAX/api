@@ -29,6 +29,7 @@ export default async function handler(req, res) {
       name: String(q?.name),
       email: String(q?.email),
       mobile: String(q?.mobile),
+      x_studio_country_origin: String(q?.country_origin),
     });
 
     let params = [];
