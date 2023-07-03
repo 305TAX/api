@@ -30,6 +30,7 @@ export default async function handler(req, res) {
       email: String(q?.email),
       mobile: String(q?.mobile),
       x_studio_country_origin: String(q?.country_origin),
+      x_studio_status_verify: 1,
     });
 
     let params = [];
