@@ -19,11 +19,6 @@ export default async function handler(req, res) {
 
   const q = req.query;
 
-  const secret = `${q?.crm_id}572023${Math.floor(Math.random() * 100)}`;
-  const hash = createHmac("sha256", secret)
-    .update("EMAIL-CONFIRMATION")
-    .digest("hex");
-
   odoo.connect(function (err) {
     if (err) {
       return console.log(err);
@@ -31,24 +26,63 @@ export default async function handler(req, res) {
     console.log("Connected to Odoo server.");
     var inParams = [];
     inParams.push([
-      ["is_company", "=", true],
-      ["customer", "=", true],
+      [
+        "x_studio_status_verify_code_1",
+        "=",
+        "42a1c29b02a8bf2314e87f37c234e1678faf46bcf5f5f1b0da73c3c4a6788a01",
+      ],
     ]);
-    inParams.push([""]); //fields
+    inParams.push(["id", "x_studio_status_verify_1"]); //fields
 
     var params = [];
     params.push(inParams);
-    odoo.execute_kw(
-      "res.partner",
-      "search_read",
-      params,
-      function (err, value) {
-        if (err) {
-          return console.log(err);
-        }
-        console.log("Result: ", value);
+    odoo.execute_kw("crm.lead", "search_read", params, function (err, value) {
+      if (err) {
+        return console.log(err);
       }
-    );
+
+      if (value) {
+        // console.log(value[0]?.x_studio_status_verify_1)
+        // if (Number(value[0]?.x_studio_status_verify_1) >= 3)
+        //   return res.json({
+        //     result: false,
+        //   });
+
+        odoo.connect(function (err2) {
+          if (err2) {
+            return console.log(err2);
+          }
+
+          var inParams2 = [];
+          inParams2.push([Number(value[0]?.id)]); //id to update
+          inParams2.push({
+            x_studio_status_verify_1: String(3),
+          });
+          var params2 = [];
+          params2.push(inParams2);
+          odoo.execute_kw(
+            "crm.lead",
+            "write",
+            params2,
+            function (err2, value2) {
+              if (err2) {
+                return console.log(err2);
+              }
+
+              return res.json({
+                result: true,
+              });
+            }
+          );
+        });
+      } else {
+        return res.json({ result: false });
+      }
+      // return res.json({
+      //   result: value,
+      // });
+      console.log("Result: ", value);
+    });
   });
 
   //   odoo.connect(function (err) {
