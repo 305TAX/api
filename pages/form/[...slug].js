@@ -25,8 +25,33 @@ const Verify = ({ userReview }) => {
   const [currentLang, setCurrentLang] = useState("es");
   //const [userCurrent, setUserCurrent] = useState({});
   const [thankState, setThankState] = useState(false);
+  const [user_form_data, set_user_form_data] = useState({});
 
   const [isLoading, setIsLoading] = useState(true);
+
+  const [rquestions, setRQuestions] = useState({});
+  const [originalQuestions, setOriginalQuestions] = useState({});
+
+  const handleChangeChecked = (e) => {
+    setRQuestions({
+      ...rquestions,
+      [e.target.name]: e.target.checked,
+    });
+  };
+
+  const handleChangeRadio = (e, option) => {
+    setRQuestions({
+      ...rquestions,
+      [e.target.name]: [e.target.checked, option],
+    });
+  };
+
+  const handleChangeInput = (e) => {
+    setRQuestions({
+      ...rquestions,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const [dimensions, setDimensions] = useState({
     width: 0,
@@ -34,24 +59,20 @@ const Verify = ({ userReview }) => {
   });
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-    // fetch(`/api/verify_email?hash=${userReview}`, {
-    //   method: "POST",
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     if (data.result == true) {
-    //       const { innerWidth: width, innerHeight: height } = window;
-    //       setDimensions({
-    //         width,
-    //         height,
-    //       });
-    //       setIsLoading(false);
-    //     }
-
-    //   });
+    // setTimeout(() => {
+    //   setIsLoading(false);
+    // }, 2000);
+    fetch(`/api/get_lead_form?id=${userReview}`, {
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setIsLoading(false);
+        setOriginalQuestions(data.form);
+        setRQuestions(data.form);
+        set_user_form_data(data);
+        console.log(data);
+      });
   }, []);
 
   const questions = [
@@ -196,6 +217,15 @@ const Verify = ({ userReview }) => {
     <>
       <main>
         <div className="divide-y divide-gray-300 px-5 py-4">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              console.log(rquestions);
+            }}
+          >
+            asdasd
+          </button>
+          <span className="block"></span>
           {questions.map((quest, index) => (
             <>
               {quest?.type == "multiple_choice" ? (
@@ -232,7 +262,14 @@ const Verify = ({ userReview }) => {
                                   <input
                                     id={`item-${index}-${index2}`}
                                     name={`item-${index}-${index2}`}
-                                    onChange={console.log("hola")}
+                                    onChange={(e) => handleChangeChecked(e)}
+                                    defaultChecked={
+                                      user_form_data["form"][
+                                        `item-${index}-${index2}`
+                                      ] == true
+                                        ? true
+                                        : false
+                                    }
                                     type="checkbox"
                                     className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 rounded-full"
                                   />
@@ -277,8 +314,18 @@ const Verify = ({ userReview }) => {
                                   id={`item-${index}-${index2}`}
                                   name={`item-${index}`}
                                   type="radio"
-                                  defaultChecked={false}
-                                  onChange={console.log("hola")}
+                                  onChange={(e) => handleChangeRadio(e, index2)}
+                                  defaultChecked={
+                                    user_form_data["form"][
+                                      `item-${index}`
+                                    ][1] == index2
+                                      ? user_form_data["form"][
+                                          `item-${index}`
+                                        ][0] == true
+                                        ? true
+                                        : false
+                                      : false
+                                  }
                                   className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
                                 />
                                 <label
@@ -317,10 +364,12 @@ const Verify = ({ userReview }) => {
                         <textarea
                           rows={quest?.rows}
                           name={`comment-${index}`}
-                          onChange={console.log("hola")}
+                          onChange={(e) => handleChangeInput(e)}
                           id={`comment-${index}`}
                           className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
-                          defaultValue={""}
+                          defaultValue={
+                            user_form_data["form"][`comment-${index}`]
+                          }
                         />
                       </div>
                     </fieldset>
@@ -362,7 +411,14 @@ const Verify = ({ userReview }) => {
                         id={`item-last`}
                         name={`item-last`}
                         type="radio"
-                        onChange={console.log("hola")}
+                        onChange={(e) => handleChangeRadio(e, 0)}
+                        defaultChecked={
+                          user_form_data["form"][`item-last`][1] == 0
+                            ? user_form_data["form"][`item-last`][0] == true
+                              ? true
+                              : false
+                            : false
+                        }
                         className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
                       />
                     </div>
@@ -383,7 +439,14 @@ const Verify = ({ userReview }) => {
                         id={`item-last`}
                         name={`item-last`}
                         type="radio"
-                        onChange={console.log("hola")}
+                        onChange={(e) => handleChangeRadio(e, 1)}
+                        defaultChecked={
+                          user_form_data["form"][`item-last`][1] == 1
+                            ? user_form_data["form"][`item-last`][0] == true
+                              ? true
+                              : false
+                            : false
+                        }
                         className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 "
                       />
                     </div>
@@ -404,10 +467,10 @@ const Verify = ({ userReview }) => {
                   rows={1}
                   name="item-last-comment"
                   id="item-last-comment"
-                  onChange={console.log("hola")}
+                  onChange={(e) => handleChangeInput(e)}
                   placeholder="Nombre y Apellido"
                   className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
-                  defaultValue={""}
+                  defaultValue={user_form_data["form"][`item-last-comment`]}
                 />
               </div>
             </fieldset>
@@ -425,13 +488,30 @@ const Verify = ({ userReview }) => {
                   name="item-comment-optional"
                   id="item-comment-optional"
                   placeholder="Opcional"
-                  onChange={console.log("hola")}
+                  onChange={(e) => handleChangeInput(e)}
                   className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
-                  defaultValue={""}
+                  defaultValue={user_form_data["form"]["item-comment-optional"]}
                 />
               </div>
             </fieldset>
           </div>
+        </div>
+
+        <div className="fixed block bottom-0 right-0 my-2.5 mx-2.5">
+          {JSON.stringify(originalQuestions) == JSON.stringify(rquestions) ? (
+            <></>
+          ) : (
+            <>
+              <div className="flex justify-end items-center space-x-3">
+                <button class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
+                  Guardar Cambios
+                </button>
+                <button class="bg-[#f50002] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
+                  X
+                </button>
+              </div>
+            </>
+          )}
         </div>
       </main>
       {/* <span className="block">El hash: {userReview} es correcto.</span> */}
