@@ -58,20 +58,26 @@ const Verify = ({ userReview }) => {
     height: 0,
   });
 
+  const [notForm, setNotForm] = useState(false);
+
   useEffect(() => {
-    // setTimeout(() => {
-    //   setIsLoading(false);
-    // }, 2000);
     fetch(`/api/get_lead_form?id=${userReview}`, {
       method: "POST",
     })
       .then((response) => response.json())
       .then((data) => {
-        setIsLoading(false);
-        setOriginalQuestions(data.form);
-        setRQuestions(data.form);
-        set_user_form_data(data);
-        console.log(data);
+        if (Object.entries(data.form).length > 1) {
+          setIsLoading(false);
+          setOriginalQuestions(data.form);
+          setRQuestions(data.form);
+          set_user_form_data(data);
+          console.log(data);
+        } else {
+          setNotForm(true);
+          setIsLoading(false);
+          set_user_form_data(data);
+          console.log(data);
+        }
       });
   }, []);
 
@@ -216,303 +222,582 @@ const Verify = ({ userReview }) => {
   return (
     <>
       <main>
-        <div className="divide-y divide-gray-300 px-5 py-4">
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              console.log(rquestions);
-            }}
-          >
-            asdasd
-          </button>
-          <span className="block"></span>
-          {questions.map((quest, index) => (
-            <>
-              {quest?.type == "multiple_choice" ? (
+        {notForm == false ? (
+          <>
+            <div className="divide-y divide-gray-300 px-5 py-4">
+              {/* <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log(rquestions);
+                }}
+              >
+                asdasd
+              </button> */}
+              <span className="block"></span>
+              {questions.map((quest, index) => (
                 <>
-                  <div className="w-full py-4">
-                    <fieldset>
-                      <legend className="text-lg font-semibold text-gray-900">
-                        {quest?.title}
-                        {quest?.subtitle ? (
-                          <>
-                            <br />
-                            <span className="pl-3 block text-gray-400">
-                              {quest?.subtitle}
-                            </span>
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </legend>
-                      <ol className="   pl-6 space-y-2 py-4" type="A">
-                        {quest?.items.map((item, index2) => (
-                          <>
-                            <li key={`item-${index}-${index2}`}>
-                              <div className="relative flex items-center space-x-4justify-start">
-                                <div className="min-w-0 order-last flex-1 text-sm">
-                                  <label
-                                    htmlFor={`item-${index}-${index2}`}
-                                    className="font-medium text-gray-black text-lg select-none"
-                                  >
-                                    {item}
-                                  </label>
-                                </div>
-                                <div className="mr-3 flex items-center h-5">
-                                  <input
-                                    id={`item-${index}-${index2}`}
-                                    name={`item-${index}-${index2}`}
-                                    onChange={(e) => handleChangeChecked(e)}
-                                    defaultChecked={
-                                      user_form_data["form"][
-                                        `item-${index}-${index2}`
-                                      ] == true
-                                        ? true
-                                        : false
-                                    }
-                                    type="checkbox"
-                                    className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 rounded-full"
-                                  />
-                                </div>
-                              </div>
-                            </li>
-                          </>
-                        ))}
-                      </ol>
-                    </fieldset>
-                  </div>
-                </>
-              ) : quest?.type == "choice" ? (
-                <>
-                  <div className="w-full py-4">
-                    <fieldset>
-                      <legend className="text-lg font-semibold text-gray-900">
-                        <div className="flex justify-start items-start">
-                          <span className="block">¿</span>
-                          {String(quest?.title).replace("¿", "")}
-                        </div>
-                        {quest?.subtitle ? (
-                          <>
-                            <span className="pl-3 block text-gray-400">
-                              {quest?.subtitle}
-                            </span>
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </legend>
-
-                      <ol className="   pl-6 space-y-2 py-4" type="A">
-                        {quest?.items.map((item, index2) => (
-                          <>
-                            <li key={`item-${index}-${index2}`}>
-                              <div
-                                key={`item-${index}-${index2}`}
-                                className="flex items-center"
-                              >
-                                <input
-                                  id={`item-${index}-${index2}`}
-                                  name={`item-${index}`}
-                                  type="radio"
-                                  onChange={(e) => handleChangeRadio(e, index2)}
-                                  defaultChecked={
-                                    user_form_data["form"][
-                                      `item-${index}`
-                                    ][1] == index2
-                                      ? user_form_data["form"][
-                                          `item-${index}`
-                                        ][0] == true
-                                        ? true
-                                        : false
-                                      : false
-                                  }
-                                  className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
-                                />
-                                <label
-                                  htmlFor={`item-${index}-${index2}`}
-                                  className="ml-3 block text-lg font-medium text-black"
-                                >
-                                  {item}
-                                </label>
-                              </div>
-                            </li>
-                          </>
-                        ))}
-                      </ol>
-                    </fieldset>
-                  </div>
-                </>
-              ) : quest?.type == "input" ? (
-                <>
-                  <div className="w-full py-4">
-                    <fieldset>
-                      <legend className="text-lg font-semibold text-gray-900">
-                        {quest?.title}
-                        {quest?.subtitle ? (
-                          <>
-                            <br />
-                            <span className="block text-gray-400">
-                              {quest?.subtitle}
-                            </span>
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </legend>
-
-                      <div className="   space-y-2 py-4">
-                        <textarea
-                          rows={quest?.rows}
-                          name={`comment-${index}`}
-                          onChange={(e) => handleChangeInput(e)}
-                          id={`comment-${index}`}
-                          className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
-                          defaultValue={
-                            user_form_data["form"][`comment-${index}`]
-                          }
-                        />
+                  {quest?.type == "multiple_choice" ? (
+                    <>
+                      <div className="w-full py-4">
+                        <fieldset>
+                          <legend className="text-lg font-semibold text-gray-900">
+                            {quest?.title}
+                            {quest?.subtitle ? (
+                              <>
+                                <br />
+                                <span className="pl-3 block text-gray-400">
+                                  {quest?.subtitle}
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </legend>
+                          <ol className="   pl-6 space-y-2 py-4" type="A">
+                            {quest?.items.map((item, index2) => (
+                              <>
+                                <li key={`item-${index}-${index2}`}>
+                                  <div className="relative flex items-center space-x-4justify-start">
+                                    <div className="min-w-0 order-last flex-1 text-sm">
+                                      <label
+                                        htmlFor={`item-${index}-${index2}`}
+                                        className="font-medium text-gray-black text-lg select-none"
+                                      >
+                                        {item}
+                                      </label>
+                                    </div>
+                                    <div className="mr-3 flex items-center h-5">
+                                      <input
+                                        id={`item-${index}-${index2}`}
+                                        name={`item-${index}-${index2}`}
+                                        onChange={(e) => handleChangeChecked(e)}
+                                        defaultChecked={
+                                          user_form_data["form"][
+                                            `item-${index}-${index2}`
+                                          ] == true
+                                            ? true
+                                            : false
+                                        }
+                                        type="checkbox"
+                                        className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 rounded-full"
+                                      />
+                                    </div>
+                                  </div>
+                                </li>
+                              </>
+                            ))}
+                          </ol>
+                        </fieldset>
                       </div>
-                    </fieldset>
+                    </>
+                  ) : quest?.type == "choice" ? (
+                    <>
+                      <div className="w-full py-4">
+                        <fieldset>
+                          <legend className="text-lg font-semibold text-gray-900">
+                            <div className="flex justify-start items-start">
+                              <span className="block">¿</span>
+                              {String(quest?.title).replace("¿", "")}
+                            </div>
+                            {quest?.subtitle ? (
+                              <>
+                                <span className="pl-3 block text-gray-400">
+                                  {quest?.subtitle}
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </legend>
+
+                          <ol className="   pl-6 space-y-2 py-4" type="A">
+                            {quest?.items.map((item, index2) => (
+                              <>
+                                <li key={`item-${index}-${index2}`}>
+                                  <div
+                                    key={`item-${index}-${index2}`}
+                                    className="flex items-center"
+                                  >
+                                    <input
+                                      id={`item-${index}-${index2}`}
+                                      name={`item-${index}`}
+                                      type="radio"
+                                      onChange={(e) =>
+                                        handleChangeRadio(e, index2)
+                                      }
+                                      defaultChecked={
+                                        user_form_data["form"][
+                                          `item-${index}`
+                                        ][1] == index2
+                                          ? user_form_data["form"][
+                                              `item-${index}`
+                                            ][0] == true
+                                            ? true
+                                            : false
+                                          : false
+                                      }
+                                      className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
+                                    />
+                                    <label
+                                      htmlFor={`item-${index}-${index2}`}
+                                      className="ml-3 block text-lg font-medium text-black"
+                                    >
+                                      {item}
+                                    </label>
+                                  </div>
+                                </li>
+                              </>
+                            ))}
+                          </ol>
+                        </fieldset>
+                      </div>
+                    </>
+                  ) : quest?.type == "input" ? (
+                    <>
+                      <div className="w-full py-4">
+                        <fieldset>
+                          <legend className="text-lg font-semibold text-gray-900">
+                            {quest?.title}
+                            {quest?.subtitle ? (
+                              <>
+                                <br />
+                                <span className="block text-gray-400">
+                                  {quest?.subtitle}
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </legend>
+
+                          <div className="   space-y-2 py-4">
+                            <textarea
+                              rows={quest?.rows}
+                              name={`comment-${index}`}
+                              onChange={(e) => handleChangeInput(e)}
+                              id={`comment-${index}`}
+                              className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                              defaultValue={
+                                user_form_data["form"][`comment-${index}`]
+                              }
+                            />
+                          </div>
+                        </fieldset>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              ))}
+            </div>
+            <div className="border-t border-gray-300 px-5 pt-4">
+              <p className="m-0 p-0 py-4 font-semibold text-lg text-justify">
+                En 305TAX estamos comprometidos en respetar el trabajo de los
+                agentes de bienes raíces, a quienes consideramos nuestros
+                aliados.
+                <br />
+                <br />
+                Por este motivo le agradecemos su respuesta a la siguiente
+                pregunta:
+              </p>
+              <div className="">
+                <fieldset>
+                  <legend className="text-lg font-semibold text-gray-900">
+                    ¿Está usted representado(a) por un agente de bienes raíces
+                    en Florida?
+                  </legend>
+                  <ol className=" pl-6 space-y-2 py-4" type="A">
+                    <li key={`item-last`}>
+                      <div className="relative flex items-center space-x-4justify-start">
+                        <div className="min-w-0 order-last flex-1 text-sm">
+                          <label
+                            htmlFor={`item-last`}
+                            className="font-medium text-gray-black text-lg select-none"
+                          >
+                            Si
+                          </label>
+                        </div>
+                        <div className="mr-3 flex items-center h-5">
+                          <input
+                            id={`item-last`}
+                            name={`item-last`}
+                            type="radio"
+                            onChange={(e) => handleChangeRadio(e, 0)}
+                            defaultChecked={
+                              user_form_data["form"][`item-last`][1] == 0
+                                ? user_form_data["form"][`item-last`][0] == true
+                                  ? true
+                                  : false
+                                : false
+                            }
+                            className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
+                          />
+                        </div>
+                      </div>
+                    </li>
+                    <li key={`item-last`}>
+                      <div className="relative flex items-center space-x-4justify-start">
+                        <div className="min-w-0 order-last flex-1 text-sm">
+                          <label
+                            htmlFor={`item-last`}
+                            className="font-medium text-gray-black text-lg select-none"
+                          >
+                            No
+                          </label>
+                        </div>
+                        <div className="mr-3 flex items-center h-5">
+                          <input
+                            id={`item-last`}
+                            name={`item-last`}
+                            type="radio"
+                            onChange={(e) => handleChangeRadio(e, 1)}
+                            defaultChecked={
+                              user_form_data["form"][`item-last`][1] == 1
+                                ? user_form_data["form"][`item-last`][0] == true
+                                  ? true
+                                  : false
+                                : false
+                            }
+                            className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 "
+                          />
+                        </div>
+                      </div>
+                    </li>
+                  </ol>
+                </fieldset>
+              </div>
+              <div className="border-t border-gray-300 py-4">
+                <fieldset>
+                  <legend className="text-lg font-semibold text-gray-900">
+                    Si su respuesta es afirmativa, le agradecemos indicar el
+                    nombre y apellido del agente:
+                  </legend>
+
+                  <div className=" space-y-2 py-4">
+                    <textarea
+                      rows={1}
+                      name="item-last-comment"
+                      id="item-last-comment"
+                      onChange={(e) => handleChangeInput(e)}
+                      placeholder="Nombre y Apellido"
+                      className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                      defaultValue={user_form_data["form"][`item-last-comment`]}
+                    />
+                  </div>
+                </fieldset>
+              </div>
+              <div className="border-t py-4 border-gray-300">
+                <fieldset>
+                  <legend className="text-lg font-semibold text-gray-900">
+                    Si usted desea hacernos alguna pregunta para su caso
+                    particular, hágala en el siguiente campo:
+                  </legend>
+
+                  <div className=" pace-y-2 py-4">
+                    <textarea
+                      rows={6}
+                      name="item-comment-optional"
+                      id="item-comment-optional"
+                      placeholder="Opcional"
+                      onChange={(e) => handleChangeInput(e)}
+                      className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                      defaultValue={
+                        user_form_data["form"]["item-comment-optional"]
+                      }
+                    />
+                  </div>
+                </fieldset>
+              </div>
+            </div>
+
+            <div className="fixed block bottom-0 right-0 my-2.5 mx-2.5">
+              {JSON.stringify(originalQuestions) ==
+              JSON.stringify(rquestions) ? (
+                <></>
+              ) : (
+                <>
+                  <div className="flex justify-end items-center space-x-3">
+                    <button class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
+                      Guardar Cambios
+                    </button>
+                    <button class="bg-[#f50002] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
+                      X
+                    </button>
                   </div>
                 </>
-              ) : (
-                <></>
               )}
-            </>
-          ))}
-        </div>
-        <div className="border-t border-gray-300 px-5 pt-4">
-          <p className="m-0 p-0 py-4 font-semibold text-lg text-justify">
-            En 305TAX estamos comprometidos en respetar el trabajo de los
-            agentes de bienes raíces, a quienes consideramos nuestros aliados.
-            <br />
-            <br />
-            Por este motivo le agradecemos su respuesta a la siguiente pregunta:
-          </p>
-          <div className="">
-            <fieldset>
-              <legend className="text-lg font-semibold text-gray-900">
-                ¿Está usted representado(a) por un agente de bienes raíces en
-                Florida?
-              </legend>
-              <ol className=" pl-6 space-y-2 py-4" type="A">
-                <li key={`item-last`}>
-                  <div className="relative flex items-center space-x-4justify-start">
-                    <div className="min-w-0 order-last flex-1 text-sm">
-                      <label
-                        htmlFor={`item-last`}
-                        className="font-medium text-gray-black text-lg select-none"
-                      >
-                        Si
-                      </label>
-                    </div>
-                    <div className="mr-3 flex items-center h-5">
-                      <input
-                        id={`item-last`}
-                        name={`item-last`}
-                        type="radio"
-                        onChange={(e) => handleChangeRadio(e, 0)}
-                        defaultChecked={
-                          user_form_data["form"][`item-last`][1] == 0
-                            ? user_form_data["form"][`item-last`][0] == true
-                              ? true
-                              : false
-                            : false
-                        }
-                        className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
-                      />
-                    </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="divide-y divide-gray-300 px-5 py-4">
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log(rquestions);
+                }}
+              >
+                asdasd
+              </button>
+              <span className="block"></span>
+              {questions.map((quest, index) => (
+                <>
+                  {quest?.type == "multiple_choice" ? (
+                    <>
+                      <div className="w-full py-4">
+                        <fieldset>
+                          <legend className="text-lg font-semibold text-gray-900">
+                            {quest?.title}
+                            {quest?.subtitle ? (
+                              <>
+                                <br />
+                                <span className="pl-3 block text-gray-400">
+                                  {quest?.subtitle}
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </legend>
+                          <ol className="   pl-6 space-y-2 py-4" type="A">
+                            {quest?.items.map((item, index2) => (
+                              <>
+                                <li key={`item-${index}-${index2}`}>
+                                  <div className="relative flex items-center space-x-4justify-start">
+                                    <div className="min-w-0 order-last flex-1 text-sm">
+                                      <label
+                                        htmlFor={`item-${index}-${index2}`}
+                                        className="font-medium text-gray-black text-lg select-none"
+                                      >
+                                        {item}
+                                      </label>
+                                    </div>
+                                    <div className="mr-3 flex items-center h-5">
+                                      <input
+                                        id={`item-${index}-${index2}`}
+                                        name={`item-${index}-${index2}`}
+                                        onChange={(e) => handleChangeChecked(e)}
+                                        type="checkbox"
+                                        className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 rounded-full"
+                                      />
+                                    </div>
+                                  </div>
+                                </li>
+                              </>
+                            ))}
+                          </ol>
+                        </fieldset>
+                      </div>
+                    </>
+                  ) : quest?.type == "choice" ? (
+                    <>
+                      <div className="w-full py-4">
+                        <fieldset>
+                          <legend className="text-lg font-semibold text-gray-900">
+                            <div className="flex justify-start items-start">
+                              <span className="block">¿</span>
+                              {String(quest?.title).replace("¿", "")}
+                            </div>
+                            {quest?.subtitle ? (
+                              <>
+                                <span className="pl-3 block text-gray-400">
+                                  {quest?.subtitle}
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </legend>
+
+                          <ol className="   pl-6 space-y-2 py-4" type="A">
+                            {quest?.items.map((item, index2) => (
+                              <>
+                                <li key={`item-${index}-${index2}`}>
+                                  <div
+                                    key={`item-${index}-${index2}`}
+                                    className="flex items-center"
+                                  >
+                                    <input
+                                      id={`item-${index}-${index2}`}
+                                      name={`item-${index}`}
+                                      type="radio"
+                                      onChange={(e) =>
+                                        handleChangeRadio(e, index2)
+                                      }
+                                      className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
+                                    />
+                                    <label
+                                      htmlFor={`item-${index}-${index2}`}
+                                      className="ml-3 block text-lg font-medium text-black"
+                                    >
+                                      {item}
+                                    </label>
+                                  </div>
+                                </li>
+                              </>
+                            ))}
+                          </ol>
+                        </fieldset>
+                      </div>
+                    </>
+                  ) : quest?.type == "input" ? (
+                    <>
+                      <div className="w-full py-4">
+                        <fieldset>
+                          <legend className="text-lg font-semibold text-gray-900">
+                            {quest?.title}
+                            {quest?.subtitle ? (
+                              <>
+                                <br />
+                                <span className="block text-gray-400">
+                                  {quest?.subtitle}
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </legend>
+
+                          <div className="   space-y-2 py-4">
+                            <textarea
+                              rows={quest?.rows}
+                              name={`comment-${index}`}
+                              onChange={(e) => handleChangeInput(e)}
+                              id={`comment-${index}`}
+                              className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                            />
+                          </div>
+                        </fieldset>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              ))}
+            </div>
+            <div className="border-t border-gray-300 px-5 pt-4">
+              <p className="m-0 p-0 py-4 font-semibold text-lg text-justify">
+                En 305TAX estamos comprometidos en respetar el trabajo de los
+                agentes de bienes raíces, a quienes consideramos nuestros
+                aliados.
+                <br />
+                <br />
+                Por este motivo le agradecemos su respuesta a la siguiente
+                pregunta:
+              </p>
+              <div className="">
+                <fieldset>
+                  <legend className="text-lg font-semibold text-gray-900">
+                    ¿Está usted representado(a) por un agente de bienes raíces
+                    en Florida?
+                  </legend>
+                  <ol className=" pl-6 space-y-2 py-4" type="A">
+                    <li key={`item-last`}>
+                      <div className="relative flex items-center space-x-4justify-start">
+                        <div className="min-w-0 order-last flex-1 text-sm">
+                          <label
+                            htmlFor={`item-last`}
+                            className="font-medium text-gray-black text-lg select-none"
+                          >
+                            Si
+                          </label>
+                        </div>
+                        <div className="mr-3 flex items-center h-5">
+                          <input
+                            id={`item-last`}
+                            name={`item-last`}
+                            type="radio"
+                            onChange={(e) => handleChangeRadio(e, 0)}
+                            className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
+                          />
+                        </div>
+                      </div>
+                    </li>
+                    <li key={`item-last`}>
+                      <div className="relative flex items-center space-x-4justify-start">
+                        <div className="min-w-0 order-last flex-1 text-sm">
+                          <label
+                            htmlFor={`item-last`}
+                            className="font-medium text-gray-black text-lg select-none"
+                          >
+                            No
+                          </label>
+                        </div>
+                        <div className="mr-3 flex items-center h-5">
+                          <input
+                            id={`item-last`}
+                            name={`item-last`}
+                            type="radio"
+                            onChange={(e) => handleChangeRadio(e, 1)}
+                            className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 "
+                          />
+                        </div>
+                      </div>
+                    </li>
+                  </ol>
+                </fieldset>
+              </div>
+              <div className="border-t border-gray-300 py-4">
+                <fieldset>
+                  <legend className="text-lg font-semibold text-gray-900">
+                    Si su respuesta es afirmativa, le agradecemos indicar el
+                    nombre y apellido del agente:
+                  </legend>
+
+                  <div className=" space-y-2 py-4">
+                    <textarea
+                      rows={1}
+                      name="item-last-comment"
+                      id="item-last-comment"
+                      onChange={(e) => handleChangeInput(e)}
+                      placeholder="Nombre y Apellido"
+                      className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                    />
                   </div>
-                </li>
-                <li key={`item-last`}>
-                  <div className="relative flex items-center space-x-4justify-start">
-                    <div className="min-w-0 order-last flex-1 text-sm">
-                      <label
-                        htmlFor={`item-last`}
-                        className="font-medium text-gray-black text-lg select-none"
-                      >
-                        No
-                      </label>
-                    </div>
-                    <div className="mr-3 flex items-center h-5">
-                      <input
-                        id={`item-last`}
-                        name={`item-last`}
-                        type="radio"
-                        onChange={(e) => handleChangeRadio(e, 1)}
-                        defaultChecked={
-                          user_form_data["form"][`item-last`][1] == 1
-                            ? user_form_data["form"][`item-last`][0] == true
-                              ? true
-                              : false
-                            : false
-                        }
-                        className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 "
-                      />
-                    </div>
+                </fieldset>
+              </div>
+              <div className="border-t py-4 border-gray-300">
+                <fieldset>
+                  <legend className="text-lg font-semibold text-gray-900">
+                    Si usted desea hacernos alguna pregunta para su caso
+                    particular, hágala en el siguiente campo:
+                  </legend>
+
+                  <div className=" pace-y-2 py-4">
+                    <textarea
+                      rows={6}
+                      name="item-comment-optional"
+                      id="item-comment-optional"
+                      placeholder="Opcional"
+                      onChange={(e) => handleChangeInput(e)}
+                      className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                    />
                   </div>
-                </li>
-              </ol>
-            </fieldset>
-          </div>
-          <div className="border-t border-gray-300 py-4">
-            <fieldset>
-              <legend className="text-lg font-semibold text-gray-900">
-                Si su respuesta es afirmativa, le agradecemos indicar el nombre
-                y apellido del agente:
-              </legend>
-
-              <div className=" space-y-2 py-4">
-                <textarea
-                  rows={1}
-                  name="item-last-comment"
-                  id="item-last-comment"
-                  onChange={(e) => handleChangeInput(e)}
-                  placeholder="Nombre y Apellido"
-                  className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
-                  defaultValue={user_form_data["form"][`item-last-comment`]}
-                />
+                </fieldset>
               </div>
-            </fieldset>
-          </div>
-          <div className="border-t py-4 border-gray-300">
-            <fieldset>
-              <legend className="text-lg font-semibold text-gray-900">
-                Si usted desea hacernos alguna pregunta para su caso particular,
-                hágala en el siguiente campo:
-              </legend>
+            </div>
 
-              <div className=" pace-y-2 py-4">
-                <textarea
-                  rows={6}
-                  name="item-comment-optional"
-                  id="item-comment-optional"
-                  placeholder="Opcional"
-                  onChange={(e) => handleChangeInput(e)}
-                  className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
-                  defaultValue={user_form_data["form"]["item-comment-optional"]}
-                />
-              </div>
-            </fieldset>
-          </div>
-        </div>
-
-        <div className="fixed block bottom-0 right-0 my-2.5 mx-2.5">
-          {JSON.stringify(originalQuestions) == JSON.stringify(rquestions) ? (
-            <></>
-          ) : (
-            <>
-              <div className="flex justify-end items-center space-x-3">
-                <button class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
-                  Guardar Cambios
-                </button>
-                <button class="bg-[#f50002] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
-                  X
-                </button>
-              </div>
-            </>
-          )}
-        </div>
+            {/* <div className="fixed block bottom-0 right-0 my-2.5 mx-2.5">
+              {JSON.stringify(originalQuestions) ==
+              JSON.stringify(rquestions) ? (
+                <></>
+              ) : (
+                <>
+                  <div className="flex justify-end items-center space-x-3">
+                    <button class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
+                      Guardar Cambios
+                    </button>
+                    <button class="bg-[#f50002] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
+                      X
+                    </button>
+                  </div>
+                </>
+              )}
+            </div> */}
+          </>
+        )}
       </main>
       {/* <span className="block">El hash: {userReview} es correcto.</span> */}
     </>
