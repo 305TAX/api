@@ -532,14 +532,14 @@ const Verify = ({ userReview }) => {
         ) : (
           <>
             <div className="divide-y divide-gray-300 px-5 py-4">
-              <button
+              {/* <button
                 onClick={(e) => {
                   e.preventDefault();
                   console.log(rquestions);
                 }}
               >
                 asdasd
-              </button>
+              </button> */}
               <span className="block"></span>
               {questions.map((quest, index) => (
                 <>
