@@ -30,7 +30,7 @@ export default async function handler(req, res) {
       email: String(q?.email),
       mobile: String(q?.mobile),
       x_studio_country_origin: String(q?.country_origin),
-      x_studio_status_verify: 1,
+      x_studio_status_verify: String(1),
     });
 
     let params = [];
@@ -69,7 +69,7 @@ export default async function handler(req, res) {
               }
               console.log("Result: ", value2);
               return res.json({
-                result: value2,
+                result: [value, value2],
               });
             }
           );
