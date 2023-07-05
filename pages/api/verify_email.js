@@ -25,13 +25,7 @@ export default async function handler(req, res) {
     }
     console.log("Connected to Odoo server.");
     var inParams = [];
-    inParams.push([
-      [
-        "x_studio_status_verify_code_1",
-        "=",
-        "42a1c29b02a8bf2314e87f37c234e1678faf46bcf5f5f1b0da73c3c4a6788a01",
-      ],
-    ]);
+    inParams.push([["x_studio_status_verify_code_1", "=", String(q?.hash)]]);
     inParams.push(["id", "x_studio_status_verify_1"]); //fields
 
     var params = [];

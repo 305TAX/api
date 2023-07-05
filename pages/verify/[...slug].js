@@ -94,7 +94,7 @@ const Verify = ({ userReview }) => {
                 height={0}
                 sizes="100vw"
               />
-              <h1 class="absolute text-4xl text-white drop-shadow-md uppercase w-full text-center font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+              <h1 class="absolute text-6xl text-white drop-shadow-md uppercase w-full text-center font-bold top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
                 Felicitaciones, <br />
                 <span className="text-3xl">
                   usted ha completado el proceso de registro.
@@ -117,7 +117,7 @@ const Verify = ({ userReview }) => {
                   <span className="font-bold text-[#110975]">
                     Es importante que lea el informe detenidamente.
                   </span>{" "}
-                  Si desea aclarar cualquier duad que tenga sobre su contenido o
+                  Si desea aclarar cualquier duda que tenga sobre su contenido u
                   otro tema para su caso particular, escríbanos por{" "}
                   <a
                     href="https://api.whatsapp.com/send?phone=13052395500&text=Hola%20profesionales%20de%20305TAX%2C%20le%C3%AD%20el%20Informe%20de%2012%20Preguntas%20Frecuentes%20Que%20Se%20Hacen%20Los%20Extranjeros%20Al%20Invertir%20En%20Bienes%20Ra%C3%ADces%20En%20Florida%20y%20quisera%20hacer%20una%20cita%20para%20aclarar%20algunos%20puntos%20sobre%20su%20contenido%20para%20mi%20caso%20particular.%0A%0AMuchas%20gracias."
