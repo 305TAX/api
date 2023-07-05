@@ -12,6 +12,158 @@ export default async function handler(req, res) {
 
   const oReviews = [
     {
+      author_name: "Giselly Ruiz",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTte7WVLUufZa4G0Em-fwpnfhYRWyrmUTZgvnNzIv0uHu=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Estamos complacidos por los servicios recibidos por 305 Tax. Hemos trabajado jutos de hace 3 anos, los recomendamos altamente como acesores tributarios y consulturia contable.",
+      older: 27,
+    },
+    {
+      author_name: "Carlos Gil",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtcVisJslhUN4LO2v-4JLSzmiPBj9dbruU8WuiQOcDAz=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Excelente servicio y confianza 👍🏽",
+      older: 26,
+    },
+    {
+      author_name: "Elsie Toro",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/AD_cMMQ_l0gLNJbuBK9OeWQEMwhsuXGkOmUaSzlqakfMKCnuvKs=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Prestan un servicio personalizado y profesional, por lo que me han brindado confianza de trabajar con 305TAX desde hace varios años. Lo recomiendo ampliamente ",
+      older: 25,
+    },
+    {
+      author_name: "Elio Natera",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtd3c2oBY1HbocxSsHZ3sot-BVnIixt0SkKWH5DWAemC=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Excelente atención y servicio, la experiencia en 305TAX, liderizada por Marco Dieci y su equipo de trabajo; su asesoría en el ámbito fiscal en USA, es excelente, lo cual nos brinda tranquilidad para nuestra actividad comercial, los recomiendo ampliamente!!!",
+      older: 24,
+    },
+    {
+      author_name: "Sandra Perez",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtcVr7J03B2LS4h46Ij2MsF19jsmGdpySG_cI8XRIM9o=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Excellent costumer service",
+      older: 23,
+    },
+    {
+      author_name: "galaxy 524 export",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtf8vQ9ftCRskq0lW90k1C4x60UfVOK-rb4-cl5xNUcO=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Excelente atencion, muy Profesionales, con calidad y calidez de servicio, recomendados 100%",
+      older: 22,
+    },
+    {
+      author_name: "Alfredo Natera",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtfu2uJPO1l8ijKmu0tPNPbBRDJSXY6oUpT5qFCWDlqU=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Excelente calidad de servicio, muy profesionales, los recomiendo ampliamente.",
+      older: 21,
+    },
+    {
+      author_name: "charlie schwab",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTteCtLZpsqiYDHSYCIuZEGex5OqOclRhBtzYfC64vqLo=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Apoyo uncondicional.",
+      older: 20,
+    },
+    {
+      author_name: "Richard Gollarza",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/AD_cMMSaTCva5YfjwUYaA4D1SxU_-jwkDTKqYgB8i60aptxX9g=w75-h75-p-rp-mo-ba2-br100",
+      rating: "5",
+      text: "Este es un lugar donde llegue por casualidad luego de una mala experiencia con mi contador anterior y luego de haber trabajado con Marco y su oficina lo puedo recomendar públicamente, su labor nos ha ahorrado dinero y dolores de cabezas. Si necesitan una firma contable que además se especialice en bienes raíces, esta es su mejor opción.",
+      older: 19,
+    },
+    {
+      author_name: "carlos barrientos",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtcrg_c94NIiIYXfvTvZGbqDdEds9U1oujS5SXYm_sc=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Excelente persona,profesionalmente  no creo nadie mejor,su enorme calidad humana ayuda a sus clientes con excelentes consejos y orientacion segura para los problemas que se tienen en especial para aquellos que como yo no estamos familiarizados con las leyes y regulaciones americanas",
+      older: 18,
+    },
+    {
+      author_name: "Juan Ramon Prieto Vena",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/AD_cMMR2vV5NV8-4Is-Tx-81-3Y3ZJE8yHMCvtd4pBYc9CmCU6U=w75-h75-p-rp-mo-ba4-br100",
+      rating: "5",
+      text: "Excepcional ayuda, gente que sabe lo que hace con una vocación de servicio espectacular.",
+      older: 17,
+    },
+    {
+      author_name: "Rafael Blanco",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/AD_cMMSL06G-u-EV3lPg_5CwXgU7pywdECpuKhef2mThA-MtVP8=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Excellent service. High level of professionalism and technical knowledge. Proactivity to solve problems and allow their customers to have optimal results. The best Tax and Accounting service. Highly recommended.",
+      older: 16,
+    },
+    {
+      author_name: "Gloria Hurtado",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/AD_cMMROx8teNiKGFnLUK27wklw3_Lh5MA-H5aR4TdKF_gjttqQG=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Los mejores!  Excelente servicio y asesoría contable. Muy honestos",
+      older: 15,
+    },
+    {
+      author_name: "Magaly Barreto A.",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/AD_cMMQ-TH9jzGY5bDukqcphY8239TuQvplvV9fX9uSSAcsatz4=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Trato excelente y resultados rápidos y confiables dado el conocimiento  y actualización permanente de las normas  formularios del IRS",
+      older: 14,
+    },
+    {
+      author_name: "Jose Vicente Garcia",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtfwCZdVS69oGkVcL14FYAdturLznd47qk07EbAtpvjK=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Marco y su equipo son excepcionales con el trabajo que hacen. El alivio de contar con personas confiables y profesionales para asesorarte con todo lo relacionado al tema fiscal en USA, no tiene precio. Además la interacción personalizada que ofrecen es espectacular. Sin duda 305 Tax es muy recomendado!!",
+      older: 13,
+    },
+    {
+      author_name: "Olga García",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtccYU8NcMEbIaENbBjXOj0D14FhIDlgvBgbYX5gU4Rt=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Un servicio muy profesional, confiable y experto!!!",
+      older: 12,
+    },
+    {
+      author_name: "Luis Antonio",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtc5iEgyDtt-ZpvJdK3J0BN1onZnJTmaVi4xdm-d-nmS=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "El nivel de conocimiento y experiencia es impresionante. Nos da mucha confianza trabajar con ellos.",
+      older: 11,
+    },
+    {
+      author_name: "maria de lapaz de medina",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtfG9ebV71VhwAAVB9K5HCQPD4-Luag0k_LzChqwqmf_=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Profesionales 5 estrellas, conocen de la A a la Z su profesión, generando en mi una gran seguridad por su honestidad. Lo recomiendo con los ojos cerrados",
+      older: 10,
+    },
+    {
+      author_name: "leonardo diaz",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/AD_cMMSbtzyEF7ILYPO2ZdJFhUFSLnD7S_q6QQ_D0B9YKfwg6y4=s40-c-rp-mo-br100",
+      rating: "5",
+      text: "Muy Profesionales , me gusta la manera en que trabajan, y megusta su maquina Fotocopiadora",
+      older: 10,
+    },
+    {
       author_name: "Mayra Blel",
       profile_photo_url:
         "https://lh3.googleusercontent.com/a-/AD_cMMSbtzyEF7ILYPO2ZdJFhUFSLnD7S_q6QQ_D0B9YKfwg6y4=s40-c-rp-mo-br100",
@@ -117,7 +269,6 @@ export default async function handler(req, res) {
       reviews: lp,
       our_reviews: getusers,
     });
-    
   } catch (error) {
     console.error(error);
     return res.status(403).json({ error: error });
