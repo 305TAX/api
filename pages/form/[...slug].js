@@ -10,6 +10,8 @@ import {
   Stepper,
   Step,
   Rating,
+  Checkbox,
+  Radio,
   Tooltip,
 } from "@material-tailwind/react";
 
@@ -267,10 +269,18 @@ const Verify = ({ userReview }) => {
                                       </label>
                                     </div>
                                     <div className="mr-3 flex items-center h-5">
-                                      <input
+                                      <Checkbox
                                         id={`item-${index}-${index2}`}
                                         name={`item-${index}-${index2}`}
                                         onChange={(e) => handleChangeChecked(e)}
+                                        className={classNames(
+                                          user_form_data["form"][
+                                            `item-${index}-${index2}`
+                                          ] == true
+                                            ? "checked:bg-[#110975] checked:border-[#110975] border-[#7d2181] bg-[#7d2181]"
+                                            : "checked:bg-[#f50002] checked:border-[#f50002]",
+                                          "rounded-full"
+                                        )}
                                         defaultChecked={
                                           user_form_data["form"][
                                             `item-${index}-${index2}`
@@ -278,8 +288,6 @@ const Verify = ({ userReview }) => {
                                             ? true
                                             : false
                                         }
-                                        type="checkbox"
-                                        className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 rounded-full"
                                       />
                                     </div>
                                   </div>
@@ -318,13 +326,24 @@ const Verify = ({ userReview }) => {
                                     key={`item-${index}-${index2}`}
                                     className="flex items-center"
                                   >
-                                    <input
+                                    <Radio
                                       id={`item-${index}-${index2}`}
-                                      name={`item-${index}`}
-                                      type="radio"
                                       onChange={(e) =>
                                         handleChangeRadio(e, index2)
                                       }
+                                      className={classNames(
+                                        user_form_data["form"][
+                                          `item-${index}`
+                                        ][1] == index2
+                                          ? user_form_data["form"][
+                                              `item-${index}`
+                                            ][0] == true
+                                            ? "bg-[#7d2181] checked:bg-white"
+                                            : " "
+                                          : "",
+                                        ""
+                                      )}
+                                      name={`item-${index}`}
                                       defaultChecked={
                                         user_form_data["form"][
                                           `item-${index}`
@@ -336,8 +355,15 @@ const Verify = ({ userReview }) => {
                                             : false
                                           : false
                                       }
-                                      className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
                                     />
+                                    {/* <input
+                                      
+                                     
+                                      type="radio"
+                                      
+                                      
+                                      className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
+                                    /> */}
                                     <label
                                       htmlFor={`item-${index}-${index2}`}
                                       className="ml-3 block text-lg font-medium text-black"
@@ -419,11 +445,18 @@ const Verify = ({ userReview }) => {
                           </label>
                         </div>
                         <div className="mr-3 flex items-center h-5">
-                          <input
+                          <Radio
                             id={`item-last`}
                             name={`item-last`}
-                            type="radio"
                             onChange={(e) => handleChangeRadio(e, 0)}
+                            className={classNames(
+                              user_form_data["form"][`item-last`][1] == 0
+                                ? user_form_data["form"][`item-last`][0] == true
+                                  ? "bg-[#7d2181] checked:bg-white"
+                                  : " "
+                                : "",
+                              ""
+                            )}
                             defaultChecked={
                               user_form_data["form"][`item-last`][1] == 0
                                 ? user_form_data["form"][`item-last`][0] == true
@@ -431,8 +464,14 @@ const Verify = ({ userReview }) => {
                                   : false
                                 : false
                             }
-                            className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
                           />
+                          {/* <input
+                            
+                            type="radio"
+                            
+                            
+                            className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
+                          /> */}
                         </div>
                       </div>
                     </li>
@@ -447,11 +486,18 @@ const Verify = ({ userReview }) => {
                           </label>
                         </div>
                         <div className="mr-3 flex items-center h-5">
-                          <input
+                          <Radio
                             id={`item-last`}
                             name={`item-last`}
-                            type="radio"
                             onChange={(e) => handleChangeRadio(e, 1)}
+                            className={classNames(
+                              user_form_data["form"][`item-last`][1] == 1
+                                ? user_form_data["form"][`item-last`][0] == true
+                                  ? "bg-[#7d2181] checked:bg-white"
+                                  : " "
+                                : "",
+                              ""
+                            )}
                             defaultChecked={
                               user_form_data["form"][`item-last`][1] == 1
                                 ? user_form_data["form"][`item-last`][0] == true
@@ -459,7 +505,6 @@ const Verify = ({ userReview }) => {
                                   : false
                                 : false
                             }
-                            className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 "
                           />
                         </div>
                       </div>
