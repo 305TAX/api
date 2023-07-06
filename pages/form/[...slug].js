@@ -458,7 +458,7 @@ const Verify = ({ userReview }) => {
                     en Florida?
                   </legend>
                   <ol className=" pl-6 space-y-2 py-4" type="A">
-                    {/* <li key={`item-last`}>
+                    <li key={`item-last`}>
                       <div className="relative flex items-center space-x-4justify-start">
                         <div className="min-w-0 order-last flex-1 text-sm">
                           <label
@@ -477,22 +477,27 @@ const Verify = ({ userReview }) => {
                             name={`item-last`}
                             onChange={(e) => handleChangeRadio(e, 0)}
                             className={classNames(
-                              user_form_data["form"][`item-last`][1] == 0
-                                ? user_form_data["form"][`item-last`][0] == true
-                                  ? "bg-[#7d2181] checked:bg-white"
-                                  : " "
-                                : "",
+                              user_form_data["form"][`item-last`]
+                                ? user_form_data["form"][`item-last`][1] == 0
+                                  ? user_form_data["form"][`item-last`][0] ==
+                                    true
+                                    ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
+                                    : " "
+                                  : "checked:border-[#f50002]"
+                                : "checked:border-[#f50002]",
                               ""
                             )}
                             defaultChecked={
-                              user_form_data["form"][`item-last`][1] == 0
-                                ? user_form_data["form"][`item-last`][0] == true
-                                  ? true
+                              user_form_data["form"][`item-last`]
+                                ? user_form_data["form"][`item-last`][1] == 0
+                                  ? user_form_data["form"][`item-last`][0] ==
+                                    true
+                                    ? true
+                                    : false
                                   : false
                                 : false
                             }
                           />
-                      
                         </div>
                       </div>
                     </li>
@@ -507,23 +512,35 @@ const Verify = ({ userReview }) => {
                           </label>
                         </div>
                         <div className="mr-3 flex items-center h-5">
-                          <input
+                          <Radio
                             id={`item-last`}
                             name={`item-last`}
-                            type="radio"
                             onChange={(e) => handleChangeRadio(e, 1)}
+                            className={classNames(
+                              user_form_data["form"][`item-last`]
+                                ? user_form_data["form"][`item-last`][1] == 1
+                                  ? user_form_data["form"][`item-last`][0] ==
+                                    true
+                                    ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
+                                    : " "
+                                  : "checked:border-[#f50002]"
+                                : "checked:border-[#f50002]",
+                              ""
+                            )}
                             defaultChecked={
-                              user_form_data["form"][`item-last`][1] == 1
-                                ? user_form_data["form"][`item-last`][0] == true
-                                  ? true
+                              user_form_data["form"][`item-last`]
+                                ? user_form_data["form"][`item-last`][1] == 1
+                                  ? user_form_data["form"][`item-last`][0] ==
+                                    true
+                                    ? true
+                                    : false
                                   : false
                                 : false
                             }
-                            className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 "
                           />
                         </div>
                       </div>
-                    </li> */}
+                    </li>
                   </ol>
                 </fieldset>
               </div>
