@@ -163,7 +163,7 @@ const Verify = ({ userReview }) => {
 
                     <span className="block text-sm sm:text-lg">
                       {currentLang == "es" ? (
-                        <>Hablemos</>
+                        <>Quiero Contactarlos</>
                       ) : (
                         <>Let&apos;s Talk</>
                       )}
