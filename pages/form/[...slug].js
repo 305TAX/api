@@ -359,38 +359,35 @@ const Verify = ({ userReview }) => {
                                         handleChangeRadio(e, index2)
                                       }
                                       className={classNames(
-                                        user_form_data["form"][
-                                          `item-${index}`
-                                        ][1] == index2
+                                        user_form_data["form"][`item-${index}`]
                                           ? user_form_data["form"][
                                               `item-${index}`
-                                            ][0] == true
-                                            ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
-                                            : " "
+                                            ][1] == index2
+                                            ? user_form_data["form"][
+                                                `item-${index}`
+                                              ][0] == true
+                                              ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
+                                              : " "
+                                            : "checked:border-[#f50002]"
                                           : "checked:border-[#f50002]",
                                         ""
                                       )}
                                       name={`item-${index}`}
                                       defaultChecked={
-                                        user_form_data["form"][
-                                          `item-${index}`
-                                        ][1] == index2
+                                        user_form_data["form"][`item-${index}`]
                                           ? user_form_data["form"][
                                               `item-${index}`
-                                            ][0] == true
-                                            ? true
+                                            ][1] == index2
+                                            ? user_form_data["form"][
+                                                `item-${index}`
+                                              ][0] == true
+                                              ? true
+                                              : false
                                             : false
                                           : false
                                       }
                                     />
-                                    {/* <input
-                                      
-                                     
-                                      type="radio"
-                                      
-                                      
-                                      className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
-                                    /> */}
+
                                     <label
                                       htmlFor={`item-${index}-${index2}`}
                                       className="ml-3 block text-lg font-medium text-black"
@@ -461,7 +458,7 @@ const Verify = ({ userReview }) => {
                     en Florida?
                   </legend>
                   <ol className=" pl-6 space-y-2 py-4" type="A">
-                    <li key={`item-last`}>
+                    {/* <li key={`item-last`}>
                       <div className="relative flex items-center space-x-4justify-start">
                         <div className="min-w-0 order-last flex-1 text-sm">
                           <label
@@ -495,13 +492,7 @@ const Verify = ({ userReview }) => {
                                 : false
                             }
                           />
-                          {/* <input
-                            
-                            type="radio"
-                          
-                            
-                            className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
-                          /> */}
+                      
                         </div>
                       </div>
                     </li>
@@ -532,7 +523,7 @@ const Verify = ({ userReview }) => {
                           />
                         </div>
                       </div>
-                    </li>
+                    </li> */}
                   </ol>
                 </fieldset>
               </div>
