@@ -223,6 +223,22 @@ const Verify = ({ userReview }) => {
                 mdicon.classList.add("text-[#f50002]");
               }
             });
+
+            for (let index = 0; index < 2; index++) {
+              const mditem = document.getElementById(`item-last-div-${index}`);
+
+              const mdinput = mditem.childNodes[0].childNodes[0].childNodes[0];
+              const mdicon = mditem.childNodes[0].childNodes[0].childNodes[1];
+
+              if (mdinput.checked) {
+                mdinput.setAttribute("leadEstablished", true);
+                mdicon.classList.remove("text-blue-500");
+                mdicon.classList.add("text-[#110975]");
+              } else {
+                mdicon.classList.remove("text-blue-500");
+                mdicon.classList.add("text-[#f50002]");
+              }
+            }
           }
         });
       }
@@ -469,11 +485,11 @@ const Verify = ({ userReview }) => {
                           </label>
                         </div>
                         <div
-                          id={"item-last-div"}
+                          id={"item-last-div-0"}
                           className="mr-3 flex items-center h-5"
                         >
                           <Radio
-                            id={`item-last`}
+                            id={`item-last-0`}
                             name={`item-last`}
                             onChange={(e) => handleChangeRadio(e, 0)}
                             className={classNames(
@@ -511,9 +527,12 @@ const Verify = ({ userReview }) => {
                             No
                           </label>
                         </div>
-                        <div className="mr-3 flex items-center h-5">
+                        <div
+                          id={"item-last-div-1"}
+                          className="mr-3 flex items-center h-5"
+                        >
                           <Radio
-                            id={`item-last`}
+                            id={`item-last-1`}
                             name={`item-last`}
                             onChange={(e) => handleChangeRadio(e, 1)}
                             className={classNames(
