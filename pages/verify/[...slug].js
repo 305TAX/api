@@ -49,6 +49,9 @@ const Verify = ({ userReview }) => {
             height,
           });
           setIsLoading(false);
+          setTimeout(() => {
+            window.location.replace("https://305tax.com")
+          }, 30000);
         }
         // } else {
         //   window.location.replace("https://www.305tax.com");

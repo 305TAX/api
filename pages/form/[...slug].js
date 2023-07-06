@@ -55,34 +55,6 @@ const Verify = ({ userReview }) => {
     });
   };
 
-  const [dimensions, setDimensions] = useState({
-    width: 0,
-    height: 0,
-  });
-
-  const [notForm, setNotForm] = useState(false);
-
-  useEffect(() => {
-    fetch(`/api/get_lead_form?id=${userReview}`, {
-      method: "POST",
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (Object.entries(data.form).length > 1) {
-          setIsLoading(false);
-          setOriginalQuestions(data.form);
-          setRQuestions(data.form);
-          set_user_form_data(data);
-          console.log(data);
-        } else {
-          setNotForm(true);
-          setIsLoading(false);
-          set_user_form_data(data);
-          console.log(data);
-        }
-      });
-  }, []);
-
   const questions = [
     {
       title:
@@ -203,6 +175,60 @@ const Verify = ({ userReview }) => {
     },
   ];
 
+  const [dimensions, setDimensions] = useState({
+    width: 0,
+    height: 0,
+  });
+
+  const [notForm, setNotForm] = useState(false);
+
+  useEffect(() => {
+    fetch(`/api/get_lead_form?id=${userReview}`, {
+      method: "POST",
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (Object.entries(data.form).length > 1) {
+          setIsLoading(false);
+          setOriginalQuestions(data.form);
+          setRQuestions(data.form);
+          set_user_form_data(data);
+
+          console.log("data:", data);
+        } else {
+          setNotForm(true);
+          setIsLoading(false);
+          set_user_form_data(data);
+          console.log("data:", data);
+        }
+      });
+
+    setTimeout(() => {
+      if (document.readyState === "complete") {
+        questions.map((quest, index) => {
+          if (quest?.type == "choice") {
+            quest?.items.map((item, index2) => {
+              const mditem = document.getElementById(
+                `item-${index}-${index2}-div`
+              );
+              const mdinput = mditem.childNodes[0].childNodes[0].childNodes[0];
+              const mdicon = mditem.childNodes[0].childNodes[0].childNodes[1];
+
+              if (mdinput.checked) {
+                mdinput.setAttribute("leadEstablished", true);
+                mdicon.classList.remove("text-blue-500");
+                mdicon.classList.add("text-[#110975]");
+              } else {
+                mdicon.classList.remove("text-blue-500");
+                mdicon.classList.add("text-[#f50002]");
+              }
+            });
+          }
+        });
+      }
+    }, 200);
+  }, []);
+
   if (isLoading) {
     // ⬅️ si está cargando, mostramos un texto que lo indique
     return (
@@ -235,12 +261,7 @@ const Verify = ({ userReview }) => {
               >
                 asdasd
               </button> */}
-              <div className="flex justify-between items-center">
-              <Radio id={`all-1`} name={`all-1`} label="Establecido por el Lead" className={"bg-[#110975]"} />
-              <Radio id={`all-1`} name={`all-1`} label="Establecido por 305TAX" className={"bg-[#f50002]"} />
-                <Radio id={`all-1`} name={`all-1`} label="Modificado por 305TAX a otra opción" className={"bg-[#7d2181]"} />
-                
-              </div>
+              <span className="block"></span>
               {questions.map((quest, index) => (
                 <>
                   {quest?.type == "multiple_choice" ? (
@@ -260,7 +281,7 @@ const Verify = ({ userReview }) => {
                               <></>
                             )}
                           </legend>
-                          <ol className="   pl-6 space-y-2 py-4" type="A">
+                          <ol className="pl-6 space-y-2 py-4" type="A">
                             {quest?.items.map((item, index2) => (
                               <>
                                 <li key={`item-${index}-${index2}`}>
@@ -323,12 +344,13 @@ const Verify = ({ userReview }) => {
                             )}
                           </legend>
 
-                          <ol className="   pl-6 space-y-2 py-4" type="A">
+                          <ol className=" pl-6 space-y-2 py-4" type="A">
                             {quest?.items.map((item, index2) => (
                               <>
                                 <li key={`item-${index}-${index2}`}>
                                   <div
                                     key={`item-${index}-${index2}`}
+                                    id={`item-${index}-${index2}-div`}
                                     className="flex items-center"
                                   >
                                     <Radio
@@ -343,9 +365,9 @@ const Verify = ({ userReview }) => {
                                           ? user_form_data["form"][
                                               `item-${index}`
                                             ][0] == true
-                                            ? "bg-[#7d2181] checked:bg-white"
+                                            ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
                                             : " "
-                                          : "",
+                                          : "checked:border-[#f50002]",
                                         ""
                                       )}
                                       name={`item-${index}`}
@@ -449,7 +471,10 @@ const Verify = ({ userReview }) => {
                             Si
                           </label>
                         </div>
-                        <div className="mr-3 flex items-center h-5">
+                        <div
+                          id={"item-last-div"}
+                          className="mr-3 flex items-center h-5"
+                        >
                           <Radio
                             id={`item-last`}
                             name={`item-last`}
@@ -473,7 +498,7 @@ const Verify = ({ userReview }) => {
                           {/* <input
                             
                             type="radio"
-                            
+                          
                             
                             className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300"
                           /> */}
@@ -491,18 +516,11 @@ const Verify = ({ userReview }) => {
                           </label>
                         </div>
                         <div className="mr-3 flex items-center h-5">
-                          <Radio
+                          <input
                             id={`item-last`}
                             name={`item-last`}
+                            type="radio"
                             onChange={(e) => handleChangeRadio(e, 1)}
-                            className={classNames(
-                              user_form_data["form"][`item-last`][1] == 1
-                                ? user_form_data["form"][`item-last`][0] == true
-                                  ? "bg-[#7d2181] checked:bg-white"
-                                  : " "
-                                : "",
-                              ""
-                            )}
                             defaultChecked={
                               user_form_data["form"][`item-last`][1] == 1
                                 ? user_form_data["form"][`item-last`][0] == true
@@ -510,6 +528,7 @@ const Verify = ({ userReview }) => {
                                   : false
                                 : false
                             }
+                            className="focus:ring-[#110975] h-4 w-4 text-[#110975] border-gray-300 "
                           />
                         </div>
                       </div>
