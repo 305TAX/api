@@ -235,7 +235,12 @@ const Verify = ({ userReview }) => {
               >
                 asdasd
               </button> */}
-              <span className="block"></span>
+              <div className="flex justify-between items-center">
+              <Radio id={`all-1`} name={`all-1`} label="Establecido por el Lead" className={"bg-[#110975]"} />
+              <Radio id={`all-1`} name={`all-1`} label="Establecido por 305TAX" className={"bg-[#f50002]"} />
+                <Radio id={`all-1`} name={`all-1`} label="Modificado por 305TAX a otra opción" className={"bg-[#7d2181]"} />
+                
+              </div>
               {questions.map((quest, index) => (
                 <>
                   {quest?.type == "multiple_choice" ? (
