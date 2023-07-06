@@ -617,7 +617,13 @@ const Verify = ({ userReview }) => {
                     <button class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
                       Guardar Cambios
                     </button>
-                    <button class="bg-[#f50002] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setRQuestions(originalQuestions);
+                      }}
+                      class="bg-[#f50002] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm"
+                    >
                       X
                     </button>
                   </div>
