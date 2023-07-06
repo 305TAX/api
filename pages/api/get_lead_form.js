@@ -23,6 +23,7 @@ export default async function handler(req, res) {
     const db = client.db("users_reviews");
 
     const response = await db.collection("forms").find({}).toArray();
+    console.log(response?.filter((user) => user.info_lead.odoo_id == q?.id)[0])
     return res.json(
       response?.filter((user) => user.info_lead.odoo_id == q?.id)[0]
     );
@@ -43,23 +44,5 @@ export default async function handler(req, res) {
     });
   }
 
-  //   odoo.connect(function (err) {
-  //     if (err) {
-  //       return console.log(err);
-  //     }
 
-  //     var inParams = [];
-  //     inParams.push([Number(q?.info_lead.crm_id)]); //id to update
-  //     inParams.push({
-  //       x_studio_temp_stage: String(1),
-  //     });
-  //     var params = [];
-  //     params.push(inParams);
-  //     odoo.execute_kw("crm.lead", "write", params, async function (err, value) {
-  //       if (err) {
-  //         return console.log(err);
-  //       }
-
-  //     });
-  //   });
 }
