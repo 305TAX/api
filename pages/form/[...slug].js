@@ -175,6 +175,48 @@ const Verify = ({ userReview }) => {
     },
   ];
 
+  const internalQuestions = [
+    {
+      title: "¿Posee usted cuenta bancaria en los Estados Unidos?",
+      type: "choice",
+      items: ["Si", "No"],
+    },
+    {
+      title: "¿Puede usted viajar a los Estados Unidos?",
+      type: "choice",
+      items: ["Si", "No"],
+    },
+    {
+      title:
+        "¿Existe alguna otra persona que influya en la toma de la decisión en relación con esta compra?",
+      type: "choice",
+      items: ["Si", "No"],
+    },
+    {
+      title:
+        "Si respondió afirmativamente a la pregunta anterior. ¿Cuál es su relación con usted?",
+      type: "input",
+      rows: 1,
+    },
+    {
+      title:
+        "Si respondió afirmativamente a la pregunta anterior. ¿Desea usted que participe en nuestra próxima reunión vía Zoom?",
+      type: "choice",
+      items: ["Si", "No"],
+    },
+    {
+      title: "¿Tiene hijos?",
+      type: "choice",
+      items: ["Si", "No"],
+    },
+    {
+      title: "¿Cuáles son sus edades?",
+      subtitle: "Separe con comas las diferentes edades",
+      type: "input",
+      rows: 1,
+    },
+  ];
+
   const [dimensions, setDimensions] = useState({
     width: 0,
     height: 0,
@@ -241,6 +283,43 @@ const Verify = ({ userReview }) => {
             }
           }
         });
+
+        internalQuestions.map((quest, index) => {
+          if (quest?.type == "choice") {
+            quest?.items.map((item, index2) => {
+              const mditem = document.getElementById(
+                `item-internal-${index}-${index2}-div`
+              );
+              const mdinput = mditem.childNodes[0].childNodes[0].childNodes[0];
+              const mdicon = mditem.childNodes[0].childNodes[0].childNodes[1];
+
+              if (mdinput.checked) {
+                mdinput.setAttribute("leadEstablished", true);
+                mdicon.classList.remove("text-blue-500");
+                mdicon.classList.add("text-[#110975]");
+              } else {
+                mdicon.classList.remove("text-blue-500");
+                mdicon.classList.add("text-[#f50002]");
+              }
+            });
+
+            // for (let index = 0; index < 2; index++) {
+            //   const mditem = document.getElementById(`item-last-div-${index}`);
+
+            //   const mdinput = mditem.childNodes[0].childNodes[0].childNodes[0];
+            //   const mdicon = mditem.childNodes[0].childNodes[0].childNodes[1];
+
+            //   if (mdinput.checked) {
+            //     mdinput.setAttribute("leadEstablished", true);
+            //     mdicon.classList.remove("text-blue-500");
+            //     mdicon.classList.add("text-[#110975]");
+            //   } else {
+            //     mdicon.classList.remove("text-blue-500");
+            //     mdicon.classList.add("text-[#f50002]");
+            //   }
+            // }
+          }
+        });
       }
     }, 200);
   }, []);
@@ -277,7 +356,25 @@ const Verify = ({ userReview }) => {
               >
                 asdasd
               </button> */}
-              <span className="block"></span>
+              <div className="flex justify-between pb-2 items-center max-w-7xl mx-auto">
+                <div className="flex justify-start items-center space-x-2">
+                  <span className="block p-2.5 rounded-full bg-[#110975]"></span>
+                  <span className="block">Establecido por el Lead</span>
+                </div>
+                <div className="flex justify-start items-center space-x-2">
+                  <span className="block p-2.5 rounded-full bg-[#7d2181]"></span>
+                  <span className="block">
+                    Modificado por un agente de 305TAX
+                  </span>
+                </div>
+                <div className="flex justify-start items-center space-x-2">
+                  <span className="block p-2.5 rounded-full bg-[#f50002]"></span>
+                  <span className="block">
+                    Establecido por un agente de 305TAX
+                  </span>
+                </div>
+              </div>
+
               {questions.map((quest, index) => (
                 <>
                   {quest?.type == "multiple_choice" ? (
@@ -457,6 +554,132 @@ const Verify = ({ userReview }) => {
                 </>
               ))}
             </div>
+            <div className="divide-y bg-[#453aec2c] divide-gray-800 px-5 py-4">
+              {internalQuestions.map((iquest, indexi) => (
+                <>
+                  {iquest?.type == "choice" ? (
+                    <>
+                      <div className="w-full  py-4">
+                        <fieldset>
+                          <legend className="text-lg font-semibold text-gray-900">
+                            <div className="flex justify-start items-start">
+                              <span className="block">¿</span>
+                              {String(iquest?.title).replace("¿", "")}
+                            </div>
+                            {iquest?.subtitle ? (
+                              <>
+                                <span className="pl-3 block text-gray-400">
+                                  {iquest?.subtitle}
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </legend>
+
+                          <ol className=" pl-6 space-y-2 py-4" type="A">
+                            {iquest?.items.map((item, indexi2) => (
+                              <>
+                                <li key={`item-internal-${indexi}-${indexi2}`}>
+                                  <div
+                                    key={`item-internal-${indexi}-${indexi2}`}
+                                    id={`item-internal-${indexi}-${indexi2}-div`}
+                                    className="flex items-center"
+                                  >
+                                    <Radio
+                                      id={`item-internal-${indexi}-${indexi2}`}
+                                      onChange={(e) =>
+                                        handleChangeRadio(e, indexi2)
+                                      }
+                                      className={classNames(
+                                        user_form_data["form"][
+                                          `item-internal-${indexi}`
+                                        ]
+                                          ? user_form_data["form"][
+                                              `item-internal-${indexi}`
+                                            ][1] == index2
+                                            ? user_form_data["form"][
+                                                `item-internal-${indexi}`
+                                              ][0] == true
+                                              ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
+                                              : " "
+                                            : "checked:border-[#f50002]"
+                                          : "checked:border-[#f50002]",
+                                        ""
+                                      )}
+                                      name={`item-internal-${indexi}`}
+                                      defaultChecked={
+                                        user_form_data["form"][
+                                          `item-internal${indexi}`
+                                        ]
+                                          ? user_form_data["form"][
+                                              `item-internal-${indexi}`
+                                            ][1] == index2
+                                            ? user_form_data["form"][
+                                                `item-internal-${indexi}`
+                                              ][0] == true
+                                              ? true
+                                              : false
+                                            : false
+                                          : false
+                                      }
+                                    />
+
+                                    <label
+                                      htmlFor={`item-internal-${indexi}-${indexi2}`}
+                                      className="ml-3 block text-lg font-medium text-black"
+                                    >
+                                      {item}
+                                    </label>
+                                  </div>
+                                </li>
+                              </>
+                            ))}
+                          </ol>
+                        </fieldset>
+                      </div>
+                    </>
+                  ) : iquest?.type == "input" ? (
+                    <>
+                      <div className="w-full py-4">
+                        <fieldset>
+                          <legend className="text-lg font-semibold text-gray-900">
+                            {iquest?.title}
+                            {iquest?.subtitle ? (
+                              <>
+                                <br />
+                                <span className="block text-gray-400">
+                                  {iquest?.subtitle}
+                                </span>
+                              </>
+                            ) : (
+                              <></>
+                            )}
+                          </legend>
+
+                          <div className="   space-y-2 py-4">
+                            <textarea
+                              rows={iquest?.rows}
+                              name={`comment-internal-${indexi}`}
+                              onChange={(e) => handleChangeInput(e)}
+                              id={`comment-internal-${indexi}`}
+                              className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                              defaultValue={
+                                user_form_data["form"][
+                                  `comment-internal-${indexi}`
+                                ]
+                              }
+                            />
+                          </div>
+                        </fieldset>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </>
+              ))}
+            </div>
             <div className="border-t border-gray-300 px-5 pt-4">
               <p className="m-0 p-0 py-4 font-semibold text-lg text-justify">
                 En 305TAX estamos comprometidos en respetar el trabajo de los
@@ -613,16 +836,48 @@ const Verify = ({ userReview }) => {
                 <></>
               ) : (
                 <>
-                  <div className="flex justify-end items-center space-x-3">
-                    <button class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
-                      Guardar Cambios
+                  {/* <a
+                    href="#seeVideo"
+                    className="relative w-full transform hover:scale-[1.03] hover:transition duration-300 ease-in-out sm:w-auto text-lg font-bold text-black "
+                  >
+                    <Image
+                      className="w-52 bg-cover drop-shadow-sm"
+                      src="/images/blue-button.png"
+                      alt="Quickbooks"
+                      loading="lazy"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                    />
+                    <span class="absolute w-full text-center text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                      <span className="block text-lg">
+                        {currentLang == "es" ? (
+                          <>Informe GRATIS</>
+                        ) : (
+                          <>FREE Report</>
+                        )}
+                      </span>
+                    </span>
+                  </a> */}
+                  <div className="flex justify-end items-center space-x-2">
+                    <button class=" relative hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
+                      <img
+                        className="w-44 bg-cover drop-shadow-sm"
+                        src="https://305tax.com/images/blue-button.png"
+                        alt=""
+                      />
+                      <span class="absolute w-full text-center text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                        <span className="block text-lg">
+                          Guardar Cambios
+                        </span>
+                      </span>
                     </button>
                     <button
                       onClick={(e) => {
                         e.preventDefault();
                         setRQuestions(originalQuestions);
                       }}
-                      class="bg-[#f50002] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm"
+                      class="bg-[#f50002] rounded-full hover:brightness-75 text-white font-bold py-2 px-4"
                     >
                       X
                     </button>
@@ -880,24 +1135,6 @@ const Verify = ({ userReview }) => {
                 </fieldset>
               </div>
             </div>
-
-            {/* <div className="fixed block bottom-0 right-0 my-2.5 mx-2.5">
-              {JSON.stringify(originalQuestions) ==
-              JSON.stringify(rquestions) ? (
-                <></>
-              ) : (
-                <>
-                  <div className="flex justify-end items-center space-x-3">
-                    <button class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
-                      Guardar Cambios
-                    </button>
-                    <button class="bg-[#f50002] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
-                      X
-                    </button>
-                  </div>
-                </>
-              )}
-            </div> */}
           </>
         )}
       </main>
