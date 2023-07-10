@@ -836,48 +836,16 @@ const Verify = ({ userReview }) => {
                 <></>
               ) : (
                 <>
-                  {/* <a
-                    href="#seeVideo"
-                    className="relative w-full transform hover:scale-[1.03] hover:transition duration-300 ease-in-out sm:w-auto text-lg font-bold text-black "
-                  >
-                    <Image
-                      className="w-52 bg-cover drop-shadow-sm"
-                      src="/images/blue-button.png"
-                      alt="Quickbooks"
-                      loading="lazy"
-                      width={0}
-                      height={0}
-                      sizes="100vw"
-                    />
-                    <span class="absolute w-full text-center text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                      <span className="block text-lg">
-                        {currentLang == "es" ? (
-                          <>Informe GRATIS</>
-                        ) : (
-                          <>FREE Report</>
-                        )}
-                      </span>
-                    </span>
-                  </a> */}
-                  <div className="flex justify-end items-center space-x-2">
-                    <button class=" relative hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
-                      <img
-                        className="w-44 bg-cover drop-shadow-sm"
-                        src="https://305tax.com/images/blue-button.png"
-                        alt=""
-                      />
-                      <span class="absolute w-full text-center text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                        <span className="block text-lg">
-                          Guardar Cambios
-                        </span>
-                      </span>
+                  <div className="flex justify-end items-center space-x-3">
+                    <button class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
+                      Guardar Cambios
                     </button>
                     <button
                       onClick={(e) => {
                         e.preventDefault();
                         setRQuestions(originalQuestions);
                       }}
-                      class="bg-[#f50002] rounded-full hover:brightness-75 text-white font-bold py-2 px-4"
+                      class="bg-[#f50002] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm"
                     >
                       X
                     </button>
