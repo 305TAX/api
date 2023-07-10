@@ -12,6 +12,22 @@ export default async function handler(req, res) {
 
   const oReviews = [
     {
+      author_name: "Maria Gabriela Barreto Araque",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTteUuonhvcBgoO5weP4Hw4u5aUJdW1IN73mpXMICwyjK=w68-h68-p-rp-mo-br100",
+      rating: "5",
+      text: "Excelentes y recomendado ampliamente!",
+      older: 29,
+    },
+    {
+      author_name: "Marjorie Cucalon",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTteu1LK14ZoflhR0J5z-_68OxizImjja4hrcRi1R_5u8=w68-h68-p-rp-mo-br100",
+      rating: "5",
+      text: "Excellent service, very knowledgeable group. Follow up with the clients. Highly recommended.",
+      older: 28,
+    },
+    {
       author_name: "Giselly Ruiz",
       profile_photo_url:
         "https://lh3.googleusercontent.com/a/AAcHTte7WVLUufZa4G0Em-fwpnfhYRWyrmUTZgvnNzIv0uHu=w75-h75-p-rp-mo-br100",
