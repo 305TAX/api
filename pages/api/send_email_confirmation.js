@@ -19,6 +19,11 @@ export default async function handler(req, res) {
 
   const q = req.query;
 
+  if (q?.mode == "body") {
+    const qbody = JSON.parse(JSON.stringify(req.body));
+    q.crm_id = qbody?.crm_id;
+  }
+
   const secret = `${q?.crm_id}572023${Math.floor(Math.random() * 100)}`;
   const hash = createHmac("sha256", secret)
     .update("EMAIL-CONFIRMATION")
