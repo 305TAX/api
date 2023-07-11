@@ -39,7 +39,7 @@ export default async function handler(req, res) {
     params.push(inParams);
     odoo.execute_kw("crm.lead", "write", params, function (err, value) {
       if (err) {
-        return console.log("ERROR2", err, q.crm_id);
+        return console.log("ERROR2", err, q);
       }
 
       return res.json({
