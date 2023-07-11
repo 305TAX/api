@@ -364,13 +364,13 @@ const Verify = ({ userReview }) => {
                 <div className="flex justify-start items-center space-x-2">
                   <span className="block p-2.5 rounded-full bg-[#7d2181]"></span>
                   <span className="block">
-                    Modificado por un agente de 305TAX
+                    Modificado por 305TAX
                   </span>
                 </div>
                 <div className="flex justify-start items-center space-x-2">
                   <span className="block p-2.5 rounded-full bg-[#f50002]"></span>
                   <span className="block">
-                    Establecido por un agente de 305TAX
+                    Establecido por 305TAX
                   </span>
                 </div>
               </div>
