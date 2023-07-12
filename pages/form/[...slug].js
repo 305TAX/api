@@ -177,12 +177,17 @@ const Verify = ({ userReview }) => {
 
   const internalQuestions = [
     {
+      title: "¿Puede usted viajar a los Estados Unidos?",
+      type: "choice",
+      items: ["Si", "No"],
+    },
+    {
       title: "¿Posee usted cuenta bancaria en los Estados Unidos?",
       type: "choice",
       items: ["Si", "No"],
     },
     {
-      title: "¿Puede usted viajar a los Estados Unidos?",
+      title: "¿Tiene hijos menores de 18 años de edad?",
       type: "choice",
       items: ["Si", "No"],
     },
@@ -203,17 +208,6 @@ const Verify = ({ userReview }) => {
         "Si respondió afirmativamente a la pregunta anterior. ¿Desea usted que participe en nuestra próxima reunión vía Zoom?",
       type: "choice",
       items: ["Si", "No"],
-    },
-    {
-      title: "¿Tiene hijos?",
-      type: "choice",
-      items: ["Si", "No"],
-    },
-    {
-      title: "¿Cuáles son sus edades?",
-      subtitle: "Separe con comas las diferentes edades",
-      type: "input",
-      rows: 1,
     },
   ];
 
@@ -351,7 +345,7 @@ const Verify = ({ userReview }) => {
               <div className="flex justify-between pb-2 items-center max-w-7xl mx-auto">
                 <div className="flex justify-start items-center space-x-2">
                   <span className="block p-2.5 rounded-full bg-[#110975]"></span>
-                  <span className="block">Establecido por el Lead</span>
+                  <span className="block">Respondido por el Lead</span>
                 </div>
                 <div className="flex justify-start items-center space-x-2">
                   <span className="block p-2.5 rounded-full bg-[#7d2181]"></span>
@@ -359,7 +353,7 @@ const Verify = ({ userReview }) => {
                 </div>
                 <div className="flex justify-start items-center space-x-2">
                   <span className="block p-2.5 rounded-full bg-[#f50002]"></span>
-                  <span className="block">Establecido por 305TAX</span>
+                  <span className="block">Respondido por 305TAX</span>
                 </div>
               </div>
 
@@ -527,7 +521,13 @@ const Verify = ({ userReview }) => {
                               name={`comment-${index}`}
                               onChange={(e) => handleChangeInput(e)}
                               id={`comment-${index}`}
-                              className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                              className={classNames(
+                                user_form_data["form"][`comment-${index}`] ==
+                                  undefined
+                                  ? "text-[#f50002]"
+                                  : "text-[#110975]",
+                                "shadow-sm focus:ring-[#110975]  resize-none focus:border-[#110975] block w-full text-lg border-gray-400 border rounded-sm"
+                              )}
                               defaultValue={
                                 user_form_data["form"][`comment-${index}`]
                               }
@@ -651,7 +651,14 @@ const Verify = ({ userReview }) => {
                               name={`comment-internal-${indexi}`}
                               onChange={(e) => handleChangeInput(e)}
                               id={`comment-internal-${indexi}`}
-                              className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                              className={classNames(
+                                user_form_data["form"][
+                                  `comment-internal-${indexi}`
+                                ] == undefined
+                                  ? "text-[#f50002]"
+                                  : "text-[#110975]",
+                                "shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border border-gray-400 rounded-sm"
+                              )}
                               defaultValue={
                                 user_form_data["form"][
                                   `comment-internal-${indexi}`
@@ -788,7 +795,12 @@ const Verify = ({ userReview }) => {
                       id="item-last-comment"
                       onChange={(e) => handleChangeInput(e)}
                       placeholder="Nombre y Apellido"
-                      className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                      className={classNames(
+                        user_form_data["form"][`item-last-comment`] == undefined
+                          ? "text-[#f50002]"
+                          : "text-[#110975]",
+                        "shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] border block w-full text-lg border-gray-400 rounded-sm"
+                      )}
                       defaultValue={user_form_data["form"][`item-last-comment`]}
                     />
                   </div>
@@ -808,7 +820,13 @@ const Verify = ({ userReview }) => {
                       id="item-comment-optional"
                       placeholder="Opcional"
                       onChange={(e) => handleChangeInput(e)}
-                      className="shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border-gray-300 rounded-sm"
+                      className={classNames(
+                        user_form_data["form"]["item-comment-optional"] ==
+                          undefined
+                          ? "text-[#f50002]"
+                          : "text-[#110975]",
+                        "shadow-sm focus:ring-[#110975] border resize-none focus:border-[#110975] block w-full text-lg border-gray-400 rounded-sm"
+                      )}
                       defaultValue={
                         user_form_data["form"]["item-comment-optional"]
                       }
