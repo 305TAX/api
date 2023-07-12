@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   const currentYear = new Date().getFullYear();
   const customerOdoo = JSON.parse(JSON.stringify(req.body));
 
-  if (customerOdoo?.invoice) {
+  if (String(customerOdoo?.invoice).toUpperCase() == "TRUE") {
     console.log("INVOICE ACTIVO", customerOdoo);
   } else {
     console.log("INVOICE FALSE", customerOdoo);
