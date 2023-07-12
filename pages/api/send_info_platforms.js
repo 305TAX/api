@@ -10,15 +10,24 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200,
   });
 
+  /** 0 = HOT LEAD INVOICE / 1 = ESTIMATE */
+
   /** VARIABLES */
   const currentYear = new Date().getFullYear();
   const customerOdoo = JSON.parse(JSON.stringify(req.body));
 
-  if (String(customerOdoo?.invoice).toUpperCase() == "TRUE") {
-    console.log("INVOICE ACTIVO", customerOdoo);
+  if (customerOdoo?.dest == 0) {
+    //LE DAN A INVOICE
+    console.log("Peticion recibida desde HOT LEAD INVOICE");
   } else {
-    console.log("INVOICE FALSE", customerOdoo);
+    console.log("Peticion recibida desde ESTIMATE");
   }
+
+  // if (String(customerOdoo?.invoice).toUpperCase() == "TRUE") {
+  //   console.log("INVOICE ACTIVO", customerOdoo);
+  // } else {
+  //   console.log("INVOICE FALSE", customerOdoo);
+  // }
 
   return res.json({
     currentYear: currentYear,
