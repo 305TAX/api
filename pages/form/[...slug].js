@@ -243,85 +243,77 @@ const Verify = ({ userReview }) => {
           set_user_form_data(data);
           console.log("data:", data);
         }
+
+        setTimeout(() => {
+          if (document.readyState === "complete") {
+            questions.map((quest, index) => {
+              if (quest?.type == "choice") {
+                quest?.items.map((item, index2) => {
+                  const mditem = document.getElementById(
+                    `item-${index}-${index2}-div`
+                  );
+                  const mdinput =
+                    mditem.childNodes[0].childNodes[0].childNodes[0];
+                  const mdicon =
+                    mditem.childNodes[0].childNodes[0].childNodes[1];
+
+                  if (mdinput.checked) {
+                    mdinput.setAttribute("leadEstablished", true);
+                    mdicon.classList.remove("text-blue-500");
+                    mdicon.classList.add("text-[#110975]");
+                  } else {
+                    mdicon.classList.remove("text-blue-500");
+                    mdicon.classList.add("text-[#f50002]");
+                  }
+                });
+
+                for (let index = 0; index < 2; index++) {
+                  const mditem = document.getElementById(
+                    `item-last-div-${index}`
+                  );
+
+                  const mdinput =
+                    mditem.childNodes[0].childNodes[0].childNodes[0];
+                  const mdicon =
+                    mditem.childNodes[0].childNodes[0].childNodes[1];
+
+                  if (mdinput.checked) {
+                    mdinput.setAttribute("leadEstablished", true);
+                    mdicon.classList.remove("text-blue-500");
+                    mdicon.classList.add("text-[#110975]");
+                  } else {
+                    mdicon.classList.remove("text-blue-500");
+                    mdicon.classList.add("text-[#f50002]");
+                  }
+                }
+              }
+            });
+
+            internalQuestions.map((quest, index) => {
+              if (quest?.type == "choice") {
+                quest?.items.map((item, index2) => {
+                  const mditem = document.getElementById(
+                    `item-internal-${index}-${index2}-div`
+                  );
+                  const mdinput =
+                    mditem.childNodes[0].childNodes[0].childNodes[0];
+                  const mdicon =
+                    mditem.childNodes[0].childNodes[0].childNodes[1];
+
+                  if (mdinput.checked) {
+                    mdinput.setAttribute("leadEstablished", true);
+                    mdicon.classList.remove("text-blue-500");
+                    mdicon.classList.add("text-[#110975]");
+                  } else {
+                    mdicon.classList.remove("text-blue-500");
+                    mdicon.classList.add("text-[#f50002]");
+                  }
+                });
+              }
+            });
+          }
+        }, 100);
       });
-
-    setTimeout(() => {
-      if (document.readyState === "complete") {
-        questions.map((quest, index) => {
-          if (quest?.type == "choice") {
-            quest?.items.map((item, index2) => {
-              const mditem = document.getElementById(
-                `item-${index}-${index2}-div`
-              );
-              const mdinput = mditem.childNodes[0].childNodes[0].childNodes[0];
-              const mdicon = mditem.childNodes[0].childNodes[0].childNodes[1];
-
-              if (mdinput.checked) {
-                mdinput.setAttribute("leadEstablished", true);
-                mdicon.classList.remove("text-blue-500");
-                mdicon.classList.add("text-[#110975]");
-              } else {
-                mdicon.classList.remove("text-blue-500");
-                mdicon.classList.add("text-[#f50002]");
-              }
-            });
-
-            for (let index = 0; index < 2; index++) {
-              const mditem = document.getElementById(`item-last-div-${index}`);
-
-              const mdinput = mditem.childNodes[0].childNodes[0].childNodes[0];
-              const mdicon = mditem.childNodes[0].childNodes[0].childNodes[1];
-
-              if (mdinput.checked) {
-                mdinput.setAttribute("leadEstablished", true);
-                mdicon.classList.remove("text-blue-500");
-                mdicon.classList.add("text-[#110975]");
-              } else {
-                mdicon.classList.remove("text-blue-500");
-                mdicon.classList.add("text-[#f50002]");
-              }
-            }
-          }
-        });
-
-        internalQuestions.map((quest, index) => {
-          if (quest?.type == "choice") {
-            quest?.items.map((item, index2) => {
-              const mditem = document.getElementById(
-                `item-internal-${index}-${index2}-div`
-              );
-              const mdinput = mditem.childNodes[0].childNodes[0].childNodes[0];
-              const mdicon = mditem.childNodes[0].childNodes[0].childNodes[1];
-
-              if (mdinput.checked) {
-                mdinput.setAttribute("leadEstablished", true);
-                mdicon.classList.remove("text-blue-500");
-                mdicon.classList.add("text-[#110975]");
-              } else {
-                mdicon.classList.remove("text-blue-500");
-                mdicon.classList.add("text-[#f50002]");
-              }
-            });
-
-            // for (let index = 0; index < 2; index++) {
-            //   const mditem = document.getElementById(`item-last-div-${index}`);
-
-            //   const mdinput = mditem.childNodes[0].childNodes[0].childNodes[0];
-            //   const mdicon = mditem.childNodes[0].childNodes[0].childNodes[1];
-
-            //   if (mdinput.checked) {
-            //     mdinput.setAttribute("leadEstablished", true);
-            //     mdicon.classList.remove("text-blue-500");
-            //     mdicon.classList.add("text-[#110975]");
-            //   } else {
-            //     mdicon.classList.remove("text-blue-500");
-            //     mdicon.classList.add("text-[#f50002]");
-            //   }
-            // }
-          }
-        });
-      }
-    }, 200);
   }, []);
 
   if (isLoading) {
@@ -363,15 +355,11 @@ const Verify = ({ userReview }) => {
                 </div>
                 <div className="flex justify-start items-center space-x-2">
                   <span className="block p-2.5 rounded-full bg-[#7d2181]"></span>
-                  <span className="block">
-                    Modificado por 305TAX
-                  </span>
+                  <span className="block">Modificado por 305TAX</span>
                 </div>
                 <div className="flex justify-start items-center space-x-2">
                   <span className="block p-2.5 rounded-full bg-[#f50002]"></span>
-                  <span className="block">
-                    Establecido por 305TAX
-                  </span>
+                  <span className="block">Establecido por 305TAX</span>
                 </div>
               </div>
 
