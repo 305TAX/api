@@ -231,14 +231,12 @@ export default async function handler(req, res) {
         console.log("ERROR IN CREATE CUSTOMER IN QUICKBOOKS", err);
       });
   } else {
-    console.log("Peticion recibida desde ESTIMATE");
+    if (String(customerOdoo?.invoice).toUpperCase() == "TRUE") {
+      console.log("INVOICE ACTIVO", customerOdoo);
+    } else {
+      console.log("INVOICE FALSE", customerOdoo);
+    }
   }
-
-  // if (String(customerOdoo?.invoice).toUpperCase() == "TRUE") {
-  //   console.log("INVOICE ACTIVO", customerOdoo);
-  // } else {
-  //   console.log("INVOICE FALSE", customerOdoo);
-  // }
 
   return res.json({
     currentYear: currentYear,
