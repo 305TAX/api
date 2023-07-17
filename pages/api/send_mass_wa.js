@@ -36,6 +36,19 @@ export default async function handler(req, res) {
   let i = 0;
   const res_ids = [];
 
+  const executeLoop = async () => {
+    var array = ["some", "array", "containing", "words"];
+    var interval = 1000; // how much time should the delay between two iterations be (in milliseconds)?
+    array.forEach(function (el, index) {
+      setTimeout(function () {
+        console.log(el);
+      }, index * interval);
+    });
+    return res.json({
+      current: true,
+    });
+  };
+
   odoo.connect(function (err) {
     if (err) {
       return console.log(err);
@@ -66,50 +79,52 @@ export default async function handler(req, res) {
             res_ids.push(val);
           }
         });
-        console.log(res_ids);
+
+        executeLoop();
       }
     );
   });
 
   // console.log("El resultado es", qbody);
 
-  const looping = async () => {
-    setTimeout(async () => {
-      try {
-        const rm = res_ids[i];
-        let fmessage =
-          "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
-          String(rm.mobile)
-            .replace(" ", "")
-            .replace("+", "")
-            .replace("-", "")
-            .replace("-", "") +
-          "?m=Hola%20" +
-          String(rm.name).split(" ")[0] +
-          "%0A%0A" +
-          encodeURIComponent(qbody.msg);
-        // const fetched = await fetch(fmessage, {
-        //   method: "POST",
-        // });
-        // const resultFetched = await fetched.json();
-        // console.log(Result, resultFetched);
-        console.log("result");
-      } catch (error) {
-        console.log("Error en Send Mass Wa");
-      }
+  // (function myLoop(i) {
+  //   setTimeout(function () {
+  //     const rm = res_ids[i];
+  //     // let fmessage =
+  //     //   "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
+  //     //   String(rm.mobile)
+  //     //     .replace(" ", "")
+  //     //     .replace("+", "")
+  //     //     .replace("-", "")
+  //     //     .replace("-", "") +
+  //     //   "?m=Hola%20" +
+  //     //   String(rm.name).split(" ")[0] +
+  //     //   "%0A%0A" +
+  //     //   encodeURIComponent(qbody.msg);
+  //     // const fetched = await fetch(fmessage, {
+  //     //   method: "POST",
+  //     // });
+  //     // const resultFetched = await fetched.json();
+  //     // console.log(Result, resultFetched);
+  //     console.log("result", i);
 
-      i++;
-      if (i < res_ids.length) {
-        looping();
-      }
+  //     if (--i) myLoop(i); //  decrement i and call myLoop again if i > 0
+  //   }, 3000);
+  // })(res_ids.length);
 
-      if (i >= res_ids.length) {
-        return res.json({
-          current: true,
-        });
-      }
-    }, 5000);
-  };
+  // const looping = async () => {
+  //   setTimeout(async () => {
 
-  looping();
+  //     i++;
+  //     if (i < res_ids.length) {
+  //       looping();
+  //     }
+
+  //     if (i >= res_ids.length) {
+  //       return res.json({
+  //         current: true,
+  //       });
+  //     }
+  //   }, 5000);
+  // };
 }
