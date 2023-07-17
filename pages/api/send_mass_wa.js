@@ -87,7 +87,7 @@ export default async function handler(req, res) {
                 .replace("-", "") +
               "?m=Hola%20" +
               String(rm.name).split(" ")[0] +
-              "%0A%0A" +
+              ".%0A%0A" +
               encodeURIComponent(qbody.msg);
             const fetched = await fetch(fmessage, {
               method: "POST",
