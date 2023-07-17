@@ -95,7 +95,7 @@ export default async function handler(req, res) {
             const resultFetched = await fetched.json();
             console.log("resulto");
           }
-
+          console.log("log interno", qbody)
           return res.json({
             current: true,
           });
