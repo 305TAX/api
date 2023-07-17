@@ -51,7 +51,7 @@ export default async function handler(req, res) {
     const inParams = [];
 
     inParams.push([]);
-    inParams.push(["id", "name", "mobile"]); //fields
+    inParams.push(["id", "name", "mobile", "email"]); //fields
 
     const params = [];
     params.push(inParams);
@@ -78,24 +78,46 @@ export default async function handler(req, res) {
 
           for (let index = 0; index < res_ids.length; index++) {
             const rm = res_ids[index];
-            let fmessage =
+
+            let fmessage = "";
+
+            if (qbody?.rc) {
+              fmessage =
+                "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
+                String(rm.mobile)
+                  .replace(" ", "")
+                  .replace("+", "")
+                  .replace("-", "")
+                  .replace("-", "") +
+                "?m=Hola%20" +
+                String(rm.name).split(" ")[0] +
+                ".%0A%0A" +
+                encodeURIComponent(qbody.msg);
+            } else {
               "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
-              String(rm.mobile)
-                .replace(" ", "")
-                .replace("+", "")
-                .replace("-", "")
-                .replace("-", "") +
-              "?m=Hola%20" +
-              String(rm.name).split(" ")[0] +
-              ".%0A%0A" +
-              encodeURIComponent(qbody.msg);
+                String(rm.mobile)
+                  .replace(" ", "")
+                  .replace("+", "")
+                  .replace("-", "")
+                  .replace("-", "") +
+                "?m=Hola%20" +
+                String(rm.name).split(" ")[0] +
+                ".%0A%0A" +
+                encodeURIComponent(qbody.msg) +
+                "%0A%0Ahttps%3A%2F%2Freview.305tax.com%2Freview%2F" +
+                String(rm.id) +
+                "%3Fe%3D" +
+                String(rm.email) +
+                "%0A%0ACordiales%20Saludos.";
+            }
+
             const fetched = await fetch(fmessage, {
               method: "POST",
             });
             const resultFetched = await fetched.json();
             console.log("resulto");
           }
-          console.log("log interno", qbody)
+          console.log("log interno", qbody);
           return res.json({
             current: true,
           });
