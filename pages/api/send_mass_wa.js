@@ -36,18 +36,11 @@ export default async function handler(req, res) {
   let i = 0;
   const res_ids = [];
 
-  const executeLoop = async () => {
-    var array = ["some", "array", "containing", "words"];
-    var interval = 1000; // how much time should the delay between two iterations be (in milliseconds)?
-    array.forEach(function (el, index) {
-      setTimeout(function () {
-        console.log(el);
-      }, index * interval);
+  function wait(time) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, time);
     });
-    return res.json({
-      current: true,
-    });
-  };
+  }
 
   odoo.connect(function (err) {
     if (err) {
@@ -67,7 +60,7 @@ export default async function handler(req, res) {
       "res.partner",
       "search_read",
       params,
-      function (err, value) {
+      async function (err, value) {
         if (err) {
           return console.log(err);
         }
@@ -80,7 +73,34 @@ export default async function handler(req, res) {
           }
         });
 
-        executeLoop();
+        const forLoop = async () => {
+          console.log("Start");
+
+          for (let index = 0; index < res_ids.length; index++) {
+            const rm = res_ids[index];
+            let fmessage =
+              "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
+              String(rm.mobile)
+                .replace(" ", "")
+                .replace("+", "")
+                .replace("-", "")
+                .replace("-", "") +
+              "?m=Hola%20" +
+              String(rm.name).split(" ")[0] +
+              "%0A%0A" +
+              encodeURIComponent(qbody.msg);
+            const fetched = await fetch(fmessage, {
+              method: "POST",
+            });
+            const resultFetched = await fetched.json();
+            console.log("resulto");
+          }
+
+          return res.json({
+            current: true,
+          });
+        };
+        forLoop();
       }
     );
   });
@@ -89,42 +109,11 @@ export default async function handler(req, res) {
 
   // (function myLoop(i) {
   //   setTimeout(function () {
-  //     const rm = res_ids[i];
-  //     // let fmessage =
-  //     //   "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
-  //     //   String(rm.mobile)
-  //     //     .replace(" ", "")
-  //     //     .replace("+", "")
-  //     //     .replace("-", "")
-  //     //     .replace("-", "") +
-  //     //   "?m=Hola%20" +
-  //     //   String(rm.name).split(" ")[0] +
-  //     //   "%0A%0A" +
-  //     //   encodeURIComponent(qbody.msg);
-  //     // const fetched = await fetch(fmessage, {
-  //     //   method: "POST",
-  //     // });
-  //     // const resultFetched = await fetched.json();
+
   //     // console.log(Result, resultFetched);
   //     console.log("result", i);
 
   //     if (--i) myLoop(i); //  decrement i and call myLoop again if i > 0
   //   }, 3000);
   // })(res_ids.length);
-
-  // const looping = async () => {
-  //   setTimeout(async () => {
-
-  //     i++;
-  //     if (i < res_ids.length) {
-  //       looping();
-  //     }
-
-  //     if (i >= res_ids.length) {
-  //       return res.json({
-  //         current: true,
-  //       });
-  //     }
-  //   }, 5000);
-  // };
 }
