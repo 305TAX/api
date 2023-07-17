@@ -20,8 +20,8 @@ export default async function handler(req, res) {
 
   /** VARIABLES */
   const currentYear = new Date().getFullYear();
-  const qbody = JSON.parse(req.body);
-  // const qbody = req.body;
+  // const qbody = JSON.parse(req.body);
+  const qbody = req.body;
 
   const newArray = [];
   String(qbody.res_ids)
@@ -94,7 +94,8 @@ export default async function handler(req, res) {
                 ".%0A%0A" +
                 encodeURIComponent(qbody.msg);
             } else {
-              "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
+              fmessage =
+                "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
                 String(rm.mobile)
                   .replace(" ", "")
                   .replace("+", "")
