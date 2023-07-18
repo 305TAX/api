@@ -489,13 +489,23 @@ const Verify = ({ userReview }) => {
                                         className={classNames(
                                           user_form_data["form_our"][
                                             `item-${index}-${index2}`
-                                          ] == true
-                                            ? "checked:bg-[#f50002] checked:border-[#f50002]"
+                                          ]
+                                            ? "existe"
                                             : user_form_data["form"][
                                                 `item-${index}-${index2}`
-                                              ] == true
-                                            ? "checked:bg-[#110975] checked:border-[#110975] border-[#7d2181] bg-[#7d2181]"
-                                            : "checked:bg-[#f50002] checked:border-[#f50002]",
+                                              ]
+                                            ? user_form_data["form"][`item-${index}-${index2}`] == true ? "checked:bg-[#110975] checked:border-[#110975] border-[#7d2181] bg-[#7d2181]" : "checked:bg-[#f50002] checked:border-[#f50002]"
+                                            : "checked:border-[#f50002] checked:bg-white",
+
+                                          // user_form_data["form_our"][
+                                          //   `item-${index}-${index2}`
+                                          // ] == true
+                                          //   ? "checked:bg-[#f50002] checked:border-[#f50002]"
+                                          //   : user_form_data["form"][
+                                          //       `item-${index}-${index2}`
+                                          //     ] == true
+                                          //   ? "checked:bg-[#110975] checked:border-[#110975] border-[#7d2181] bg-[#7d2181]"
+                                          //   : "checked:bg-[#f50002] checked:border-[#f50002]",
                                           "rounded-full"
                                         )}
                                         defaultChecked={
