@@ -34,6 +34,7 @@ const Verify = ({ userReview }) => {
   const [rquestions, setRQuestions] = useState({});
   const [modifyQuestions, setModifyQuestions] = useState({});
   const [originalQuestions, setOriginalQuestions] = useState({});
+  const [ourQuestions, setOurQuestions] = useState({});
 
   const handleChangeChecked = (e) => {
     setRQuestions({
@@ -228,6 +229,8 @@ const Verify = ({ userReview }) => {
         if (Object.entries(data.form).length > 1) {
           setIsLoading(false);
           setOriginalQuestions(data.form);
+          setModifyQuestions(data.form_modify);
+          setOurQuestions(data.form_our);
           setRQuestions(data.form);
           set_user_form_data(data);
 
@@ -253,12 +256,51 @@ const Verify = ({ userReview }) => {
                     mditem.childNodes[0].childNodes[0].childNodes[1];
 
                   if (mdinput.checked) {
+                    const rechecked = data.form_our[
+                      `item-${String(mdinput.id).split("-")[1]}`
+                    ]
+                      ? data.form_our[
+                          `item-${String(mdinput.id).split("-")[1]}`
+                        ][1] == `${String(mdinput.id).split("-")[2]}`
+                        ? true
+                        : false
+                      : data.form_modify[
+                          `item-${String(mdinput.id).split("-")[1]}`
+                        ]
+                      ? data.form_modify[
+                          `item-${String(mdinput.id).split("-")[1]}`
+                        ][1] == `${String(mdinput.id).split("-")[2]}`
+                        ? true
+                        : false
+                      : false;
+
                     mdinput.setAttribute("leadEstablished", true);
-                    mdicon.classList.remove("text-blue-500");
-                    mdicon.classList.add("text-[#110975]");
+                    mdinput.setAttribute("rechekched", rechecked);
+                    if (rechecked) {
+                      mdicon.classList.remove("text-blue-500");
+                      mdicon.classList.add("text-[#f50002]");
+                    } else {
+                      mdicon.classList.remove("text-blue-500");
+                      mdicon.classList.add("text-[#110975]");
+                    }
                   } else {
-                    mdicon.classList.remove("text-blue-500");
-                    mdicon.classList.add("text-[#f50002]");
+                    const checkedLead = data.form[
+                      `item-${String(mdinput.id).split("-")[1]}`
+                    ]
+                      ? data.form[
+                          `item-${String(mdinput.id).split("-")[1]}`
+                        ][1] == `${String(mdinput.id).split("-")[2]}`
+                        ? true
+                        : false
+                      : false;
+
+                    if (checkedLead) {
+                      mdicon.classList.remove("text-blue-500");
+                      mdicon.classList.add("text-[#110975]");
+                    } else {
+                      mdicon.classList.remove("text-blue-500");
+                      mdicon.classList.add("text-[#f50002]");
+                    }
                   }
                 });
 
@@ -335,9 +377,20 @@ const Verify = ({ userReview }) => {
         {notForm == false ? (
           <>
             <div className="divide-y divide-gray-300 px-5 py-4">
-              <button onClick={console.log(rquestions, modifyQuestions)}>
+              {/* <button
+                onClick={console.log(
+                  "rQuestions",
+                  rquestions,
+                  "\n",
+                  "modifyQuestions",
+                  modifyQuestions,
+                  "\n",
+                  "ourQuestions",
+                  ourQuestions
+                )}
+              >
                 asdasd
-              </button>
+              </button> */}
               <div className="flex justify-between pb-2 items-center max-w-7xl mx-auto">
                 <div className="flex justify-start items-center space-x-2">
                   <span className="block p-2.5 rounded-full bg-[#110975]"></span>
@@ -390,53 +443,83 @@ const Verify = ({ userReview }) => {
                                         id={`item-${index}-${index2}`}
                                         name={`item-${index}-${index2}`}
                                         onChange={(e) => {
-                                          if (
+                                          // if (
+                                          //   user_form_data["form"][
+                                          //     `item-${index}-${index2}`
+                                          //   ] == true
+                                          // ) {
+                                          //
+
+                                          //   if (e.target.checked) {
+                                          //     const modquest = {
+                                          //       ...modifyQuestions,
+                                          //     };
+                                          //     delete modquest[e.target.name];
+                                          //     setModifyQuestions({
+                                          //       ...modquest,
+                                          //     });
+                                          //   } else {
+                                          //     setModifyQuestions({
+                                          //       ...modifyQuestions,
+                                          //       [e.target.name]:
+                                          //         e.target.checked,
+                                          //     });
+                                          //   }
+                                          // } else {
+                                          //   setRQuestions({
+                                          //     ...rquestions,
+                                          //     [e.target.name]: e.target.checked,
+                                          //   });
+                                          // }
+
+                                          //
+                                          console.log(
+                                            "checked ira",
                                             user_form_data["form"][
                                               `item-${index}-${index2}`
                                             ] == true
-                                          ) {
-                                            handleChangeChecked(e);
-
-                                            if (e.target.checked) {
-                                              const modquest = {
-                                                ...modifyQuestions,
-                                              };
-                                              delete modquest[e.target.name];
-                                              setModifyQuestions({
-                                                ...modquest,
-                                              });
-                                            } else {
-                                              setModifyQuestions({
-                                                ...modifyQuestions,
-                                                [e.target.name]:
-                                                  e.target.checked,
-                                              });
-                                            }
-                                          } else {
-                                            setRQuestions({
-                                              ...rquestions,
-                                              [e.target.name]: e.target.checked,
-                                            });
-                                          }
-
-                                          //
-                                          console.log("checked");
+                                              ? user_form_data["form_modify"][
+                                                  `item-${index}-${index2}`
+                                                ] == true
+                                                ? "seleccionado pero en morado"
+                                                : "seleccioando en azul"
+                                              : "no seleccionado"
+                                          );
                                         }}
                                         className={classNames(
-                                          user_form_data["form"][
+                                          user_form_data["form_our"][
                                             `item-${index}-${index2}`
                                           ] == true
+                                            ? "checked:bg-[#f50002] checked:border-[#f50002]"
+                                            : user_form_data["form"][
+                                                `item-${index}-${index2}`
+                                              ] == true
                                             ? "checked:bg-[#110975] checked:border-[#110975] border-[#7d2181] bg-[#7d2181]"
                                             : "checked:bg-[#f50002] checked:border-[#f50002]",
                                           "rounded-full"
                                         )}
                                         defaultChecked={
-                                          user_form_data["form"][
+                                          user_form_data["form_our"][
                                             `item-${index}-${index2}`
                                           ] == true
                                             ? true
+                                            : user_form_data["form"][
+                                                `item-${index}-${index2}`
+                                              ] == true
+                                            ? user_form_data["form_modify"][
+                                                `item-${index}-${index2}`
+                                              ] == true
+                                              ? false
+                                              : true
                                             : false
                                         }
+                                        // defaultChecked={
+                                        //   user_form_data["form"][
+                                        //     `item-${index}-${index2}`
+                                        //   ] == true
+                                        //     ? true
+                                        //     : false
+                                        // }
                                       />
                                     </div>
                                   </div>
@@ -478,11 +561,38 @@ const Verify = ({ userReview }) => {
                                   >
                                     <Radio
                                       id={`item-${index}-${index2}`}
-                                      onChange={(e) =>
-                                        handleChangeRadio(e, index2)
+                                      onChange={
+                                        (e) =>
+                                          console.log(
+                                            "radio",
+                                            user_form_data["form_our"][
+                                              `item-${index}`
+                                            ]
+                                              ? "existe en our"
+                                              : user_form_data["form"][
+                                                  `item-${index}`
+                                                ]
+                                              ? user_form_data["form"]
+                                              : "no existe en lead por ende lo seteamos"
+                                          )
+                                        // handleChangeRadio(e, index2)
                                       }
                                       className={classNames(
-                                        user_form_data["form"][`item-${index}`]
+                                        user_form_data["form_our"][
+                                          `item-${index}`
+                                        ]
+                                          ? user_form_data["form_our"][
+                                              `item-${index}`
+                                            ][1] == index2
+                                            ? user_form_data["form_our"][
+                                                `item-${index}`
+                                              ][0] == true
+                                              ? "checked:border-[#f50002] checked:bg-white"
+                                              : ""
+                                            : "checked:border-[#f50002]"
+                                          : user_form_data["form"][
+                                              `item-${index}`
+                                            ]
                                           ? user_form_data["form"][
                                               `item-${index}`
                                             ][1] == index2
@@ -497,10 +607,36 @@ const Verify = ({ userReview }) => {
                                       )}
                                       name={`item-${index}`}
                                       defaultChecked={
-                                        user_form_data["form"][`item-${index}`]
-                                          ? user_form_data["form"][
+                                        user_form_data["form_our"][
+                                          `item-${index}`
+                                        ]
+                                          ? user_form_data["form_our"][
                                               `item-${index}`
                                             ][1] == index2
+                                            ? user_form_data["form_our"][
+                                                `item-${index}`
+                                              ][0] == true
+                                              ? true
+                                              : false
+                                            : false
+                                          : user_form_data["form"][
+                                              `item-${index}`
+                                            ]
+                                          ? user_form_data["form_modify"][
+                                              `item-${index}`
+                                            ]
+                                            ? user_form_data["form_modify"][
+                                                `item-${index}`
+                                              ][1] == index2
+                                              ? user_form_data["form_modify"][
+                                                  `item-${index}`
+                                                ][0] == true
+                                                ? "checked:border-[#f50002] checked:bg-white"
+                                                : ""
+                                              : ""
+                                            : user_form_data["form"][
+                                                `item-${index}`
+                                              ][1] == index2
                                             ? user_form_data["form"][
                                                 `item-${index}`
                                               ][0] == true
@@ -508,6 +644,18 @@ const Verify = ({ userReview }) => {
                                               : false
                                             : false
                                           : false
+                                        //user_form_data["form_our"][`item-${index}`] ? user_form_data["form_our"][`item-${index}`][1] == index2 ? user_form_data["form_our"][`item-${index}`][0] == true ? true : false : user_form_data["form"][`item-${index}`] ? user_form_data["form"][`item-${index}`][1] == index2 ? user_form_data["form"][`item-${index}`][0] == true ? true : false : false
+                                        // user_form_data["form"][`item-${index}`]
+                                        //   ? user_form_data["form"][
+                                        //       `item-${index}`
+                                        //     ][1] == index2
+                                        //     ? user_form_data["form"][
+                                        //         `item-${index}`
+                                        //       ][0] == true
+                                        //       ? true
+                                        //       : false
+                                        //     : false
+                                        //   : false
                                       }
                                     />
 
@@ -554,7 +702,7 @@ const Verify = ({ userReview }) => {
                                   undefined
                                   ? "text-[#f50002]"
                                   : "text-[#110975]",
-                                "shadow-sm focus:ring-[#110975]  resize-none focus:border-[#110975] block w-full text-lg border-gray-400 border rounded-sm"
+                                "shadow-sm focus:ring-[#110975]  resize-none focus:border-[#110975] focus:text-[#f50002] block w-full text-lg border-gray-400 border rounded-sm"
                               )}
                               defaultValue={
                                 user_form_data["form"][`comment-${index}`]
@@ -891,9 +1039,9 @@ const Verify = ({ userReview }) => {
         ) : (
           <>
             <div className="divide-y divide-gray-300 px-5 py-4">
-              <button onClick={console.log(rquestions, modifyQuestions)}>
+              {/* <button onClick={console.log(rquestions, modifyQuestions)}>
                 asdasd
-              </button>
+              </button> */}
               <span className="block"></span>
               {questions.map((quest, index) => (
                 <>
