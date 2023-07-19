@@ -220,6 +220,19 @@ const Verify = ({ userReview }) => {
 
   const [notForm, setNotForm] = useState(false);
 
+  const saveChanges = async () => {
+    const response = await fetch("/api/updateForm", {
+      method: "POST",
+      body: JSON.stringify({
+        crm_id: user_form_data?.info_lead?.crm_id,
+        form_modify: modifyQuestions,
+        form_our: ourQuestions,
+      }),
+    });
+    const result = await response.json();
+    return result;
+  };
+
   useEffect(() => {
     fetch(`/api/get_lead_form?id=${userReview}`, {
       method: "POST",
@@ -228,13 +241,18 @@ const Verify = ({ userReview }) => {
       .then((data) => {
         if (Object.entries(data.form).length > 1) {
           setIsLoading(false);
-          setOriginalQuestions(data.form);
-          setModifyQuestions(data.form_modify);
-          setOurQuestions(data.form_our);
-          setRQuestions(data.form);
+          setOriginalQuestions(data?.form ? data?.form : {});
+          setModifyQuestions(data?.form_modify ? data?.form_modify : {});
+          setOurQuestions(data?.form_our ? data?.form_our : {});
+          setRQuestions(data?.form ? data?.form : {});
           set_user_form_data(data);
 
           console.log("data:", data);
+          console.log(
+            "Existe Modificaciones",
+            data?.form_modify ? true : false
+          );
+          console.log("Existen propias", data?.form_our ? true : false);
         } else {
           setNotForm(true);
           setIsLoading(false);
@@ -256,18 +274,18 @@ const Verify = ({ userReview }) => {
                     mditem.childNodes[0].childNodes[0].childNodes[1];
 
                   if (mdinput.checked) {
-                    const rechecked = data.form_our[
+                    const rechecked = data?.form_our?.[
                       `item-${String(mdinput.id).split("-")[1]}`
                     ]
-                      ? data.form_our[
+                      ? data?.form_our?.[
                           `item-${String(mdinput.id).split("-")[1]}`
                         ][1] == `${String(mdinput.id).split("-")[2]}`
                         ? true
                         : false
-                      : data.form_modify[
+                      : data?.form_modify?.[
                           `item-${String(mdinput.id).split("-")[1]}`
                         ]
-                      ? data.form_modify[
+                      ? data?.form_modify?.[
                           `item-${String(mdinput.id).split("-")[1]}`
                         ][1] == `${String(mdinput.id).split("-")[2]}`
                         ? true
@@ -330,7 +348,7 @@ const Verify = ({ userReview }) => {
               if (quest?.type == "choice") {
                 quest?.items.map((item, index2) => {
                   const mditem = document.getElementById(
-                    `item-internal-${index}-${index2}-div`
+                    `item-our-${index}-${index2}-div`
                   );
                   const mdinput =
                     mditem.childNodes[0].childNodes[0].childNodes[0];
@@ -338,12 +356,51 @@ const Verify = ({ userReview }) => {
                     mditem.childNodes[0].childNodes[0].childNodes[1];
 
                   if (mdinput.checked) {
+                    const rechecked = data?.form_our?.[
+                      `item-our-${String(mdinput.id).split("-")[1]}`
+                    ]
+                      ? data?.form_our?.[
+                          `item-our-${String(mdinput.id).split("-")[1]}`
+                        ][1] == `${String(mdinput.id).split("-")[2]}`
+                        ? true
+                        : false
+                      : data?.form_modify?.[
+                          `item-our-${String(mdinput.id).split("-")[1]}`
+                        ]
+                      ? data?.form_modify?.[
+                          `item-our-${String(mdinput.id).split("-")[1]}`
+                        ][1] == `${String(mdinput.id).split("-")[2]}`
+                        ? true
+                        : false
+                      : false;
+
                     mdinput.setAttribute("leadEstablished", true);
-                    mdicon.classList.remove("text-blue-500");
-                    mdicon.classList.add("text-[#110975]");
+                    mdinput.setAttribute("rechekched", rechecked);
+                    if (rechecked) {
+                      mdicon.classList.remove("text-blue-500");
+                      mdicon.classList.add("text-[#f50002]");
+                    } else {
+                      mdicon.classList.remove("text-blue-500");
+                      mdicon.classList.add("text-[#110975]");
+                    }
                   } else {
-                    mdicon.classList.remove("text-blue-500");
-                    mdicon.classList.add("text-[#f50002]");
+                    const checkedLead = data.form[
+                      `item-our-${String(mdinput.id).split("-")[1]}`
+                    ]
+                      ? data.form[
+                          `item-our-${String(mdinput.id).split("-")[1]}`
+                        ][1] == `${String(mdinput.id).split("-")[2]}`
+                        ? true
+                        : false
+                      : false;
+
+                    if (checkedLead) {
+                      mdicon.classList.remove("text-blue-500");
+                      mdicon.classList.add("text-[#110975]");
+                    } else {
+                      mdicon.classList.remove("text-blue-500");
+                      mdicon.classList.add("text-[#f50002]");
+                    }
                   }
                 });
               }
@@ -377,20 +434,23 @@ const Verify = ({ userReview }) => {
         {notForm == false ? (
           <>
             <div className="divide-y divide-gray-300 px-5 py-4">
-              {/* <button
-                onClick={console.log(
-                  "rQuestions",
-                  rquestions,
-                  "\n",
-                  "modifyQuestions",
-                  modifyQuestions,
-                  "\n",
-                  "ourQuestions",
-                  ourQuestions
-                )}
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  console.log(
+                    "rQuestions",
+                    rquestions,
+                    "\n",
+                    "modifyQuestions",
+                    modifyQuestions,
+                    "\n",
+                    "ourQuestions",
+                    ourQuestions
+                  );
+                }}
               >
                 asdasd
-              </button> */}
+              </button>
               <div className="flex justify-between pb-2 items-center max-w-7xl mx-auto">
                 <div className="flex justify-start items-center space-x-2">
                   <span className="block p-2.5 rounded-full bg-[#110975]"></span>
@@ -443,85 +503,83 @@ const Verify = ({ userReview }) => {
                                         id={`item-${index}-${index2}`}
                                         name={`item-${index}-${index2}`}
                                         onChange={(e) => {
-                                          // if (
-                                          //   user_form_data["form"][
-                                          //     `item-${index}-${index2}`
-                                          //   ] == true
-                                          // ) {
-                                          //
-
-                                          //   if (e.target.checked) {
-                                          //     const modquest = {
-                                          //       ...modifyQuestions,
-                                          //     };
-                                          //     delete modquest[e.target.name];
-                                          //     setModifyQuestions({
-                                          //       ...modquest,
-                                          //     });
-                                          //   } else {
-                                          //     setModifyQuestions({
-                                          //       ...modifyQuestions,
-                                          //       [e.target.name]:
-                                          //         e.target.checked,
-                                          //     });
-                                          //   }
-                                          // } else {
-                                          //   setRQuestions({
-                                          //     ...rquestions,
-                                          //     [e.target.name]: e.target.checked,
-                                          //   });
-                                          // }
-
-                                          //
-                                          console.log(
-                                            "checked ira",
-                                            user_form_data["form"][
+                                          if (
+                                            user_form_data?.form?.[
                                               `item-${index}-${index2}`
-                                            ] == true
-                                              ? user_form_data["form_modify"][
-                                                  `item-${index}-${index2}`
-                                                ] == true
-                                                ? "seleccionado pero en morado"
-                                                : "seleccioando en azul"
-                                              : "no seleccionado"
-                                          );
+                                            ]
+                                          ) {
+                                            if (
+                                              e.target.checked ==
+                                              user_form_data?.form?.[
+                                                `item-${index}-${index2}`
+                                              ]
+                                            ) {
+                                              delete modifyQuestions[
+                                                e.target.name
+                                              ];
+                                              setModifyQuestions({
+                                                ...modifyQuestions,
+                                              });
+                                            } else {
+                                              setModifyQuestions({
+                                                ...modifyQuestions,
+                                                [e.target.name]:
+                                                  e.target.checked,
+                                              });
+                                            }
+                                          } else {
+                                            if (e.target.checked == false) {
+                                              delete ourQuestions[
+                                                e.target.name
+                                              ];
+                                              setOurQuestions({
+                                                ...ourQuestions,
+                                              });
+                                            } else {
+                                              setOurQuestions({
+                                                ...ourQuestions,
+                                                [e.target.name]:
+                                                  e.target.checked,
+                                              });
+                                            }
+                                          }
                                         }}
                                         className={classNames(
-                                          user_form_data?.form_our
-                                            ? user_form_data["form_our"][
+                                          user_form_data?.form_our?.[
+                                            `item-${index}-${index2}`
+                                          ] == true
+                                            ? "checked:bg-[#f50002] checked:border-[#f50002]"
+                                            : user_form_data?.form?.[
+                                                `item-${index}-${index2}`
+                                              ]
+                                            ? user_form_data?.form?.[
                                                 `item-${index}-${index2}`
                                               ] == true
-                                              ? "checked:bg-[#f50002] checked:border-[#f50002]"
-                                              : user_form_data["form"][
-                                                  `item-${index}-${index2}`
-                                                ] == true
                                               ? "checked:bg-[#110975] checked:border-[#110975] border-[#7d2181] bg-[#7d2181]"
                                               : "checked:bg-[#f50002] checked:border-[#f50002]"
                                             : "checked:bg-[#f50002] checked:border-[#f50002]",
+
                                           "rounded-full"
                                         )}
                                         defaultChecked={
-                                          user_form_data["form_our"][
+                                          user_form_data?.form_our?.[
                                             `item-${index}-${index2}`
-                                          ] == true
+                                          ]
                                             ? true
-                                            : user_form_data["form"][
+                                            : user_form_data?.form?.[
                                                 `item-${index}-${index2}`
-                                              ] == true
-                                            ? user_form_data["form_modify"][
+                                              ]
+                                            ? user_form_data?.form_modify?.[
                                                 `item-${index}-${index2}`
-                                              ] == true
+                                              ] == false
                                               ? false
-                                              : true
+                                              : user_form_data?.form?.[
+                                                  `item-${index}-${index2}`
+                                                ] == true
+                                              ? true
+                                              : false
                                             : false
                                         }
-                                        // defaultChecked={
-                                        //   user_form_data["form"][
-                                        //     `item-${index}-${index2}`
-                                        //   ] == true
-                                        //     ? true
-                                        //     : false
-                                        // }
                                       />
                                     </div>
                                   </div>
@@ -563,95 +621,118 @@ const Verify = ({ userReview }) => {
                                   >
                                     <Radio
                                       id={`item-${index}-${index2}`}
-                                      onChange={
-                                        (e) =>
-                                          console.log(
-                                            "radio",
-                                            user_form_data["form_our"][
+                                      onChange={(e) => {
+                                        if (
+                                          user_form_data?.form?.[
+                                            `item-${index}`
+                                          ]
+                                        ) {
+                                          if (
+                                            user_form_data?.form?.[
                                               `item-${index}`
-                                            ]
-                                              ? "existe en our"
-                                              : user_form_data["form"][
-                                                  `item-${index}`
-                                                ]
-                                              ? user_form_data["form"]
-                                              : "no existe en lead por ende lo seteamos"
-                                          )
-                                        // handleChangeRadio(e, index2)
-                                      }
+                                            ][1] == index2
+                                          ) {
+                                            delete modifyQuestions[
+                                              e.target.name
+                                            ];
+                                            setModifyQuestions({
+                                              ...modifyQuestions,
+                                            });
+                                          } else {
+                                            setModifyQuestions({
+                                              ...modifyQuestions,
+                                              [e.target.name]: [
+                                                e.target.checked,
+                                                index2,
+                                              ],
+                                            });
+                                          }
+                                        } else {
+                                          setOurQuestions({
+                                            ...ourQuestions,
+                                            [e.target.name]: [
+                                              e.target.checked,
+                                              index2,
+                                            ],
+                                          });
+                                        }
+                                      }}
                                       className={classNames(
-                                        user_form_data["form_our"][
+                                        user_form_data?.form_our?.[
                                           `item-${index}`
-                                        ]
-                                          ? user_form_data["form_our"][
+                                        ]?.[1] == index2
+                                          ? user_form_data?.form_our?.[
                                               `item-${index}`
-                                            ][1] == index2
-                                            ? user_form_data["form_our"][
-                                                `item-${index}`
-                                              ][0] == true
-                                              ? "checked:border-[#f50002] checked:bg-white"
-                                              : ""
+                                            ]?.[0] == true
+                                            ? "checked:border-[#f50002]"
                                             : "checked:border-[#f50002]"
-                                          : user_form_data["form"][
+                                          : user_form_data?.form_modify?.[
                                               `item-${index}`
-                                            ]
-                                          ? user_form_data["form"][
+                                            ]?.[1] == index2
+                                          ? "bg-[#7d2181] checked:border-[#f50002] checked:bg-white"
+                                          : user_form_data?.form?.[
                                               `item-${index}`
-                                            ][1] == index2
-                                            ? user_form_data["form"][
-                                                `item-${index}`
-                                              ][0] == true
-                                              ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
-                                              : " "
-                                            : "checked:border-[#f50002]"
+                                            ]?.[1] == index2
+                                          ? user_form_data?.form?.[
+                                              `item-${index}`
+                                            ]?.[0] == true
+                                            ? "bg-[#7d2181] checked:border-[#110975] checked: checked:bg-white"
+                                            : ""
                                           : "checked:border-[#f50002]",
+                                        // user_form_data?.form_our?.[
+                                        //   `item-${index}`
+                                        // ]
+                                        //   ? "bg-teal-400"
+                                        //   : user_form_data?.form?.[
+                                        //       `item-${index}`
+                                        //     ]
+                                        //   ? user_form_data?.form?.[
+                                        //       `item-${index}`
+                                        //     ][1] == index2
+                                        //     ? user_form_data?.form?.[
+                                        //         `item-${index}`
+                                        //       ][0] == true
+                                        //       ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
+                                        //       : ""
+                                        //     : "checked:border-[#f50002]"
+                                        //   : "checked:border-[#f50002]",
+
                                         ""
                                       )}
                                       name={`item-${index}`}
                                       defaultChecked={
-                                        user_form_data["form_our"][
-                                          `item-${index}`
-                                        ]
-                                          ? user_form_data["form_our"][
-                                              `item-${index}`
-                                            ][1] == index2
-                                            ? user_form_data["form_our"][
-                                                `item-${index}`
-                                              ][0] == true
-                                              ? true
-                                              : false
-                                            : false
-                                          : user_form_data["form"][
-                                              `item-${index}`
-                                            ]
-                                          ? user_form_data["form_modify"][
-                                              `item-${index}`
-                                            ]
-                                            ? user_form_data["form_modify"][
-                                                `item-${index}`
-                                              ][1] == index2
-                                              ? user_form_data["form_modify"][
-                                                  `item-${index}`
-                                                ][0] == true
-                                                ? "checked:border-[#f50002] checked:bg-white"
-                                                : ""
-                                              : ""
-                                            : user_form_data["form"][
-                                                `item-${index}`
-                                              ][1] == index2
-                                            ? user_form_data["form"][
-                                                `item-${index}`
-                                              ][0] == true
-                                              ? true
-                                              : false
-                                            : false
-                                          : false
-                                        //user_form_data["form_our"][`item-${index}`] ? user_form_data["form_our"][`item-${index}`][1] == index2 ? user_form_data["form_our"][`item-${index}`][0] == true ? true : false : user_form_data["form"][`item-${index}`] ? user_form_data["form"][`item-${index}`][1] == index2 ? user_form_data["form"][`item-${index}`][0] == true ? true : false : false
-                                        // user_form_data["form"][`item-${index}`]
-                                        //   ? user_form_data["form"][
+                                        false
+                                        // user_form_data?.form_modify?.[`item-${index}`]?.[1] == index2 ? true : false
+
+                                        // user_form_data?.form_our?.[
+                                        //   `item-${index}`
+                                        // ]?.[1] == index2
+                                        //   ? true
+                                        //   : user_form_data?.form_modify?.[
+                                        //       `item-${index}`
+                                        //     ]?.[1] == index2
+                                        //   ? true
+                                        //   : user_form_data?.form?.[
+                                        //       `item-${index}`
+                                        //     ]?.[1] == index2
+                                        //   ? user_form_data?.form?.[
+                                        //       `item-${index}`
+                                        //     ]?.[0] == true
+                                        //     ? true
+                                        //     : false
+                                        //   : false
+                                        // user_form_data?.form_our?.[`item-${index}`]?.[1] == index2 ? user_form_data?.form_our?.[`item-${index}`]?.[0] == true ? true : false : user_form_data?.form_modify?.[`item-${index}`]?.[1] == index2 ? user_form_data?.form_modify?.[`item-${index}`]?.[0] == true ? false : true : user_form_data?.form?.[`item-${index}`]?.[1] == index2 ? user_form_data?.form?.[`item-${index}`]?.[0] == true ? true : false : false
+                                        // user_form_data?.form_our?.[
+                                        //   `item-${index}`
+                                        // ]
+                                        //   ? true
+                                        //   : user_form_data?.form?.[
+                                        //       `item-${index}`
+                                        //     ]
+                                        //   ? user_form_data?.form?.[
                                         //       `item-${index}`
                                         //     ][1] == index2
-                                        //     ? user_form_data["form"][
+                                        //     ? user_form_data?.form?.[
                                         //         `item-${index}`
                                         //       ][0] == true
                                         //       ? true
@@ -665,7 +746,7 @@ const Verify = ({ userReview }) => {
                                       htmlFor={`item-${index}-${index2}`}
                                       className="ml-3 block text-lg font-medium text-black"
                                     >
-                                      {item}
+                                      {item} {`${index}-${index2}`}
                                     </label>
                                   </div>
                                 </li>
@@ -697,13 +778,49 @@ const Verify = ({ userReview }) => {
                             <textarea
                               rows={quest?.rows}
                               name={`comment-${index}`}
-                              onChange={(e) => handleChangeInput(e)}
+                              onChange={(e) => {
+                                if (
+                                  user_form_data?.form?.[`comment-${index}`]
+                                ) {
+                                  if (
+                                    String(e.target.value) !=
+                                    String(
+                                      user_form_data?.form?.[`comment-${index}`]
+                                    )
+                                  ) {
+                                    e.target.classList.replace(
+                                      "text-[#110975]",
+                                      "text-[#f50002]"
+                                    );
+                                    setModifyQuestions({
+                                      ...modifyQuestions,
+                                      [e.target.name]: e.target.value,
+                                    });
+                                  } else {
+                                    e.target.classList.replace(
+                                      "text-[#f50002]",
+                                      "text-[#110975]"
+                                    );
+                                    delete modifyQuestions[e.target.name];
+                                    setModifyQuestions({
+                                      ...modifyQuestions,
+                                    });
+                                  }
+                                } else {
+                                  setOurQuestions({
+                                    ...ourQuestions,
+                                    [e.target.name]: e.target.value,
+                                  });
+                                }
+                              }}
                               id={`comment-${index}`}
                               className={classNames(
-                                user_form_data["form"][`comment-${index}`] ==
-                                  undefined
-                                  ? "text-[#f50002]"
-                                  : "text-[#110975]",
+                                user_form_data?.form_our?.[`comment-${index}`]
+                                  ? "text-green-400"
+                                  : user_form_data?.form?.[`comment-${index}`]
+                                  ? "text-[#110975]"
+                                  : "text-[#f50002]",
+
                                 "shadow-sm focus:ring-[#110975]  resize-none focus:border-[#110975] focus:text-[#f50002] block w-full text-lg border-gray-400 border rounded-sm"
                               )}
                               defaultValue={
@@ -725,7 +842,7 @@ const Verify = ({ userReview }) => {
                 <>
                   {iquest?.type == "choice" ? (
                     <>
-                      <div className="w-full  py-4">
+                      <div className="w-full py-4">
                         <fieldset>
                           <legend className="text-lg font-semibold text-gray-900">
                             <div className="flex justify-start items-start">
@@ -744,55 +861,100 @@ const Verify = ({ userReview }) => {
                           </legend>
 
                           <ol className=" pl-6 space-y-2 py-4" type="A">
-                            {iquest?.items.map((item, indexi2) => (
+                            {iquest?.items.map((item, index2) => (
                               <>
-                                <li key={`item-internal-${indexi}-${indexi2}`}>
+                                <li key={`item-our-${indexi}-${index2}`}>
                                   <div
-                                    key={`item-internal-${indexi}-${indexi2}`}
-                                    id={`item-internal-${indexi}-${indexi2}-div`}
+                                    key={`item-our-${indexi}-${index2}`}
+                                    id={`item-our-${indexi}-${index2}-div`}
                                     className="flex items-center"
                                   >
                                     <Radio
-                                      id={`item-internal-${indexi}-${indexi2}`}
-                                      onChange={(e) =>
-                                        handleChangeRadio(e, indexi2)
-                                      }
-                                      className={classNames(
-                                        user_form_data["form"][
-                                          `item-internal-${indexi}`
-                                        ]
-                                          ? user_form_data["form"][
-                                              `item-internal-${indexi}`
+                                      id={`item-our-${indexi}-${index2}`}
+                                      onChange={(e) => {
+                                        if (
+                                          user_form_data?.form_our?.[
+                                            `item-${indexi}`
+                                          ]
+                                        ) {
+                                          if (
+                                            user_form_data?.form_our?.[
+                                              `item-${indexi}`
                                             ][1] == index2
-                                            ? user_form_data["form"][
-                                                `item-internal-${indexi}`
-                                              ][0] == true
-                                              ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
-                                              : " "
-                                            : "checked:border-[#f50002]"
-                                          : "checked:border-[#f50002]",
+                                          ) {
+                                            delete modifyQuestions[
+                                              e.target.name
+                                            ];
+                                            setModifyQuestions({
+                                              ...modifyQuestions,
+                                            });
+                                          } else {
+                                            setModifyQuestions({
+                                              ...modifyQuestions,
+                                              [e.target.name]: [
+                                                e.target.checked,
+                                                index2,
+                                              ],
+                                            });
+                                          }
+                                        } else {
+                                          setOurQuestions({
+                                            ...ourQuestions,
+                                            [e.target.name]: [
+                                              e.target.checked,
+                                              index2,
+                                            ],
+                                          });
+                                        }
+                                        console.log("tempalte our");
+                                      }}
+                                      className={classNames(
+                                        "bg-yellow-400",
+                                        // user_form_data?.form_our?.[
+                                        //   `item-our-${indexi}`
+                                        // ]
+                                        //   ? "bg-teal-400"
+                                        //   : user_form_data?.form?.[
+                                        //       `item-our-${indexi}`
+                                        //     ]
+                                        //   ? user_form_data?.form?.[
+                                        //       `item-our-${indexi}`
+                                        //     ][1] == index2
+                                        //     ? user_form_data?.form?.[
+                                        //         `item-our-${indexi}`
+                                        //       ][0] == true
+                                        //       ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
+                                        //       : ""
+                                        //     : "checked:border-[#f50002]"
+                                        //   : "checked:border-[#f50002]",
+
                                         ""
                                       )}
-                                      name={`item-internal-${indexi}`}
+                                      name={`item-our-${indexi}`}
                                       defaultChecked={
-                                        user_form_data["form"][
-                                          `item-internal${indexi}`
-                                        ]
-                                          ? user_form_data["form"][
-                                              `item-internal-${indexi}`
-                                            ][1] == index2
-                                            ? user_form_data["form"][
-                                                `item-internal-${indexi}`
-                                              ][0] == true
-                                              ? true
-                                              : false
-                                            : false
-                                          : false
+                                        false
+                                        // user_form_data?.form_our?.[
+                                        //   `item-our-${indexi}`
+                                        // ]
+                                        //   ? true
+                                        //   : user_form_data?.form?.[
+                                        //       `item-our-${indexi}`
+                                        //     ]
+                                        //   ? user_form_data?.form?.[
+                                        //       `item-our-${indexi}`
+                                        //     ][1] == index2
+                                        //     ? user_form_data?.form?.[
+                                        //         `item-our-${indexi}`
+                                        //       ][0] == true
+                                        //       ? true
+                                        //       : false
+                                        //     : false
+                                        //   : false
                                       }
                                     />
 
                                     <label
-                                      htmlFor={`item-internal-${indexi}-${indexi2}`}
+                                      htmlFor={`item-our-${indexi}-${index2}`}
                                       className="ml-3 block text-lg font-medium text-black"
                                     >
                                       {item}
@@ -826,21 +988,61 @@ const Verify = ({ userReview }) => {
                           <div className="   space-y-2 py-4">
                             <textarea
                               rows={iquest?.rows}
-                              name={`comment-internal-${indexi}`}
-                              onChange={(e) => handleChangeInput(e)}
-                              id={`comment-internal-${indexi}`}
+                              name={`comment-our-${indexi}`}
+                              onChange={(e) => {
+                                if (
+                                  user_form_data?.form_our?.[
+                                    `comment-our-${indexi}`
+                                  ]
+                                ) {
+                                  if (
+                                    String(e.target.value) !=
+                                    String(
+                                      user_form_data?.form_our?.[
+                                        `comment-our-${indexi}`
+                                      ]
+                                    )
+                                  ) {
+                                    e.target.classList.replace(
+                                      "text-[#110975]",
+                                      "text-[#f50002]"
+                                    );
+                                    setModifyQuestions({
+                                      ...modifyQuestions,
+                                      [e.target.name]: e.target.value,
+                                    });
+                                  } else {
+                                    e.target.classList.replace(
+                                      "text-[#f50002]",
+                                      "text-[#110975]"
+                                    );
+                                    delete modifyQuestions[e.target.name];
+                                    setModifyQuestions({
+                                      ...modifyQuestions,
+                                    });
+                                  }
+                                } else {
+                                  setOurQuestions({
+                                    ...ourQuestions,
+                                    [e.target.name]: e.target.value,
+                                  });
+                                }
+                                console.log("comment our");
+                              }}
+                              id={`comment-our-${indexi}`}
                               className={classNames(
-                                user_form_data["form"][
-                                  `comment-internal-${indexi}`
-                                ] == undefined
-                                  ? "text-[#f50002]"
-                                  : "text-[#110975]",
-                                "shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] block w-full text-lg border border-gray-400 rounded-sm"
+                                "text-yellow-400",
+                                // user_form_data?.form_our?.[`comment-our-${indexi}`]
+                                //   ? "text-green-400"
+                                //   : user_form_data?.form?.[`comment-our-${indexi}`]
+                                //   ? "text-[#110975]"
+                                //   : "text-[#f50002]",
+
+                                "shadow-sm focus:ring-[#110975]  resize-none focus:border-[#110975] focus:text-[#f50002] block w-full text-lg border-gray-400 border rounded-sm"
                               )}
                               defaultValue={
-                                user_form_data["form"][
-                                  `comment-internal-${indexi}`
-                                ]
+                                false
+                                // user_form_data["form"][`comment-our-${indexi}`]
                               }
                             />
                           </div>
@@ -1014,14 +1216,19 @@ const Verify = ({ userReview }) => {
               </div>
             </div>
 
-            <div className="fixed block bottom-0 right-0 my-2.5 mx-2.5">
-              {JSON.stringify(originalQuestions) ==
-              JSON.stringify(rquestions) ? (
-                <></>
-              ) : (
+            <div className="fixed block bottom-0 right-0 text-black font-bold my-2.5 mx-2.5">
+              {Object.keys(modifyQuestions).length >= 1 ||
+              Object.keys(ourQuestions).length >= 1 ? (
                 <>
                   <div className="flex justify-end items-center space-x-3">
-                    <button class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm">
+                    <button
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        const response = await saveChanges();
+                        console.log("ohg", response);
+                      }}
+                      class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm"
+                    >
                       Guardar Cambios
                     </button>
                     <button
@@ -1035,7 +1242,13 @@ const Verify = ({ userReview }) => {
                     </button>
                   </div>
                 </>
+              ) : (
+                <></>
               )}
+              {/* {Object.keys(modifyQuestions).length >= 1 ||
+                ( ? (
+                  
+                ) : <></>)} */}
             </div>
           </>
         ) : (
