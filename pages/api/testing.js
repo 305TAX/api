@@ -21,7 +21,7 @@ export default async function handler(req, res) {
     while ((match = urlRegex.exec(text)) !== null) {
       try {
         let url = String(match[0]);
-        const response = await fetch("http://localhost:3001/api/shorten", {
+        const response = await fetch("https://review.305tax.com/api/shorten", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
           .then((result) => {
             newText = newText.replace(
               match,
-              `https://305tax.com/${result.key}`
+              `https://305tax.com/l/${result.key}`
             );
           });
       } catch (error) {
