@@ -12,7 +12,45 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
 
-  
+  async function replaceUrlsAndShorten(text) {
+    const urlRegex = /https?:\/\/[^\s]+/g;
+    let newText = text;
+    var match = "";
+    while ((match = urlRegex.exec(text)) !== null) {
+      const response = await fetch("https://305tax.com/api/shorten", {
+        method: "POST",
+        body: String(match),
+      });
+      const data = await response.json();
+      newText = newText.replace(match, `https://305tax.com/${data[0].key}`);
+    }
+    return newText;
+  }
+
+  // async function replaceUrlsAndAddNumber(text) {
+  //   const urlRegex = /https?:\/\/[^\s]+/g;
+  //   let count = 1;
+  //   const newText = text.replace(urlRegex, async (url) => {
+
+  //
+
+  //     //
+  //     console.log(url, data[0].key)
+  //     return data[0]?.key;
+  //   });
+  //   await new Promise((resolve) => setTimeout(resolve, 3000));
+  //   return newText;
+  // }
+
+  const text =
+    "Les dejoe l link de descarga directo del report https://305tax.com/download-report?utm_source=facebook";
+  const newText = await replaceUrlsAndShorten(text);
+  console.log(newText);
+
+  return res.json({
+    result: newText,
+    olk: "ojitoo",
+  });
 
   // const getData = () => {
   //   return unirest
@@ -30,5 +68,4 @@ export default async function handler(req, res) {
   // };
 
   // getData()
-  
 }
