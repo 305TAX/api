@@ -109,7 +109,6 @@ const Review = ({ userReview }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        
         setUserCurrent(data.result[0]);
         console.log(data.result[0]);
         brow();
@@ -227,33 +226,33 @@ const Review = ({ userReview }) => {
                 )}
               >
                 <div>
-                <h2 className="text-4xl font-bold uppercase text-center">
+                  <h2 className="text-4xl font-bold uppercase text-center">
                     {currentLang == "es" ? <>Paso</> : <>Step</>} 1
                   </h2>
                   <p className="text-base text-justify">
-                  {currentLang == "es" ? (
-                    <>
-                      Sus comentarios nos ayudarán a seguir mejorando nuestros
-                      servicios y ayudaría a otros a tomar una decisión
-                      informada al elegir a sus asesores fiscales. Califique
-                      cada una de las características de nuestro servicio,
-                      basándose en la siguiente escala:
-                    </>
-                  ) : (
-                    <>
-                      Your comments will help us to continue to improve our
-                      services services and help others make an informed
-                      decision when choosing their informed decision when
-                      choosing their tax advisors.
-                      <br/>
-                      <br/>
-                      Please rate each of the
-                      features of our service, based on the following scale:
-                    </>
-                  )}
-                </p>
+                    {currentLang == "es" ? (
+                      <>
+                        Sus comentarios nos ayudarán a seguir mejorando nuestros
+                        servicios y ayudaría a otros a tomar una decisión
+                        informada al elegir a sus asesores fiscales. Califique
+                        cada una de las características de nuestro servicio,
+                        basándose en la siguiente escala:
+                      </>
+                    ) : (
+                      <>
+                        Your comments will help us to continue to improve our
+                        services services and help others make an informed
+                        decision when choosing their informed decision when
+                        choosing their tax advisors.
+                        <br />
+                        <br />
+                        Please rate each of the features of our service, based
+                        on the following scale:
+                      </>
+                    )}
+                  </p>
                 </div>
-                
+
                 <ul className="grid grid-cols-1 pb-4 sm:flex justify-between items-center sm:pr-2">
                   <li>
                     <Tooltip
@@ -458,21 +457,21 @@ const Review = ({ userReview }) => {
               >
                 <div>
                   <h2 className="text-4xl font-bold uppercase text-center">
-                  {currentLang == "es" ? <>Paso</> : <>Step</>} 2
+                    {currentLang == "es" ? <>Paso</> : <>Step</>} 2
                   </h2>
                   <p className="text-lg text-justify">
-                  {/* {currentLang == "es" ? (
+                    {/* {currentLang == "es" ? (
                     <>
-                      
+
                     </>
                   ) : (
                     <>
-                      
+
                     </>
                   )} */}
-                </p>
+                  </p>
                 </div>
-                
+
                 <hr />
 
                 <div className="flex justify-center items-center">
@@ -695,14 +694,18 @@ const Review = ({ userReview }) => {
                   .{" "}
                   {currentLang == "es" ? (
                     <>
-                      <br/>Le damos las gracias por elegir a 305TAX como sus asesores
-                      tributarios. <br/>Su opinión expresada en Google la mostraremos en breve en 
+                      <br />
+                      Le damos las gracias por elegir a 305TAX como sus asesores
+                      tributarios. <br />
+                      Su opinión expresada en Google la mostraremos en breve en
                       nuestra página principal.
                     </>
                   ) : (
                     <>
-                      <br/>We thank you for choosing 305TAX as your tax advisors. <br/>Your
-                      Google Review will be displayed on our home page
+                      <br />
+                      We thank you for choosing 305TAX as your tax advisors.{" "}
+                      <br />
+                      Your Google Review will be displayed on our home page
                       shortly.
                     </>
                   )}
@@ -855,7 +858,6 @@ export const getServerSideProps = async ({ query }) => {
   console.log(query);
   const userReview = {
     user: query.slug[0],
-    email: query.e,
     lang: query?.l ? query.l : "es_ES",
   };
   // const repo = await res.json()
