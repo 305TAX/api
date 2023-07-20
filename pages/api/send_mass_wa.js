@@ -42,6 +42,11 @@ export default async function handler(req, res) {
     });
   }
 
+  function replaceUrl(text) {
+    const urlRegex = /https?:\/\/[^\s]+/g;
+    return text.replace(urlRegex, "https://305tax.com/linkacortado");
+  }
+
   odoo.connect(function (err) {
     if (err) {
       return console.log(err);
@@ -81,6 +86,8 @@ export default async function handler(req, res) {
 
             let fmessage = "";
 
+            let modifyMessage = replaceUrl(qbody.msg);
+
             if (qbody?.rc) {
               fmessage =
                 "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
@@ -92,7 +99,7 @@ export default async function handler(req, res) {
                 "?m=Hola%20" +
                 String(rm.name).split(" ")[0] +
                 ".%0A%0A" +
-                encodeURIComponent(qbody.msg);
+                encodeURIComponent(modifyMessage);
             } else {
               fmessage =
                 "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
@@ -104,7 +111,7 @@ export default async function handler(req, res) {
                 "?m=Hola%20" +
                 String(rm.name).split(" ")[0] +
                 ".%0A%0A" +
-                encodeURIComponent(qbody.msg) +
+                encodeURIComponent(modifyMessage) +
                 "%0A%0Ahttps%3A%2F%2Freview.305tax.com%2Freview%2F" +
                 String(rm.id) +
                 "%3Fe%3D" +
