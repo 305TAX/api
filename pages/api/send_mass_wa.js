@@ -137,8 +137,6 @@ export default async function handler(req, res) {
                 encodeURIComponent(modifyMessage) +
                 "%0A%0Ahttps%3A%2F%2Freview.305tax.com%2Freview%2F" +
                 String(rm.id) +
-                "%3Fe%3D" +
-                String(rm.email) +
                 "%0A%0ACordiales%20Saludos.";
             }
 
