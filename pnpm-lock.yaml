@@ -3,6 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@heroicons/react': ^2.0.18
   '@material-tailwind/react': ^2.0.3
+  '@prisma/client': ^5.0.0
   '@types/node': 18.7.5
   '@types/react': 16.9.17
   '@vercel/kv': ^0.2.2
@@ -28,6 +29,7 @@ specifiers:
 dependencies:
   '@heroicons/react': 2.0.18_react@18.2.0
   '@material-tailwind/react': 2.0.3_biqbaboplfbrettd7655fr4n2y
+  '@prisma/client': 5.0.0
   '@vercel/kv': 0.2.2
   autoprefixer: 10.4.14_postcss@8.4.24
   axios: 1.4.0
@@ -1136,6 +1138,23 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
+    dev: false
+
+  /@prisma/client/5.0.0:
+    resolution: {integrity: sha512-XlO5ELNAQ7rV4cXIDJUNBEgdLwX3pjtt9Q/RHqDpGf43szpNJx2hJnggfFs7TKNx0cOFsl6KJCSfqr5duEU/bQ==}
+    engines: {node: '>=16.13'}
+    requiresBuild: true
+    peerDependencies:
+      prisma: '*'
+    peerDependenciesMeta:
+      prisma:
+        optional: true
+    dependencies:
+      '@prisma/engines-version': 4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584
+    dev: false
+
+  /@prisma/engines-version/4.17.0-26.6b0aef69b7cdfc787f822ecd7cdc76d5f1991584:
+    resolution: {integrity: sha512-HHiUF6NixsldsP3JROq07TYBLEjXFKr6PdH8H4gK/XAoTmIplOJBCgrIUMrsRAnEuGyRoRLXKXWUb943+PFoKQ==}
     dev: false
 
   /@smithy/protocol-http/1.0.1:
