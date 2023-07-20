@@ -42,9 +42,32 @@ export default async function handler(req, res) {
     });
   }
 
-  function replaceUrl(text) {
+  async function replaceUrlsAndShorten(text) {
     const urlRegex = /https?:\/\/[^\s]+/g;
-    return text.replace(urlRegex, "https://305tax.com/linkacortado");
+    let newText = text;
+    var match = "";
+    while ((match = urlRegex.exec(text)) !== null) {
+      try {
+        let url = String(match[0]);
+        const response = await fetch("https://review.305tax.com/api/shorten", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ url }),
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            newText = newText.replace(
+              match,
+              `https://305tax.com/l/${result.key}`
+            );
+          });
+      } catch (error) {
+        console.log("Error", error);
+      }
+    }
+    return newText;
   }
 
   odoo.connect(function (err) {
@@ -86,7 +109,7 @@ export default async function handler(req, res) {
 
             let fmessage = "";
 
-            let modifyMessage = replaceUrl(qbody.msg);
+            let modifyMessage = await replaceUrlsAndShorten(qbody.msg);
 
             if (qbody?.rc) {
               fmessage =
