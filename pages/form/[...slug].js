@@ -219,15 +219,20 @@ const Verify = ({ userReview }) => {
   });
 
   const [notForm, setNotForm] = useState(false);
+  const [notCrmId, setNotCrmId] = useState(false);
 
   const saveChanges = async () => {
+    const jsonFe = {
+      info_lead: user_form_data?.info_lead,
+      notCrmId: notCrmId,
+      crm_id: user_form_data?.info_lead?.crm_id,
+      form_modify: modifyQuestions,
+      form_our: ourQuestions,
+    };
+    console.log(jsonFe);
     const response = await fetch("/api/updateForm", {
       method: "POST",
-      body: JSON.stringify({
-        crm_id: user_form_data?.info_lead?.crm_id,
-        form_modify: modifyQuestions,
-        form_our: ourQuestions,
-      }),
+      body: JSON.stringify(jsonFe),
     });
     const result = await response.json();
     return result;
@@ -239,25 +244,39 @@ const Verify = ({ userReview }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (Object.entries(data.form).length > 1) {
+        if (data?.result == false) {
           setIsLoading(false);
-          setOriginalQuestions(data?.form ? data?.form : {});
-          setModifyQuestions(data?.form_modify ? data?.form_modify : {});
-          setOurQuestions(data?.form_our ? data?.form_our : {});
-          setRQuestions(data?.form ? data?.form : {});
-          set_user_form_data(data);
-
-          console.log("data:", data);
-          console.log(
-            "Existe Modificaciones",
-            data?.form_modify ? true : false
-          );
-          console.log("Existen propias", data?.form_our ? true : false);
+          setNotCrmId(true);
+          set_user_form_data({
+            info_lead: {
+              odoo_id: userReview,
+            },
+          });
+          console.log("no data");
+          console.log("data:", data, user_form_data);
         } else {
-          setNotForm(true);
-          setIsLoading(false);
-          set_user_form_data(data);
-          console.log("data:", data);
+          if (Object.entries(data.form).length > 1) {
+            setNotCrmId(false);
+            setIsLoading(false);
+            setOriginalQuestions(data?.form ? data?.form : {});
+            setModifyQuestions(data?.form_modify ? data?.form_modify : {});
+            setOurQuestions(data?.form_our ? data?.form_our : {});
+            setRQuestions(data?.form ? data?.form : {});
+            set_user_form_data(data);
+
+            console.log("data:", data);
+            console.log(
+              "Existe Modificaciones",
+              data?.form_modify ? true : false
+            );
+            console.log("Existen propias", data?.form_our ? true : false);
+          } else {
+            setNotForm(true);
+            setIsLoading(false);
+            set_user_form_data(data);
+            console.log("no data");
+            console.log("data:", data);
+          }
         }
 
         setTimeout(() => {
@@ -302,7 +321,7 @@ const Verify = ({ userReview }) => {
                       mdicon.classList.add("text-[#110975]");
                     }
                   } else {
-                    const checkedLead = data.form[
+                    const checkedLead = data?.form?.[
                       `item-${String(mdinput.id).split("-")[1]}`
                     ]
                       ? data.form[
@@ -384,7 +403,7 @@ const Verify = ({ userReview }) => {
                       mdicon.classList.add("text-[#110975]");
                     }
                   } else {
-                    const checkedLead = data.form[
+                    const checkedLead = data?.form?.[
                       `item-our-${String(mdinput.id).split("-")[1]}`
                     ]
                       ? data.form[
@@ -445,11 +464,12 @@ const Verify = ({ userReview }) => {
                     modifyQuestions,
                     "\n",
                     "ourQuestions",
-                    ourQuestions
+                    ourQuestions,
+                    user_form_data
                   );
                 }}
               >
-                asdasd
+                Develop
               </button>
               <div className="flex justify-between pb-2 items-center max-w-7xl mx-auto">
                 <div className="flex justify-start items-center space-x-2">
@@ -824,7 +844,7 @@ const Verify = ({ userReview }) => {
                                 "shadow-sm focus:ring-[#110975]  resize-none focus:border-[#110975] focus:text-[#f50002] block w-full text-lg border-gray-400 border rounded-sm"
                               )}
                               defaultValue={
-                                user_form_data["form"][`comment-${index}`]
+                                user_form_data?.["form"]?.[`comment-${index}`]
                               }
                             />
                           </div>
@@ -1091,10 +1111,12 @@ const Verify = ({ userReview }) => {
                             name={`item-last`}
                             onChange={(e) => handleChangeRadio(e, 0)}
                             className={classNames(
-                              user_form_data["form"][`item-last`]
-                                ? user_form_data["form"][`item-last`][1] == 0
-                                  ? user_form_data["form"][`item-last`][0] ==
-                                    true
+                              user_form_data?.["form"]?.[`item-last`]
+                                ? user_form_data?.["form"]?.[`item-last`][1] ==
+                                  0
+                                  ? user_form_data?.["form"]?.[
+                                      `item-last`
+                                    ][0] == true
                                     ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
                                     : " "
                                   : "checked:border-[#f50002]"
@@ -1102,10 +1124,12 @@ const Verify = ({ userReview }) => {
                               ""
                             )}
                             defaultChecked={
-                              user_form_data["form"][`item-last`]
-                                ? user_form_data["form"][`item-last`][1] == 0
-                                  ? user_form_data["form"][`item-last`][0] ==
-                                    true
+                              user_form_data?.["form"]?.[`item-last`]
+                                ? user_form_data?.["form"]?.[`item-last`][1] ==
+                                  0
+                                  ? user_form_data?.["form"]?.[
+                                      `item-last`
+                                    ][0] == true
                                     ? true
                                     : false
                                   : false
@@ -1134,10 +1158,12 @@ const Verify = ({ userReview }) => {
                             name={`item-last`}
                             onChange={(e) => handleChangeRadio(e, 1)}
                             className={classNames(
-                              user_form_data["form"][`item-last`]
-                                ? user_form_data["form"][`item-last`][1] == 1
-                                  ? user_form_data["form"][`item-last`][0] ==
-                                    true
+                              user_form_data?.["form"]?.[`item-last`]
+                                ? user_form_data?.["form"]?.[`item-last`][1] ==
+                                  1
+                                  ? user_form_data?.["form"]?.[
+                                      `item-last`
+                                    ][0] == true
                                     ? "bg-[#7d2181] checked:border-[#110975] checked:bg-white"
                                     : " "
                                   : "checked:border-[#f50002]"
@@ -1145,10 +1171,12 @@ const Verify = ({ userReview }) => {
                               ""
                             )}
                             defaultChecked={
-                              user_form_data["form"][`item-last`]
-                                ? user_form_data["form"][`item-last`][1] == 1
-                                  ? user_form_data["form"][`item-last`][0] ==
-                                    true
+                              user_form_data?.["form"]?.[`item-last`]
+                                ? user_form_data?.["form"]?.[`item-last`][1] ==
+                                  1
+                                  ? user_form_data?.["form"]?.[
+                                      `item-last`
+                                    ][0] == true
                                     ? true
                                     : false
                                   : false
@@ -1176,12 +1204,15 @@ const Verify = ({ userReview }) => {
                       onChange={(e) => handleChangeInput(e)}
                       placeholder="Nombre y Apellido"
                       className={classNames(
-                        user_form_data["form"][`item-last-comment`] == undefined
+                        user_form_data?.["form"]?.[`item-last-comment`] ==
+                          undefined
                           ? "text-[#f50002]"
                           : "text-[#110975]",
                         "shadow-sm focus:ring-[#110975] resize-none focus:border-[#110975] border block w-full text-lg border-gray-400 rounded-sm"
                       )}
-                      defaultValue={user_form_data["form"][`item-last-comment`]}
+                      defaultValue={
+                        user_form_data?.["form"]?.[`item-last-comment`]
+                      }
                     />
                   </div>
                 </fieldset>
@@ -1201,14 +1232,14 @@ const Verify = ({ userReview }) => {
                       placeholder="Opcional"
                       onChange={(e) => handleChangeInput(e)}
                       className={classNames(
-                        user_form_data["form"]["item-comment-optional"] ==
+                        user_form_data?.["form"]?.["item-comment-optional"] ==
                           undefined
                           ? "text-[#f50002]"
                           : "text-[#110975]",
                         "shadow-sm focus:ring-[#110975] border resize-none focus:border-[#110975] block w-full text-lg border-gray-400 rounded-sm"
                       )}
                       defaultValue={
-                        user_form_data["form"]["item-comment-optional"]
+                        user_form_data?.["form"]?.["item-comment-optional"]
                       }
                     />
                   </div>

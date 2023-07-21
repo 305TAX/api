@@ -23,10 +23,21 @@ export default async function handler(req, res) {
     const db = client.db("users_reviews");
 
     const response = await db.collection("forms").find({}).toArray();
-    console.log("response api", response?.filter((user) => user.info_lead.odoo_id == q?.id)[0])
-    return res.json(
-      response?.filter((user) => user.info_lead.odoo_id == q?.id)[0]
-    );
+
+    const findResponse = response?.filter(
+      (user) => user.info_lead.odoo_id == q?.id
+    )[0];
+    console.log("response api", findResponse);
+
+    if (findResponse == undefined) {
+      return res.json({
+        result: false,
+      });
+    } else {
+      return res.json(
+        response?.filter((user) => user.info_lead.odoo_id == q?.id)[0]
+      );
+    }
 
     // if (response) {
     //   const findUser = response.result;
@@ -43,6 +54,4 @@ export default async function handler(req, res) {
       error: error,
     });
   }
-
-
 }

@@ -16,6 +16,7 @@
     "axios": "^1.4.0",
     "cheerio": "1.0.0-rc.12",
     "google-contacts": "^0.1.5",
+    "googleapis": "^122.0.0",
     "jose": "^4.14.4",
     "mongodb": "^4.8.1",
     "next": "latest",
@@ -31,9 +32,9 @@
     "unirest": "^0.6.0"
   },
   "devDependencies": {
-    "prisma": "4.16.2",
     "@types/node": "18.7.5",
     "@types/react": "16.9.17",
+    "prisma": "4.16.2",
     "typescript": "4.6.3"
   }
 }

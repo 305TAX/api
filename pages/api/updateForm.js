@@ -14,7 +14,9 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
 
-  const { crm_id, form_modify, form_our } = JSON.parse(req.body);
+  const { notCrmId, info_lead, crm_id, form_modify, form_our } = JSON.parse(
+    req.body
+  );
 
   try {
     // return res.json({
@@ -24,9 +26,15 @@ export default async function handler(req, res) {
     const client = await clientPromise;
     const db = client.db("users_reviews");
 
-    const response = await db
-      .collection("forms")
-      .updateOne(
+    if (notCrmId == true) {
+      const response = await db.collection("forms").insertOne({
+        info_lead: info_lead,
+        form_modify: form_modify,
+        form_our: form_our,
+      });
+      console.log(response, notCrmId, "NOT CRM ID");
+    } else {
+      const response = await db.collection("forms").updateOne(
         { "info_lead.crm_id": crm_id },
         {
           $set: {
@@ -36,7 +44,9 @@ export default async function handler(req, res) {
           },
         }
       );
-    console.log(response, crm_id, form_modify, form_our);
+      console.log(response, crm_id, form_modify, form_our);
+    }
+
     // if (response) {
     //   return true;
     // }
