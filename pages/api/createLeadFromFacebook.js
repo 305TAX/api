@@ -1,4 +1,4 @@
-import clientPromise from "../../lib/mongodb";
+//import clientPromise from "../../lib/mongodb";
 import Odoo from "odoo-xmlrpc";
 
 import NextCors from "nextjs-cors";
@@ -14,9 +14,80 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
 
-  const query = req.body;
-  console.log("EL QUERY", query);
-  return res.json({
-    result: query,
+  //ODOO CONFIGURATION
+  let odoo = new Odoo(odooConfig);
+
+  //CREATE PARTNER
+
+  odoo.connect(function (err) {
+    if (err) {
+      return console.log(err);
+    }
+
+    let inParams = [];
+    inParams.push({
+      name: String(query?.full_name),
+      email: String(query?.email),
+      mobile: String(query?.mobile),
+
+      ad_id: String(query?.ad_id),
+      ad_name: String(query?.ad_name),
+      adset_id: String(query?.adset_id),
+      adset_name: String(query?.adset_name),
+      ad_campaign_id: String(query?.campaign_id),
+      ad_campaign_name: String(query?.campaign_name),
+      ad_created_time: String(query?.created_time),
+      ad_form_id: String(query?.form_id),
+      ad_form_name: String(query?.form_name),
+      ad_lead_id: String(query?.id),
+      ad_is_organic: String(query?.is_organic),
+      ad_page_id: String(query?.page_id),
+      ad_page_name: String(query?.page_name),
+      ad_platform: String(query?.platform),
+    });
+
+    let params = [];
+    params.push(inParams);
+
+    odoo.execute_kw("res.partner", "create", params, function (err, value) {
+      if (err) {
+        return console.log(err);
+      }
+      console.log("Result: ", value);
+
+      if (value) {
+        odoo.connect(function (err2) {
+          if (err2) {
+            return console.log(err2);
+          }
+
+          let inParams2 = [];
+          inParams2.push({
+            partner_id: value,
+            name: String(query?.full_name).toUpperCase(),
+            email_from: String(query?.email),
+            user_id: "",
+          });
+
+          let params2 = [];
+          params2.push(inParams2);
+
+          odoo.execute_kw(
+            "crm.lead",
+            "create",
+            params2,
+            function (err2, value2) {
+              if (err2) {
+                return console.log(err2);
+              }
+              console.log("Result: ", value2);
+              return res.json({
+                result: [value, value2],
+              });
+            }
+          );
+        });
+      }
+    });
   });
 }
