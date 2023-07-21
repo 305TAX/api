@@ -38,7 +38,7 @@ export default async function handler(req, res) {
       x_studio_ad_campaign_name: String(query?.campaign_name),
       x_studio_ad_created_time: String(query?.created_time),
       x_studio_ad_form_id: String(query?.form_id),
-      x_studio_ad_form_name: String(query?.form_name),
+      x_studio_ad_form_name_1: String(query?.form_name),
       x_studio_ad_lead_id: String(query?.id),
       x_studio_ad_is_organic: String(query?.is_organic),
       x_studio_ad_page_id: String(query?.page_id),
