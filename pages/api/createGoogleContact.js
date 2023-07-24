@@ -16,11 +16,37 @@ export default async function handler(req, res) {
 
   //ODOO CONFIGURATION
   //   let odoo = new Odoo(odooConfig);
-  const query = JSON.parse(JSON.stringify(req.body));
-  //CREATE PARTNER
 
-  console.log("REQ BODY", req.body);
+  const query = JSON.parse(JSON.stringify(req.body));
+  //   const query = {
+  //     companyname: "Brandon Test",
+  //     email: "joalexint@gmail.com",
+  //     displayname: "Brandon Test",
+  //     familyname: "Brandon Test",
+  //     phonenumber: "+584246002286",
+  //     givenname: "Brandon Test",
+  //   };
+
+  const newContact = {
+    givenName: String(query?.displayname),
+    email: String(query?.email),
+    mobile: String(query?.phonenumber),
+  };
+
+  //CREATE GOOGLE CONTACT
+
+  const response = await fetch(`${process.env.QB_API}/create_google_contact`, {
+    method: "POST",
+    body: JSON.stringify(newContact),
+  });
+
+  const result = await response.json();
+
+  //   const queryStringify = JSON.stringify(query);
+  //   console.log("REQ BODY", queryStringify);
+  //   let xds = String(process.env.QB_API);
+
   return res.json({
-    result: req.body,
+    result: result,
   });
 }
