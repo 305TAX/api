@@ -41,7 +41,7 @@ export default async function handler(req, res) {
   });
 
   const result = await response.json();
-  console.log("result", result)
+  console.log("result", newContact?.givenName, result)
 
   //   const queryStringify = JSON.stringify(query);
   //   console.log("REQ BODY", queryStringify);
