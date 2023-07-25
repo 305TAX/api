@@ -35,13 +35,15 @@ export default async function handler(req, res) {
 
   //CREATE GOOGLE CONTACT
 
-  const response = await fetch(`${process.env.QB_API}/create_google_contact`, {
-    method: "POST",
-    body: JSON.stringify(newContact),
-  });
+  const jsonQuery = new URLSearchParams(newContact).toString();
+  const linkResponse = `${process.env.QB_API}/create_google_contact?${jsonQuery}`;
 
+  const response = await fetch(linkResponse, {
+    method: "POST",
+  });
   const result = await response.json();
-  console.log("result", result);
+
+  console.log("RESULT", linkResponse, result);
 
   //   const queryStringify = JSON.stringify(query);
   //   console.log("REQ BODY", queryStringify);
