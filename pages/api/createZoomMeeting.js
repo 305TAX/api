@@ -32,7 +32,15 @@ export default async function handler(req, res) {
 
       const inParams = [];
       inParams.push([Number(query?.event_id)]); //id to update
-      inParams.push({ videocall_location: String(query?.zoom_url) });
+      inParams.push({
+        videocall_location: String(query?.zoom_url),
+        x_studio_zoom_meeting_id: query?.meeting_id,
+        x_studio_zoom_topic: query?.topic,
+        x_studio_zoom_password: query?.password,
+        x_studio_zoom_start_time: query?.start_time,
+        x_studio_zoom_url: query?.zoom_url,
+        x_studio_zoom_time_zone: query?.time_zone,
+      });
       var params = [];
       params.push(inParams);
       odoo.execute_kw("calendar.event", "write", params, function (err, value) {
