@@ -19,20 +19,10 @@ export default async function handler(req, res) {
 
   const query = req.query;
 
-  if (query?.event_id) {
-    return res.json({
-      result: "event",
-    });
-  } else if (query?.success) {
-    console.log("REUSLT SUSCCESS", query);
-    return res.json({
-      result: query,
-    });
-  } else {
-    return res.json({
-      result: false,
-    });
-  }
+  console.log("REUSLT SUSCCESS", query);
+  return res.json({
+    result: query,
+  });
 
   // odoo.connect(function (err) {
   //   if (err) {
