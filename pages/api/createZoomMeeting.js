@@ -20,9 +20,39 @@ export default async function handler(req, res) {
   const query = req.query;
 
   console.log("REUSLT SUSCCESS", query);
-  return res.json({
-    result: query,
-  });
+  // return res.json({
+  //   result: query,
+  // });
+
+  try {
+    odoo.connect(function (err) {
+      if (err) {
+        return console.log(err);
+      }
+
+      const inParams = [];
+      inParams.push([Number(query?.event_id)]); //id to update
+      inParams.push({ videocall_location: String(query?.zoom_url) });
+      var params = [];
+      params.push(inParams);
+      odoo.execute_kw("res.partner", "write", params, function (err, value) {
+        if (err) {
+          return console.log(err);
+        }
+
+        return res.json({
+          status: true,
+          result: value,
+        });
+      });
+    });
+  } catch (error) {
+    console.log("ERROR", error);
+    return res.json({
+      status: false,
+      error: error,
+    });
+  }
 
   // odoo.connect(function (err) {
   //   if (err) {
