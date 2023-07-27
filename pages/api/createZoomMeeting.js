@@ -35,7 +35,7 @@ export default async function handler(req, res) {
       inParams.push({ videocall_location: String(query?.zoom_url) });
       var params = [];
       params.push(inParams);
-      odoo.execute_kw("res.partner", "write", params, function (err, value) {
+      odoo.execute_kw("calendar.event", "write", params, function (err, value) {
         if (err) {
           return console.log(err);
         }
