@@ -212,19 +212,33 @@ const Verify = ({ userReview }) => {
 
   const saveChanges = async () => {
     const jsonFe = {
+      bdid: user_form_data?._id,
       info_lead: user_form_data?.info_lead,
       notCrmId: notCrmId,
       crm_id: user_form_data?.info_lead?.crm_id,
       form_modify: modifyQuestions,
       form_our: ourQuestions,
     };
-    console.log(jsonFe);
+
     const response = await fetch("/api/updateTaxForm", {
       method: "POST",
       body: JSON.stringify(jsonFe),
     });
     const result = await response.json();
     return result;
+  };
+
+  const targetFind = (object, property) => {
+    for (const key in object) {
+      //console.log("KEY", key, "PROPERTY", property, "IS CHANGE", `item-${String(property).split("-")[1]}` == `item-${String(key).split("-")[1]}`);
+      if (
+        `item-${String(property).split("-")[1]}` ==
+        `item-${String(key).split("-")[1]}`
+      ) {
+        document.getElementById(key).checked = false;
+        delete ourQuestions[key];
+      }
+    }
   };
 
   useEffect(() => {
@@ -241,8 +255,8 @@ const Verify = ({ userReview }) => {
               odoo_id: userReview,
             },
           });
-          console.log("no data");
-          console.log("data:", data, user_form_data);
+          console.log("NO SE HA ENCONTRADO DATA");
+          console.log("LA DATA:", data, user_form_data);
         } else {
           if (Object.entries(data?.form_our).length > 1) {
             setNotCrmId(false);
@@ -329,26 +343,6 @@ const Verify = ({ userReview }) => {
                     }
                   }
                 });
-
-                // for (let index = 0; index < 2; index++) {
-                //   const mditem = document.getElementById(
-                //     `item-last-div-${index}`
-                //   );
-
-                //   const mdinput =
-                //     mditem.childNodes[0].childNodes[0].childNodes[0];
-                //   const mdicon =
-                //     mditem.childNodes[0].childNodes[0].childNodes[1];
-
-                //   if (mdinput.checked) {
-                //     mdinput.setAttribute("leadEstablished", true);
-                //     mdicon.classList.remove("text-blue-500");
-                //     mdicon.classList.add("text-[#110975]");
-                //   } else {
-                //     mdicon.classList.remove("text-blue-500");
-                //     mdicon.classList.add("text-[#f50002]");
-                //   }
-                // }
               }
             });
           }
@@ -383,20 +377,17 @@ const Verify = ({ userReview }) => {
               {/* <button
                 onClick={(e) => {
                   e.preventDefault();
+                  console.log("***************************************");
+
                   console.log(
-                    "rQuestions",
-                    rquestions,
-                    "\n",
-                    "modifyQuestions",
-                    modifyQuestions,
-                    "\n",
-                    "ourQuestions",
+                    "OurQuestions",
                     ourQuestions,
-                    user_form_data
+                    "modifyQuestions",
+                    modifyQuestions
                   );
                 }}
               >
-                Develop
+                asdasd
               </button> */}
               <div className="flex justify-between pb-2 items-center max-w-7xl mx-auto">
                 <div className="flex justify-start items-center space-x-2">
@@ -566,7 +557,90 @@ const Verify = ({ userReview }) => {
                                     id={`item-${index}-${index2}-div`}
                                     className="flex items-center"
                                   >
-                                    <Radio
+                                    <Checkbox
+                                      id={`item-${index}-${index2}`}
+                                      name={`item-${index}-${index2}`}
+                                      onChange={(e) => {
+                                        if (
+                                          user_form_data?.form?.[
+                                            `item-${index}-${index2}`
+                                          ]
+                                        ) {
+                                          if (
+                                            e.target.checked ==
+                                            user_form_data?.form?.[
+                                              `item-${index}-${index2}`
+                                            ]
+                                          ) {
+                                            delete modifyQuestions[
+                                              e.target.name
+                                            ];
+                                            setModifyQuestions({
+                                              ...modifyQuestions,
+                                            });
+                                          } else {
+                                            setModifyQuestions({
+                                              ...modifyQuestions,
+                                              [e.target.name]: e.target.checked,
+                                            });
+                                          }
+                                        } else {
+                                          targetFind(
+                                            ourQuestions,
+                                            e.target.name
+                                          );
+
+                                          if (e.target.checked == false) {
+                                            delete ourQuestions[e.target.name];
+                                            setOurQuestions({
+                                              ...ourQuestions,
+                                            });
+                                          } else {
+                                            setOurQuestions({
+                                              ...ourQuestions,
+                                              [e.target.name]: e.target.checked,
+                                            });
+                                          }
+                                        }
+                                      }}
+                                      className={classNames(
+                                        user_form_data?.form_our?.[
+                                          `item-${index}-${index2}`
+                                        ] == true
+                                          ? "checked:bg-[#f50002] checked:border-[#f50002]"
+                                          : user_form_data?.form?.[
+                                              `item-${index}-${index2}`
+                                            ]
+                                          ? user_form_data?.form?.[
+                                              `item-${index}-${index2}`
+                                            ] == true
+                                            ? "checked:bg-[#110975] checked:border-[#110975] border-[#7d2181] bg-[#7d2181]"
+                                            : "checked:bg-[#f50002] checked:border-[#f50002]"
+                                          : "checked:bg-[#f50002] checked:border-[#f50002]",
+
+                                        "rounded-full"
+                                      )}
+                                      defaultChecked={
+                                        user_form_data?.form_our?.[
+                                          `item-${index}-${index2}`
+                                        ]
+                                          ? true
+                                          : user_form_data?.form?.[
+                                              `item-${index}-${index2}`
+                                            ]
+                                          ? user_form_data?.form_modify?.[
+                                              `item-${index}-${index2}`
+                                            ] == false
+                                            ? false
+                                            : user_form_data?.form?.[
+                                                `item-${index}-${index2}`
+                                              ] == true
+                                            ? true
+                                            : false
+                                          : false
+                                      }
+                                    />
+                                    {/* <Radio
                                       id={`item-${index}-${index2}`}
                                       onChange={(e) => {
                                         if (
@@ -692,7 +766,7 @@ const Verify = ({ userReview }) => {
                                         //     : false
                                         //   : false
                                       }
-                                    />
+                                    /> */}
 
                                     <label
                                       htmlFor={`item-${index}-${index2}`}
@@ -804,7 +878,7 @@ const Verify = ({ userReview }) => {
                         if (response) {
                           window.location.reload();
                         }
-                        console.log("ohg", response);
+                 
                       }}
                       class="bg-[#110975] hover:brightness-75 text-white font-bold py-2 px-4 rounded-sm"
                     >
@@ -833,9 +907,7 @@ const Verify = ({ userReview }) => {
         ) : (
           <>
             <div className="divide-y divide-gray-300 px-5 py-4">
-              {/* <button onClick={console.log(rquestions, modifyQuestions)}>
-                asdasd
-              </button> */}
+           
               <span className="block"></span>
               {questions.map((quest, index) => (
                 <>

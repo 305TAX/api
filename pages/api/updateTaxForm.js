@@ -5,6 +5,7 @@ import NextCors from "nextjs-cors";
 import { odooConfig } from "../../lib/odooConfig";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
   await NextCors(req, res, {
@@ -14,15 +15,10 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
   });
 
-  const { notCrmId, info_lead, crm_id, form_modify, form_our } = JSON.parse(
-    req.body
-  );
+  const { notCrmId, bdid, info_lead, crm_id, form_modify, form_our } =
+    JSON.parse(req.body);
 
   try {
-    // return res.json({
-    //   form_modify: form_modify,
-    //   form_our: form_our,
-    // });
     const client = await clientPromise;
     const db = client.db("users_reviews");
 
@@ -35,10 +31,10 @@ export default async function handler(req, res) {
       return res.json({
         result: true,
       });
-      console.log(response, notCrmId, "NOT CRM ID");
     } else {
-      const response = await db.collection("forms").updateOne(
-        { "info_lead.crm_id": crm_id },
+      const ubid = ObjectId(bdid);
+      const response = await db.collection("forms_tax").updateOne(
+        { _id: ubid },
         {
           $set: {
             "info_lead.update_time": new Date(),
@@ -50,7 +46,6 @@ export default async function handler(req, res) {
       return res.json({
         result: true,
       });
-      console.log(response, crm_id, form_modify, form_our);
     }
 
     // if (response) {
