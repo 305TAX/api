@@ -113,7 +113,7 @@ export default async function handler(req, res) {
 
             if (qbody?.rc) {
               fmessage =
-                "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
+                `${process.env.QB_API}/chat/sendmessage/` +
                 String(rm.mobile)
                   .replace(" ", "")
                   .replace("+", "")
@@ -125,7 +125,7 @@ export default async function handler(req, res) {
                 encodeURIComponent(modifyMessage);
             } else {
               fmessage =
-                "https://5364-206-1-164-185.ngrok-free.app/chat/sendmessage/" +
+                `${process.env.QB_API}/chat/sendmessage/` +
                 String(rm.mobile)
                   .replace(" ", "")
                   .replace("+", "")
