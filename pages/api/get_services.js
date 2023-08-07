@@ -52,6 +52,7 @@ export default async function handler(req, res) {
 
       "x_studio_description",
       "x_studio_description_to_spanish",
+      "x_studio_keywords",
     ]);
 
     let params = [];
@@ -69,6 +70,7 @@ export default async function handler(req, res) {
         "x_studio_translate_to_spanish",
         "x_studio_description",
         "x_studio_description_to_spanish",
+        "x_studio_keywords",
       ]);
 
       let params2 = [];
