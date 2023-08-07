@@ -322,21 +322,9 @@ export default async function handler(req, res) {
   const array1 = [1, 2, 3];
   const lp = filterReviews.concat(oReviews);
 
-  try {
-    const client = await clientPromise;
-    const db = client.db("users_reviews");
-    const getusers = await db.collection("users").find({}).toArray();
-
-    return res.status(200).json({
-      user_ratings_total: data?.result.user_ratings_total,
-      rating: data?.result.rating,
-      reviews: lp,
-      our_reviews: getusers,
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(403).json({ error: error });
-  }
+  return res.json({
+    reviews: lp,
+  });
 
   //   .then((response) => response.json())
   //   .then((data) => {
