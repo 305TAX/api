@@ -18,14 +18,6 @@ export default async function handler(req, res) {
   let odoo = new Odoo(odooConfig);
 
   const query = req.body;
-  var resultImageBase = "";
-  imageToBase64(`${query?.thumbnail}`)
-    .then((res) => {
-      result = res;
-    })
-    .catch((err) => {
-      console.log("ERROR", err);
-    });
 
   odoo.connect((err) => {
     if (err) {
@@ -40,7 +32,6 @@ export default async function handler(req, res) {
       x_studio_video_url: query?.video_url,
       x_studio_published_date: query?.published_date,
       x_studio_video_length: query?.video_length,
-      x_avatar_image: resultImageBase,
     });
     var params = [];
     params.push(inParams);
