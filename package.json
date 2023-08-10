@@ -17,6 +17,7 @@
     "cheerio": "1.0.0-rc.12",
     "google-contacts": "^0.1.5",
     "googleapis": "^122.0.0",
+    "image-to-base64": "^2.2.0",
     "jose": "^4.14.4",
     "mongodb": "^4.8.1",
     "next": "latest",

@@ -12,6 +12,7 @@ specifiers:
   cheerio: 1.0.0-rc.12
   google-contacts: ^0.1.5
   googleapis: ^122.0.0
+  image-to-base64: ^2.2.0
   jose: ^4.14.4
   mongodb: ^4.8.1
   next: latest
@@ -39,6 +40,7 @@ dependencies:
   cheerio: 1.0.0-rc.12
   google-contacts: 0.1.5
   googleapis: 122.0.0
+  image-to-base64: 2.2.0
   jose: 4.14.4
   mongodb: 4.16.0
   next: 13.4.13_biqbaboplfbrettd7655fr4n2y
@@ -2011,6 +2013,14 @@ packages:
 
   /ieee754/1.2.1:
     resolution: {integrity: sha512-dcyqhDvX1C46lXZcVqCpK+FtMRQVdIMN6/Df5js2zouUsqG7I6sFxitIC+7KYK29KdXOLHdu9zL4sFnoVQnqaA==}
+    dev: false
+
+  /image-to-base64/2.2.0:
+    resolution: {integrity: sha512-Z+aMwm/91UOQqHhrz7Upre2ytKhWejZlWV/JxUTD1sT7GWWKFDJUEV5scVQKnkzSgPHFuQBUEWcanO+ma0PSVw==}
+    dependencies:
+      node-fetch: 2.6.12
+    transitivePeerDependencies:
+      - encoding
     dev: false
 
   /inflight/1.0.6:
