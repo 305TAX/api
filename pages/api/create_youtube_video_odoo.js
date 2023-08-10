@@ -31,7 +31,7 @@ export default async function handler(req, res) {
       x_studio_video_id: query?.video_id,
       x_studio_video_url: query?.video_url,
       x_studio_published_date: query?.published_date,
-      x_studio_video_length: query?.video_length,
+      x_studio_video_length_seconds: query?.video_length,
     });
     var params = [];
     params.push(inParams);
