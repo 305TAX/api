@@ -1,9 +1,10 @@
 // import clientPromise from "../../lib/mongodb";
 
 import Odoo from "odoo-xmlrpc";
+import { odooConfig } from "../../lib/odooConfig";
 import NextCors from "nextjs-cors";
 import unirest from "unirest";
-import { odooConfig } from "../../lib/odooConfig";
+
 import cheerio from "cheerio";
 import imageToBase64 from "image-to-base64";
 
