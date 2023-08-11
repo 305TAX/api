@@ -54,6 +54,7 @@ export default async function handler(req, res) {
                   String(elm?.x_studio_video_id) == String(element?.videoId)
               );
               if (item) {
+                element.title = item?.x_name;
                 element.description = item?.x_studio_description;
                 element.publishedDate = item?.x_studio_published_date;
                 element.tags = item?.x_studio_tags;
