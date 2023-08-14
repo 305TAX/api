@@ -24,6 +24,8 @@ export default async function handler(req, res) {
   const VIDEO_ID = String(query?.v).trim();
   const VIDEO_TITLE = String(query?.title).trim();
 
+  console.log("query", query);
+
   if (!VIDEO_ID || !VIDEO_ID == "")
     return res.json({
       status: 204,
