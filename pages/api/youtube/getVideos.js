@@ -1,5 +1,5 @@
 import Odoo from "odoo-xmlrpc";
-import { odooConfig } from "../../lib/odooConfig";
+import { odooConfig } from "../../../lib/odooConfig";
 import NextCors from "nextjs-cors";
 import ytch from "yt-channel-info";
 
