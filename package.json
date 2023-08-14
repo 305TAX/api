@@ -2,6 +2,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "op": "echo \"Error: no test specified\" && next dev",
     "build": "next build",
     "start": "next start",
     "vercel-build": "prisma generate && next build",
