@@ -19,12 +19,13 @@ export default async function handler(req, res) {
   });
 
   const youtube = google.youtube("v3");
+  const old = req.body;
   const query = JSON.parse(JSON.stringify(req.body));
 
   const VIDEO_ID = String(query?.v).trim();
   const VIDEO_TITLE = String(query?.title).trim();
 
-  console.log("query", query);
+  console.log("query", old);
 
   if (!VIDEO_ID || !VIDEO_ID == "")
     return res.json({
