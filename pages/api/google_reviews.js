@@ -12,6 +12,30 @@ export default async function handler(req, res) {
 
   const oReviews = [
     {
+      author_name: "Gabriel Jiménez",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTteXseVXoaXWZXXoURrAuDbwEP4Kwxhl7-M75G0UIlgc=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Maravilloso Servicio! Sumamente atentos, que gratificante encontrarse con profesionales que se toman el tiempo de explicarte pacientemente el porque de las cosas y agregarle valor a su trabajo.",
+      older: 38,
+    },
+    {
+      author_name: "Ana Felicia Herrera",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtefVEWP4g1z40BQPn27bQ1WpAvyb6eCxF5i65OD2s4P=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Este servicio realmente ha simplificado mi vida, su responsabilidad y la confianza que me han brindado a través de los años no tiene precio, Gracias por tener todos mis taxes y los de mis familiares correctamente al día cada año ¡Lo recomiendo a todos!",
+      older: 37,
+    },
+    {
+      author_name: "Manuel Alejandro Espin Verde",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/AAcHTtfVi1DNqPJQlmAFQBnGjhK7Tx4YFl3xpLwbvKaePyz-=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Excelentes profesionales altamente capacitados en el area de contabilidad y impuestos 1000% recomendados.",
+      older: 36,
+    },
+    {
       author_name: "Aly Reyes",
       profile_photo_url:
         "https://lh3.googleusercontent.com/a-/AD_cMMQQII5wGFXg9YUgRRePYuyDQeSLEB65MumusGgEwd6qzA=w68-h68-p-rp-mo-br100",
