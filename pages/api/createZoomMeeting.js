@@ -17,8 +17,8 @@ export default async function handler(req, res) {
   //ODOO CONFIGURATION
   let odoo = new Odoo(odooConfig);
 
-  const query = req.query;
-  // const query = req.body;
+  // const query = req.query;
+  const query = req.body;
 
   // console.log("REUSLT SUSCCESS", query);
 
@@ -322,16 +322,23 @@ export default async function handler(req, res) {
       });
 
       const updateUsersZoom = new Promise((resolve, reject) => {
-        Array.from(resFindCalendar.result.partner_ids)
-          .filter((fd) => team.includes(fd))
-          .map(
-            (i) =>
-              (resFindCalendar.result.partner_ids = [
-                ...resFindCalendar.result.partner_ids,
-              ].filter((item) => item !== Number(i)))
-          );
+        let res_ids;
 
-        let res_ids = resFindCalendar.result.partner_ids;
+        if (resFindCalendar?.status) {
+          Array.from(resFindCalendar.result.partner_ids)
+            .filter((fd) => team.includes(fd))
+            .map(
+              (i) =>
+                (resFindCalendar.result.partner_ids = [
+                  ...resFindCalendar.result.partner_ids,
+                ].filter((item) => item !== Number(i)))
+            );
+
+          res_ids = resFindCalendar.result.partner_ids;
+        } else {
+          res_ids = [Number(query?.odoo_id)];
+        }
+
         let inParams = [];
 
         inParams.push(res_ids);
