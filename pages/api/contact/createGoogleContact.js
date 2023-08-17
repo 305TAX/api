@@ -31,6 +31,31 @@ export default async function handler(req, res) {
   const credentials = googleConfig?.googleCredentials;
   const token = googleContactConfig?.googleContactToken;
 
+  const resfindContacts = await fetch(
+    "https://review.305tax.com/api/contact/listGoogleContacts",
+    {
+      method: "GET",
+    }
+  );
+
+  const findContacts = await resfindContacts.json();
+
+  const newContact = {
+    givenName: String(query?.displayname),
+    email: String(query?.email),
+    mobile: String(query?.phonenumber),
+  };
+
+  if (Object.values(newContact).includes("undefined"))
+    return res.status(502).json({
+      status: false,
+      statusText: "undefined values",
+    });
+
+  var existContact = Array.from(findContacts).find(
+    (fc) => String(fc?.phoneNumbers[0]?.value) == String(newContact.mobile)
+  );
+
   async function loadSavedCredentialsIfExist() {
     try {
       const credentials = token;
@@ -46,11 +71,6 @@ export default async function handler(req, res) {
     if (client) return client;
     return client;
   }
-  const newContact = {
-    givenName: String(query?.displayname),
-    email: String(query?.email),
-    mobile: String(query?.phonenumber),
-  };
 
   async function createGoogleContact(auth, newContact) {
     const service = google.people({ version: "v1", auth });
@@ -82,27 +102,59 @@ export default async function handler(req, res) {
       .catch((error) => console.log("ERROR CREATE CONTACT", error));
   }
 
-  const response = await authorize()
-    .then((client) => createGoogleContact(client, newContact))
-    .catch(console.error);
+  if (existContact == undefined) {
+    const response = await authorize()
+      .then((client) => createGoogleContact(client, newContact))
+      .catch(console.error);
+  } else {
+    return res.json({
+      result: "User found.",
+    });
+  }
 
-  // //CREATE GOOGLE CONTACT
+  // async function authorize() {
+  //   let client = await loadSavedCredentialsIfExist();
 
-  // const jsonQuery = new URLSearchParams(newContact).toString();
-  // const linkResponse = `${process.env.QB_API}/create_google_contact?${jsonQuery}`;
+  //   if (client) return client;
+  //   return client;
+  // }
+  // const newContact = {
+  //   givenName: String(query?.displayname),
+  //   email: String(query?.email),
+  //   mobile: String(query?.phonenumber),
+  // };
 
-  // const response = await fetch(linkResponse, {
-  //   method: "POST",
-  // });
-  // const result = await response.json();
+  // async function createGoogleContact(auth, newContact) {
+  //   const service = google.people({ version: "v1", auth });
 
-  // console.log("RESULT", linkResponse, result);
+  //   service.people
+  //     .createContact({
+  //       resource: {
+  //         names: {
+  //           givenName: String(newContact?.givenName),
+  //         },
+  //         emailAddresses: {
+  //           value: String(newContact?.email),
+  //           type: "home",
+  //         },
+  //         phoneNumbers: [
+  //           {
+  //             value: String(newContact?.mobile),
+  //             type: "home",
+  //           },
+  //         ],
+  //       },
+  //     })
+  //     .then((result) => {
+  //       return res.json({
+  //         state: true,
+  //         result: result.data,
+  //       });
+  //     })
+  //     .catch((error) => console.log("ERROR CREATE CONTACT", error));
+  // }
 
-  // //   const queryStringify = JSON.stringify(query);
-  // //   console.log("REQ BODY", queryStringify);
-  // //   let xds = String(process.env.QB_API);
-
-  // return res.json({
-  //   result: result,
-  // });
+  // const response = await authorize()
+  //   .then((client) => createGoogleContact(client, newContact))
+  //   .catch(console.error);
 }
