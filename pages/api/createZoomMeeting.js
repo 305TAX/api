@@ -17,8 +17,8 @@ export default async function handler(req, res) {
   //ODOO CONFIGURATION
   let odoo = new Odoo(odooConfig);
 
-  // const query = req.query;
-  const query = req.body;
+  const query = req.query;
+  // const query = req.body;
 
   // console.log("REUSLT SUSCCESS", query);
 
