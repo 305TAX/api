@@ -48,11 +48,12 @@ export default async function handler(req, res) {
 
     const res = await service.people.connections.list({
       resourceName: "people/me",
+      pageSize: 200,
       personFields: "names,emailAddresses,phoneNumbers",
     });
 
     const connections = res.data.connections;
-
+    console.log("LENGTH", connections.length)
     if (!connections || connections.length === 0)
       return res.json({
         status: 401,
