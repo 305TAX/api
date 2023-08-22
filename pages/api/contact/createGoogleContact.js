@@ -19,8 +19,8 @@ export default async function handler(req, res) {
     optionsSuccessStatus: 200,
   });
 
-  // const query = req.body;
-  const query = JSON.parse(JSON.stringify(req.body));
+  const query = req.body;
+  //const query = JSON.parse(JSON.stringify(req.body));
 
   const client = await clientPromise;
   const db = client.db("users_reviews");

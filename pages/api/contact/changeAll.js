@@ -50,7 +50,7 @@ export default async function handler(req, res) {
     "+1 786-306-8752",
   ];
 
-  const noCreado = ["+1 770-203-3735", "+1 713-961-0262", "+1769289020"];
+  const noCreado = [ "+1769289020"];
 
   const pruebaNum = ["+1 786-724-5661"];
 
@@ -81,36 +81,35 @@ export default async function handler(req, res) {
   async function updateGoogleContact(auth, estContact, infoContact) {
     const service = google.people({ version: "v1", auth });
 
-    const res = await service.people.updateContact(
-      {
-        resourceName: String(estContact?.resourceName), //"people/c4328366331976477502"
-        personFields: "names,phoneNumbers",
-        updatePersonFields: "names,phoneNumbers",
-        resource: {
-          // Person.metadata.sources.etag
-          etag: String(estContact?.etag), //"%EgUBAi43PRoEAQIFByIMMVRobi9zZ29IY2M9"
+    const res = await service.people.updateContact({
+      resourceName: String(estContact?.resourceName), //"people/c4328366331976477502"
+      personFields: "names,phoneNumbers",
+      updatePersonFields: "names,phoneNumbers",
+      resource: {
+        // Person.metadata.sources.etag
+        etag: String(estContact?.etag), //"%EgUBAi43PRoEAQIFByIMMVRobi9zZ29IY2M9"
 
-          names: {
-            givenName: String(infoContact?.nameReal.firstName),
-            familyName: String(infoContact?.nameReal.lastName),
-          },
-          phoneNumbers: [
-            {
-              value: String(infoContact?.number),
-              type: "home",
-            },
-          ],
+        names: {
+          givenName: String(infoContact?.nameReal.firstName),
+          familyName: String(infoContact?.nameReal.lastName),
         },
-      })
-    
+        phoneNumbers: [
+          {
+            value: String(infoContact?.number),
+            type: "home",
+          },
+        ],
+      },
+    });
+
     const conc = await res;
 
     if (conc?.status == "200") {
       return true;
     } else {
-      return false
+      return false;
     }
-    
+
     // ,
     //   (err, res) => {
     //     if (err) {
@@ -152,10 +151,10 @@ export default async function handler(req, res) {
     {
       promise: new Promise(async (resolve, reject) => {
         let infoContact = {
-          number: "+58 424-4664640",
+          number: "+56 9 8419 1302",
           nameReal: {
-            firstName: "ADRIANA",
-            lastName: "GONZALEZ BENITEZ",
+            firstName: "ELIZABETH",
+            lastName: "GANA",
           },
         };
 
@@ -178,216 +177,14 @@ export default async function handler(req, res) {
         }
       }),
     },
+
     {
       promise: new Promise(async (resolve, reject) => {
         let infoContact = {
-          number: "+1 786-953-2670",
+          number: "+1 786-306-8752",
           nameReal: {
-            firstName: "CARLA",
-            lastName: "MEJICANO PEREZ",
-          },
-        };
-
-        let estContact = Array.from(findContacts).filter(
-          (fc) =>
-            String(fc?.phoneNumbers[0]?.value) == String(infoContact?.number)
-        );
-
-        const response = await authorize()
-          .then((client) =>
-            updateGoogleContact(client, estContact[0], infoContact)
-          )
-          .catch(console.error);
-
-        if (response) {
-          console.log("RESPONSE RESULT", response);
-          resolve(
-            `${estContact[0]?.names[0]?.displayName} / ${estContact[0]?.resourceName}`
-          );
-        }
-      }),
-    },
-    {
-      promise: new Promise(async (resolve, reject) => {
-        let infoContact = {
-          number: "+52 55 3555 9160",
-          nameReal: {
-            firstName: "CALEB",
-            lastName: "CHINAS REYES",
-          },
-        };
-
-        let estContact = Array.from(findContacts).filter(
-          (fc) =>
-            String(fc?.phoneNumbers[0]?.value) == String(infoContact?.number)
-        );
-
-        const response = await authorize()
-          .then((client) =>
-            updateGoogleContact(client, estContact[0], infoContact)
-          )
-          .catch(console.error);
-
-        if (response) {
-          console.log("RESPONSE RESULT", response);
-          resolve(
-            `${estContact[0]?.names[0]?.displayName} / ${estContact[0]?.resourceName}`
-          );
-        }
-      }),
-    },
-    {
-      promise: new Promise(async (resolve, reject) => {
-        let infoContact = {
-          number: "+58 414-4346274",
-          nameReal: {
-            firstName: "EMILIO",
-            lastName: "FERNANDEZ",
-          },
-        };
-
-        let estContact = Array.from(findContacts).filter(
-          (fc) =>
-            String(fc?.phoneNumbers[0]?.value) == String(infoContact?.number)
-        );
-
-        const response = await authorize()
-          .then((client) =>
-            updateGoogleContact(client, estContact[0], infoContact)
-          )
-          .catch(console.error);
-
-        if (response) {
-          console.log("RESPONSE RESULT", response);
-          resolve(
-            `${estContact[0]?.names[0]?.displayName} / ${estContact[0]?.resourceName}`
-          );
-        }
-      }),
-    },
-    {
-      promise: new Promise(async (resolve, reject) => {
-        let infoContact = {
-          number: "+1 786-513-4188",
-          nameReal: {
-            firstName: "MARY",
-            lastName: "GABRIELA OJEDA",
-          },
-        };
-
-        let estContact = Array.from(findContacts).filter(
-          (fc) =>
-            String(fc?.phoneNumbers[0]?.value) == String(infoContact?.number)
-        );
-
-        const response = await authorize()
-          .then((client) =>
-            updateGoogleContact(client, estContact[0], infoContact)
-          )
-          .catch(console.error);
-
-        if (response) {
-          console.log("RESPONSE RESULT", response);
-          resolve(
-            `${estContact[0]?.names[0]?.displayName} / ${estContact[0]?.resourceName}`
-          );
-        }
-      }),
-    },
-    {
-      promise: new Promise(async (resolve, reject) => {
-        let infoContact = {
-          number: "+58 414-3596665",
-          nameReal: {
-            firstName: "MAURIZIO",
-            lastName: "DELLI COLLI",
-          },
-        };
-
-        let estContact = Array.from(findContacts).filter(
-          (fc) =>
-            String(fc?.phoneNumbers[0]?.value) == String(infoContact?.number)
-        );
-
-        const response = await authorize()
-          .then((client) =>
-            updateGoogleContact(client, estContact[0], infoContact)
-          )
-          .catch(console.error);
-
-        if (response) {
-          console.log("RESPONSE RESULT", response);
-          resolve(
-            `${estContact[0]?.names[0]?.displayName} / ${estContact[0]?.resourceName}`
-          );
-        }
-      }),
-    },
-    {
-      promise: new Promise(async (resolve, reject) => {
-        let infoContact = {
-          number: "+1 514-638-2311",
-          nameReal: {
-            firstName: "GISEL",
-            lastName: "REYES",
-          },
-        };
-
-        let estContact = Array.from(findContacts).filter(
-          (fc) =>
-            String(fc?.phoneNumbers[0]?.value) == String(infoContact?.number)
-        );
-
-        const response = await authorize()
-          .then((client) =>
-            updateGoogleContact(client, estContact[0], infoContact)
-          )
-          .catch(console.error);
-
-        if (response) {
-          console.log("RESPONSE RESULT", response);
-          resolve(
-            `${estContact[0]?.names[0]?.displayName} / ${estContact[0]?.resourceName}`
-          );
-        }
-      }),
-    },
-    {
-      promise: new Promise(async (resolve, reject) => {
-        let infoContact = {
-          number: "+1 416-836-6573",
-          nameReal: {
-            firstName: "MARYANT",
-            lastName: "PEREZ CHACON",
-          },
-        };
-
-        let estContact = Array.from(findContacts).filter(
-          (fc) =>
-            String(fc?.phoneNumbers[0]?.value) == String(infoContact?.number)
-        );
-
-        const response = await authorize()
-          .then((client) =>
-            updateGoogleContact(client, estContact[0], infoContact)
-          )
-          .catch(console.error);
-
-        if (response) {
-          console.log("RESPONSE RESULT", response);
-          resolve(
-            `${estContact[0]?.names[0]?.displayName} / ${estContact[0]?.resourceName}`
-          );
-        }
-      }),
-    },
-    {
-      promise: new Promise(async (resolve, reject) => {
-        let infoContact = {
-          number: "+57 317 3314256",
-          nameReal: {
-            firstName: "OTILIA",
-            lastName: "DELGADO ANAYA",
+            firstName: "CAROLINA",
+            lastName: "LIENDO",
           },
         };
 
