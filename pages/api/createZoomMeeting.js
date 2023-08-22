@@ -96,6 +96,7 @@ export default async function handler(req, res) {
               x_studio_zoom_password: query?.password,
               x_studio_zoom_start_time: query?.start_time,
               x_studio_zoom_url: query?.zoom_url,
+              x_studio_host_zoom_meeting: query?.zoom_host_url,
               x_studio_zoom_time_zone: query?.time_zone,
             });
 
@@ -128,6 +129,7 @@ export default async function handler(req, res) {
               x_studio_zoom_password: query?.password,
               x_studio_zoom_start_time: query?.start_time,
               x_studio_zoom_url: query?.zoom_url,
+              x_studio_host_zoom_meeting: query?.zoom_host_url,
               x_studio_zoom_time_zone: query?.time_zone,
             });
 
@@ -302,6 +304,7 @@ export default async function handler(req, res) {
           x_studio_zoom_password: query?.password,
           x_studio_zoom_start_time: query?.start_time,
           x_studio_zoom_url: query?.zoom_url,
+          x_studio_host_zoom_meeting: query?.zoom_host_url,
           x_studio_zoom_time_zone: query?.time_zone,
         });
 
@@ -349,6 +352,7 @@ export default async function handler(req, res) {
           x_studio_zoom_password: query?.password,
           x_studio_zoom_start_time: query?.start_time,
           x_studio_zoom_url: query?.zoom_url,
+          x_studio_host_zoom_meeting: query?.zoom_host_url,
           x_studio_zoom_time_zone: query?.time_zone,
         });
 
