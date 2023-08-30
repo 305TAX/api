@@ -20,12 +20,36 @@ export default async function handler(req, res) {
 
   const client = await clientPromise;
   const db = client.db("users_reviews");
-  const getconfig = await db.collection("config").find({}).toArray();
-  const googleConfig = getconfig[1];
-  const googleContactConfig = getconfig[2];
 
-  const credentials = googleConfig?.googleCredentials;
-  const token = googleContactConfig?.googleContactToken;
+  const query = req.query;
+  let isFragmentExist =
+    Object.keys(query).filter((fs) => String(fs) === "fragment").length >= 1
+      ? true
+      : false;
+
+  const getConfigMongoDB = new Promise(async (resolve, reject) => {
+    try {
+      const resConfig = await db.collection("config").find({}).toArray();
+      const resTokens = await db.collection("tokens").find({}).toArray();
+
+      let config = {
+        credentials: resConfig,
+        tokens: resTokens,
+      };
+
+      resolve(config);
+    } catch (error) {
+      reject(error);
+    }
+  });
+
+  const config = await getConfigMongoDB;
+
+  const credentials = config.credentials[1]?.googleCredentials;
+
+  const token = !isFragmentExist
+    ? config.tokens[0]?.googleContact305TAXToken
+    : config.tokens[1]?.googleContactROSAToken;
 
   async function loadSavedCredentialsIfExist() {
     try {
@@ -53,12 +77,12 @@ export default async function handler(req, res) {
     });
 
     const connections = res.data.connections;
-    console.log("LENGTH", connections.length)
-    if (!connections || connections.length === 0)
-      return res.json({
+
+    if (!connections || connections.length === 0 || connections == undefined)
+      return {
         status: 401,
         statusText: "GOOGLE CONTACTS: No connections found.",
-      });
+      };
 
     return connections;
   }
