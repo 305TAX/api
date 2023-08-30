@@ -84,7 +84,7 @@ export default async function handler(req, res) {
       statusText: "undefined values",
     });
 
-  var existContact = checkFindContacts
+  var existContact = !checkFindContacts
     ? Array.from(findContacts).find(
         (fc) => String(fc?.phoneNumbers[0]?.value) == String(newContact.mobile)
       )
@@ -136,7 +136,7 @@ export default async function handler(req, res) {
       .catch((error) => console.log("ERROR CREATE CONTACT", error));
   }
 
-  if (existContact == undefined) {
+  if (existContact == undefined || existContact == false) {
     const response = await authorize()
       .then((client) => createGoogleContact(client, newContact))
       .catch(console.error);
