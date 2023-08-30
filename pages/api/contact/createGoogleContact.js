@@ -22,143 +22,127 @@ export default async function handler(req, res) {
   // const query = req.body;
   const query = JSON.parse(JSON.stringify(req.body));
 
-  console.log("QUERY RECIBIDA POR POST", query);
-  return res.json({
-    query: query,
+  const queryFragment = req.query;
+  let isFragmentExist =
+    Object.keys(queryFragment).filter((fs) => String(fs) === "fragment")
+      .length >= 1
+      ? true
+      : false;
+
+  const client = await clientPromise;
+  const db = client.db("users_reviews");
+
+  const getConfigMongoDB = new Promise(async (resolve, reject) => {
+    try {
+      const resConfig = await db.collection("config").find({}).toArray();
+      const resTokens = await db.collection("tokens").find({}).toArray();
+
+      let config = {
+        credentials: resConfig,
+        tokens: resTokens,
+      };
+
+      resolve(config);
+    } catch (error) {
+      reject(error);
+    }
   });
-  // const client = await clientPromise;
-  // const db = client.db("users_reviews");
-  // const getconfig = await db.collection("config").find({}).toArray();
-  // const googleConfig = getconfig[1];
-  // const googleContactConfig = getconfig[2];
 
-  // const credentials = googleConfig?.googleCredentials;
-  // const token = googleContactConfig?.googleContactToken;
+  const config = await getConfigMongoDB;
 
-  // const resfindContacts = await fetch(
-  //   "https://review.305tax.com/api/contact/listGoogleContacts",
-  //   {
-  //     method: "GET",
-  //   }
-  // );
+  const credentials = config.credentials[1]?.googleCredentials;
 
-  // const findContacts = await resfindContacts.json();
+  const token = !isFragmentExist
+    ? config.tokens[0]?.googleContact305TAXToken
+    : config.tokens[1]?.googleContactROSAToken;
 
-  // const newContact = {
-  //   givenName: String(query?.displayname),
-  //   email: String(query?.email),
-  //   mobile: String(query?.phonenumber),
-  // };
+  const resfindContacts = await fetch(
+    `https://review.305tax.com/api/contact/listGoogleContacts${
+      isFragmentExist ? "?fragment=true" : ""
+    }`,
+    {
+      method: "GET",
+    }
+  );
 
-  // if (Object.values(newContact).includes("undefined"))
-  //   return res.status(502).json({
-  //     status: false,
-  //     statusText: "undefined values",
-  //   });
+  const findContacts = await resfindContacts.json();
+  let checkFindContacts =
+    Object.keys(findContacts).filter((fs) => String(fs) === "statusText")
+      .length >= 1
+      ? true
+      : false;
 
-  // var existContact = Array.from(findContacts).find(
-  //   (fc) => String(fc?.phoneNumbers[0]?.value) == String(newContact.mobile)
-  // );
+  const newContact = {
+    givenName: String(query?.displayname),
+    email: String(query?.email),
+    mobile: String(query?.phonenumber),
+  };
 
-  // async function loadSavedCredentialsIfExist() {
-  //   try {
-  //     const credentials = token;
-  //     return google.auth.fromJSON(credentials);
-  //   } catch (err) {
-  //     return null;
-  //   }
-  // }
+  if (Object.values(newContact).includes("undefined"))
+    return res.status(502).json({
+      status: false,
+      statusText: "undefined values",
+    });
 
-  // async function authorize() {
-  //   let client = await loadSavedCredentialsIfExist();
+  var existContact = checkFindContacts
+    ? Array.from(findContacts).find(
+        (fc) => String(fc?.phoneNumbers[0]?.value) == String(newContact.mobile)
+      )
+    : false;
 
-  //   if (client) return client;
-  //   return client;
-  // }
+  async function loadSavedCredentialsIfExist() {
+    try {
+      const credentials = token;
+      return google.auth.fromJSON(credentials);
+    } catch (err) {
+      return null;
+    }
+  }
 
-  // async function createGoogleContact(auth, newContact) {
-  //   const service = google.people({ version: "v1", auth });
+  async function authorize() {
+    let client = await loadSavedCredentialsIfExist();
 
-  //   service.people
-  //     .createContact({
-  //       resource: {
-  //         names: {
-  //           givenName: String(newContact?.givenName),
-  //         },
-  //         emailAddresses: {
-  //           value: String(newContact?.email),
-  //           type: "home",
-  //         },
-  //         phoneNumbers: [
-  //           {
-  //             value: String(newContact?.mobile),
-  //             type: "home",
-  //           },
-  //         ],
-  //       },
-  //     })
-  //     .then((result) => {
-  //       return res.json({
-  //         state: true,
-  //         result: result.data,
-  //       });
-  //     })
-  //     .catch((error) => console.log("ERROR CREATE CONTACT", error));
-  // }
+    if (client) return client;
+    return client;
+  }
 
-  // if (existContact == undefined) {
-  //   const response = await authorize()
-  //     .then((client) => createGoogleContact(client, newContact))
-  //     .catch(console.error);
-  // } else {
-  //   return res.json({
-  //     result: "User found.",
-  //   });
-  // }
+  async function createGoogleContact(auth, newContact) {
+    const service = google.people({ version: "v1", auth });
 
-  // async function authorize() {
-  //   let client = await loadSavedCredentialsIfExist();
+    service.people
+      .createContact({
+        resource: {
+          names: {
+            givenName: String(newContact?.givenName),
+          },
+          emailAddresses: {
+            value: String(newContact?.email),
+            type: "home",
+          },
+          phoneNumbers: [
+            {
+              value: String(newContact?.mobile),
+              type: "home",
+            },
+          ],
+        },
+      })
+      .then((result) => {
+        return res.json({
+          state: true,
+          result: result.data,
+        });
+      })
+      .catch((error) => console.log("ERROR CREATE CONTACT", error));
+  }
 
-  //   if (client) return client;
-  //   return client;
-  // }
-  // const newContact = {
-  //   givenName: String(query?.displayname),
-  //   email: String(query?.email),
-  //   mobile: String(query?.phonenumber),
-  // };
-
-  // async function createGoogleContact(auth, newContact) {
-  //   const service = google.people({ version: "v1", auth });
-
-  //   service.people
-  //     .createContact({
-  //       resource: {
-  //         names: {
-  //           givenName: String(newContact?.givenName),
-  //         },
-  //         emailAddresses: {
-  //           value: String(newContact?.email),
-  //           type: "home",
-  //         },
-  //         phoneNumbers: [
-  //           {
-  //             value: String(newContact?.mobile),
-  //             type: "home",
-  //           },
-  //         ],
-  //       },
-  //     })
-  //     .then((result) => {
-  //       return res.json({
-  //         state: true,
-  //         result: result.data,
-  //       });
-  //     })
-  //     .catch((error) => console.log("ERROR CREATE CONTACT", error));
-  // }
-
-  // const response = await authorize()
-  //   .then((client) => createGoogleContact(client, newContact))
-  //   .catch(console.error);
+  if (existContact == undefined) {
+    const response = await authorize()
+      .then((client) => createGoogleContact(client, newContact))
+      .catch(console.error);
+  } else {
+    return res.json({
+      result: "User found.",
+    });
+  }
 }
