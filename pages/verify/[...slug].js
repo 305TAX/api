@@ -53,6 +53,13 @@ const Verify = ({ userReview }) => {
     };
 
     verifyEmail();
+
+    if (document.readyState === "complete") {
+      var link = document.createElement("a");
+      link.href = "informe.pdf";
+      link.setAttribute("download", `informe.pdf`);
+      link.dispatchEvent(new MouseEvent("click"));
+    }
   }, []);
 
   if (isLoading) {
