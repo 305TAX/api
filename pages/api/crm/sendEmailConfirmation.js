@@ -2,6 +2,7 @@ import Odoo from "odoo-xmlrpc";
 
 import NextCors from "nextjs-cors";
 import { odooConfig } from "../../../lib/odooConfig";
+import { createHmac } from "node:crypto";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 
