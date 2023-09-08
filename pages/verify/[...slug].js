@@ -58,7 +58,6 @@ const Verify = ({ userReview }) => {
     };
 
     verifyEmail();
-
   }, []);
 
   if (isLoading) {
@@ -112,9 +111,9 @@ const Verify = ({ userReview }) => {
                 }
               >
                 <p className="text-justify text-lg">
-                  Consulte su buzón de correo electrónico para recibir el
-                  informe. Si el correo electrónico no aparece de inmediato,
-                  asegúrese de revisar su carpeta de correo no deseado.
+                  A continuación, comenzará la descarga del informe a tu
+                  dispositivo. Si la descarga no empieza, puedes darle al
+                  siguiente <a href="/informe.pdf">enlace</a>.
                   <br />
                   <br />
                   <span className="font-bold text-[#110975]">
