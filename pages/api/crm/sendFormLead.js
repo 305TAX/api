@@ -16,7 +16,7 @@ export default async function handler(req, res) {
   });
 
   let odoo = new Odoo(odooConfig);
-  const q = req.query;
+  const q = JSON.parse(req.body);
 
   const sendFormLead = new Promise(async (resolve, reject) => {
     odoo.connect(function (err) {
