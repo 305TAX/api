@@ -37,7 +37,7 @@ const Verify = ({ userReview }) => {
       const response = await fetch(`/api/crm/verifyEmail?hash=${userReview}`);
       const result = await response.json();
 
-      if (data?.result == true) {
+      if (result?.result == true) {
         const { innerWidth: width, innerHeight: height } = window;
         setDimensions({
           width,
