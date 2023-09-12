@@ -48,7 +48,10 @@ const Verify = ({ userReview }) => {
 
         var link = document.createElement("a");
         link.href = "informe.pdf";
-        link.setAttribute("download", `informe.pdf`);
+        link.setAttribute(
+          "download",
+          `Informe 12 Preguntas Frecuentes Que Se Hacen Los Extranjeros Al Invertir En Bienes Raíces En Florida.pdf`
+        );
         link.dispatchEvent(new MouseEvent("click"));
 
         setTimeout(() => {
@@ -113,7 +116,11 @@ const Verify = ({ userReview }) => {
                 <p className="text-justify text-lg">
                   A continuación, comenzará la descarga del informe a tu
                   dispositivo. Si la descarga no empieza, puedes darle al
-                  siguiente <a href="/informe.pdf">enlace</a>.
+                  siguiente{" "}
+                  <a href="/informe.pdf" className="text-blue-400">
+                    enlace
+                  </a>
+                  .
                   <br />
                   <br />
                   <span className="font-bold text-[#110975]">
