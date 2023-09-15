@@ -16,6 +16,9 @@ export default async function handler(req, res) {
   let odoo = new Odoo(odooConfig);
   const q = req.query;
 
+  let isRosafrancia = q?.isRosafrancia ? true : false;
+  let referredBy = q?.referredBy ? q?.referredBy : false;
+
   const createNewLeadCRM = async (data) => {
     return await new Promise((resolve, reject) => {
       odoo.connect(function (err) {
@@ -44,10 +47,6 @@ export default async function handler(req, res) {
             state: true,
             result: value2,
           });
-
-          // return res.status(200).json({
-          //   result: [data, value2],
-          // });
         });
       });
     });
@@ -66,6 +65,9 @@ export default async function handler(req, res) {
         mobile: String(q?.mobile),
         x_studio_country_origin: String(q?.country_origin),
         x_studio_status_verify: String(1),
+        x_studio_isrosafrancia: isRosafrancia,
+        x_studio_referred_by_many: referredBy,
+        x_studio_contact_origin: String(q?.contact_origin),
       });
 
       let params = [];
