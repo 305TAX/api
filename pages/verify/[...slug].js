@@ -37,6 +37,12 @@ const Verify = ({ userReview }) => {
       const response = await fetch(`/api/crm/verifyEmail?hash=${userReview}`);
       const result = await response.json();
 
+      console.log(result.result?.exist);
+
+      if (result.result?.exist === true) {
+        return (window.location.href = "https://305tax.com");
+      }
+
       if (result?.result == true) {
         const { innerWidth: width, innerHeight: height } = window;
         setDimensions({
