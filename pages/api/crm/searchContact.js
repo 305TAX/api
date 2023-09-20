@@ -25,9 +25,9 @@ export default async function handler(req, res) {
       console.log("Connected to Odoo server.");
       var inParams = [];
 
-      inParams.push([["id", "=", 5066]]);
+      inParams.push([["id", "=", 4463]]);
 
-      inParams.push(["name", "category_id"]); //fields
+      inParams.push(["name", "x_studio_referred_by_many"]); //fields
 
       var params = [];
       params.push(inParams);
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
             return console.log(err);
           }
           return resolve({
-            result: value,
+            result: value[0],
           });
         }
       );
