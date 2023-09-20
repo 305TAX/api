@@ -14,8 +14,8 @@ export default async function handler(req, res) {
   });
 
   let odoo = new Odoo(odooConfig);
-  // const q = req.query;
-  const q = req.body;
+  const q = req.query;
+  // const q = req.body;
 
   let isRosafrancia = q?.isRosafrancia ? true : false;
   let referredBy = q?.referredBy ? q?.referredBy : false;
