@@ -74,6 +74,9 @@ export default async function handler(req, res) {
           }
 
           if (value) {
+            if (Number(value[0]?.x_studio_status_verify_1) >= "3")
+              return resolve({ exist: true });
+
             const crt = await sendVerifyEmail(value);
 
             if (crt?.state == true) {
