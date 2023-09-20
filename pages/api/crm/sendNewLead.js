@@ -19,6 +19,9 @@ export default async function handler(req, res) {
 
   let isRosafrancia = q?.isRosafrancia ? true : false;
   let referredBy = q?.referredBy ? q?.referredBy : false;
+  let catid = [];
+
+  q?.categoryId ? catid.push(Number(q?.categoryId)) : false;
 
   const createNewLeadCRM = async (data) => {
     return await new Promise((resolve, reject) => {
@@ -69,7 +72,7 @@ export default async function handler(req, res) {
         x_studio_isrosafrancia: isRosafrancia,
         x_studio_referred_by_many: referredBy,
         x_studio_contact_origin: String(q?.contact_origin),
-        category_id: q?.categoryId ? [q?.categoryId] : false,
+        category_id: catid,
       });
 
       let params = [];
