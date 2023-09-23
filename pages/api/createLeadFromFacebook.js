@@ -109,6 +109,9 @@ export default async function handler(req, res) {
         name: String(query?.full_name),
         email: String(query?.email),
         mobile: String(query?.mobile),
+        x_studio_isrosafrancia: query?.isRosafrancia
+          ? query?.isRosafrancia
+          : false,
 
         x_studio_ad_id: String(query?.ad_id),
         x_studio_ad_name: String(query?.ad_name),
