@@ -12,6 +12,46 @@ export default async function handler(req, res) {
 
   const oReviews = [
     {
+      author_name: "veronica alvarez",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/ALV-UjVyKzpdgjNRTEFaRpKpcg1zy1kSFL-d2cHvbM3KlQRE1hQ=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Excelente equipo de profesionales. Marco ha sido mi contador a titulo personal y el de todos mis clientes inversionistas en el área de real estate por muchos años . Lo recomiendo ampliamente.",
+      older: 43,
+    },
+    {
+      author_name: "HMP22",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/ACg8ocJkyWAi-tmCyooPo0nPJxGWVl1RXuc5VTXHAjh64cjk=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Yo se que puedo confiar en Marco y su equipo que haran un buen trabajo, con honestidad y de acuerdo con la ley, para mi no hay nada más importante que poder dormir tranquilo.",
+      older: 42,
+    },
+    {
+      author_name: "Anderson Mesa",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/ACg8ocLuo79sdi5De8LgipZEgQtszUjO7Jq5ZwHv34le5foN=w75-h75-p-rp-mo-ba2-br100",
+      rating: "5",
+      text: "Desde que vivo en los Estados Unidos 305TAX me ha brindado el apoyo con la preparacion de mis taxes personales, siempre atentos con un respuesta oportuna a cada necesidad, les recomiendo que los contacten.",
+      older: 41,
+    },
+    {
+      author_name: "Arianna Rojas",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a/ACg8ocLS7s-LI9ihRLYp-ApPDj3QWW_OF2onG01BmMqnwx7L=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "Excelente profesional en el área tributaria!",
+      older: 40,
+    },
+    {
+      author_name: "Daniel Hernandez Photography",
+      profile_photo_url:
+        "https://lh3.googleusercontent.com/a-/ALV-UjWf6cveBRxIAmkK6E4w4F85GlslDxKZ5I00Hgwxi-MbH04=w75-h75-p-rp-mo-br100",
+      rating: "5",
+      text: "La mejor empresa en servicios contables y fiscales del Sur de la Florida, personal capacitado para atender cualquier situación, los recomiendo 100%",
+      older: 39,
+    },
+    {
       author_name: "Gabriel Jiménez",
       profile_photo_url:
         "https://lh3.googleusercontent.com/a/AAcHTteXseVXoaXWZXXoURrAuDbwEP4Kwxhl7-M75G0UIlgc=w75-h75-p-rp-mo-br100",
@@ -332,19 +372,19 @@ export default async function handler(req, res) {
     }
   );
 
-  const data = await response.json();
+  // const data = await response.json();
 
-  if (!data) return res.status(403).json({ notFound: true });
+  // if (!data) return res.status(403).json({ notFound: true });
 
-  const reviews = data?.result.reviews;
+  // const reviews = data?.result.reviews;
   const listReviews = [];
 
   listReviews.concat(oReviews);
 
-  const filterReviews = reviews?.sort((a, b) => b?.time - a?.time);
+  // const filterReviews = reviews?.sort((a, b) => b?.time - a?.time);
 
   const array1 = [1, 2, 3];
-  const lp = filterReviews.concat(oReviews);
+  const lp = listReviews.concat(oReviews);
 
   try {
     const client = await clientPromise;
@@ -352,8 +392,8 @@ export default async function handler(req, res) {
     const getusers = await db.collection("users").find({}).toArray();
 
     return res.status(200).json({
-      user_ratings_total: data?.result.user_ratings_total,
-      rating: data?.result.rating,
+      user_ratings_total: 42,
+      rating: Number("5.0"),
       reviews: lp,
       our_reviews: getusers,
     });
