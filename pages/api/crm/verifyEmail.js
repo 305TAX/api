@@ -64,6 +64,7 @@ export default async function handler(req, res) {
       var params = [];
       params.push(inParams);
 
+      
       odoo.execute_kw(
         "crm.lead",
         "search_read",
