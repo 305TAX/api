@@ -1,6 +1,6 @@
 //import React from "react";
 
-import "../styles/globals.css";
+// import "../styles/globals.css";
 // import { ThemeProvider } from "@material-tailwind/react";
 //import { ThemeProvider } from "@material-tailwind/react";
 //import Navbar from "@/components/Navbar";
