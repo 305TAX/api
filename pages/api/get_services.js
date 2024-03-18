@@ -36,6 +36,8 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "us-expatriate-tax",
       x_name: "US Expatriate Tax",
+      id: 24,
+
       Show: true,
       x_studio_translate_to_spanish: "Impuestos De Expatriados",
       x_studio_associated_page: "US Expatriate Tax",
@@ -49,6 +51,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "payroll-and-payroll-tax",
       x_name: "Payroll And Payroll Tax",
+      id: 31,
       Show: true,
       x_studio_translate_to_spanish: "Nómina E Impuestos De Nómina",
       x_studio_associated_page: "welcome",
@@ -63,6 +66,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "foreign-national-tax",
       x_name: "Foreign National Tax",
+      id: 22,
       Show: true,
       x_studio_translate_to_spanish:
         "Impuestos De Extranjeros<br/> No Residentes",
@@ -77,6 +81,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "ein-application",
       x_name: "EIN Application",
+      id: 28,
       Show: true,
       x_studio_translate_to_spanish: "Solicitud De EIN",
       x_studio_associated_page: "EIN Application",
@@ -90,6 +95,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "sales-and-use-tax",
       x_name: "Sales And Use Tax",
+      id: 32,
       Show: true,
       x_studio_translate_to_spanish: "Impuestos A Las Ventas<br/>Y Uso",
       x_studio_associated_page: "welcome",
@@ -103,6 +109,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "new-business-setup",
       x_name: "New Business Setup",
+      id: 29,
       Show: true,
       x_studio_translate_to_spanish: "Formación De <br/>Nuevos Negocios",
       x_studio_associated_page: "welcome",
@@ -115,6 +122,7 @@ export default async function handler(req, res) {
     },
     {
       x_studio_custom_url: "business-tax",
+      id: 20,
       x_name: "Business Tax",
       Show: true,
       x_studio_translate_to_spanish: "Impuestos De Negocios",
@@ -129,6 +137,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "itin-application",
       x_name: "ITIN Application",
+      id: 27,
       Show: true,
       x_studio_translate_to_spanish: "Solicitud De ITIN",
       x_studio_associated_page: "ITIN Application",
@@ -142,6 +151,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "tax-planning",
       x_name: "Tax Planning",
+      id: 26,
       Show: true,
       x_studio_translate_to_spanish: "Planificacion Fiscal",
       x_studio_associated_page: "welcome",
@@ -155,6 +165,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "pre-immigration-tax",
       x_name: "Pre-Immigration Tax",
+      id: 23,
       Show: true,
       x_studio_translate_to_spanish:
         "Planificación Fiscal <br/>Pre-Inmigración",
@@ -169,6 +180,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "amended-income-tax-returns",
       x_name: "Amended Income Tax Returns",
+      id: 33,
       Show: true,
       x_studio_translate_to_spanish: "Declaraciones De Impuestos Sustitutivas",
       x_studio_associated_page: "welcome",
@@ -183,6 +195,7 @@ export default async function handler(req, res) {
       x_studio_custom_url: "individual-tax",
       x_name: "Individual Tax",
       Show: true,
+      id: 21,
       x_studio_translate_to_spanish:
         "Impuestos De Ciudadanos <br/>Y Residentes",
       x_studio_associated_page: "Individual Tax",
@@ -196,6 +209,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "real-estate-tax",
       x_name: "Real Estate Tax",
+      id: 19,
       Show: true,
       x_studio_translate_to_spanish: "Impuestos Sobre <br/>Bienes Raíces",
       x_studio_associated_page: "Real Estate Tax",
@@ -209,6 +223,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "back-taxes",
       x_name: "Back Taxes",
+      id: 25,
       Show: true,
       x_studio_translate_to_spanish: "Impuestos De Años Anteriores",
       x_studio_associated_page: "Back Tax",
@@ -222,6 +237,7 @@ export default async function handler(req, res) {
     {
       x_studio_custom_url: "bookkeeping",
       x_name: "Bookkeeping",
+      id: 30,
       Show: true,
       x_studio_translate_to_spanish: "Contabilidad",
       x_studio_associated_page: "welcome",
